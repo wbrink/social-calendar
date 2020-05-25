@@ -1,0 +1,6 @@
+friend request
+  1) search for person
+  2) get that persons id
+  3) create friend request 
+
+see friend requests

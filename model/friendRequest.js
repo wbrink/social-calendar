@@ -10,12 +10,14 @@ const FriendRequestSchema = new Schema({
     type: Schema.Types.ObjectId
   },
   date: {
-    type: Date
+    type: Date,
+    default: Date.now
   },
   status: {
     type: String,
     //regex to match pending, accepted, rejected
-    match: [/pending|accepted|rejected/, "status must be: pending, accepted or rejected"]
+    match: [/pending|accepted|rejected/, "status must be: pending, accepted or rejected"],
+    default: "pending"
   }
 })
 

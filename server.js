@@ -30,6 +30,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(session({
   saveUninitialized: false,
   resave: false,
+  // unset: "destroy", // session will be deleted when the response ends
   secret: "secret", // not positive what this does
   store: new MongoStore({mongooseConnection: mongoose_db, secret: "Secret"}), // enables transparent crypto in accordance with OWASP
   cookie: {
@@ -45,6 +46,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
+// api routes
 app.use(require("./routes/api-routes"));
 
 

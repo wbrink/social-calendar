@@ -8,17 +8,17 @@ passport.use(new LocalStrategy({
     passwordField: 'password' // represents req.body.password
   },
   function(username,password, done) {
-    db.User.findOne({username: username}, function(err, doc) {
+    db.User.findOne({username: username}, function(err, user) {
       if (err) {return done(err); }
-      if (!doc) {
+      if (!user) {
         return done(null, false, {message: "Incorrect Username"});
       }
-      if (!doc.checkPassword(password)) {
+      if (!user.checkPassword(password)) {
         return done(null, false, {message: "Invalid Login"});
       }
 
       // successful login
-      return done(null, doc);
+      return done(null, user);
     })
   }
 ))
