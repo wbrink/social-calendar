@@ -37,7 +37,7 @@ app.use(session({
     httpOnly: true,
     secure: false,
     path: "/",
-    maxAge: 60000 // this is in milliseconds
+    maxAge: 1000*60*60*24 // this is in milliseconds (this is 24 hours)
   }
 }))
 
