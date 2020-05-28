@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const db = require("./model");
 
 // connect mongoose db (options to remove depracation warnings)
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/user_auth_mern", {
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/calendar", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true
@@ -21,20 +21,12 @@ mongoose_db.on("error", function(err) {
 mongoose_db.once("open",function() {
   db.User.create([
     {
-      username: "bob", 
-      password: "123455"
+      username: "a", 
+      password: "123"
     },
     {
-      username: "joe", 
-      password: "123455"
-    },
-    {
-      username: "dennis", 
-      password: "123455"
-    },
-    {
-      username: "steve", 
-      password: "123455"
+      username: "b", 
+      password: "123"
     }
   ], function(err, docs) {
     if (err) {

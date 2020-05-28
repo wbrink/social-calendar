@@ -10,10 +10,11 @@ const mongoose = require("mongoose");
 const db = require("./model");
 
 // connect mongoose db (options to remove depracation warnings)
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/user_auth_mern", {
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/calendar", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  useCreateIndex: true
+  useCreateIndex: true,
+  useFindAndModify: false
 })
 
 const mongoose_db = mongoose.connection;

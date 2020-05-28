@@ -1,6 +1,7 @@
 const express = require("express");
 const passport = require("../passport");
 const isAuthenticated = require("../passport/isAuthenticated");
+const mongoose = require("mongoose");
 
 const router = express.Router();
 
@@ -23,7 +24,23 @@ router.get("/api/get", (req,res) => {
 
 // logged in user's friends
 router.get("/api/friends", isAuthenticated, (req,res) => {
-  res.json(req.user.friends);
+  db.User.find({_id: {$in: req.user.friends}}, (err, users) => {
+    const array = [];
+    users.forEach(obj => {
+      array.push({_id: obj._id, username: obj.username});
+    })
+    res.json(array);
+  })
+})
+
+
+
+
+// remove friend 
+router.delete("/api/friend/:id", (req, res) => {
+  const id = req.params.id;
+
+  // db.
 })
 
 
@@ -69,6 +86,10 @@ router.get("/api/user-search/:username", (req,res) => {
 
 
 // login route
+/*
+    username: (type: string)
+    password: (type: string)
+*/
 router.post("/api/login", (req, res, next) => {
   passport.authenticate("local", function(err, user, info) {
     if (err) {return next(err);}
@@ -76,7 +97,7 @@ router.post("/api/login", (req, res, next) => {
     req.logIn(user, function(err) {
       if (err) {return next(err);}
       // must save session before redirecting. Many web browsers will redirect before they even finish receiving the response
-      //req.session.save(() => res.redirect('/profile'));
+      // req.session.save(() => res.redirect('/profile'));
       req.session.save(() => res.json({msg: "Logged in"}))
     });
   })(req, res, next);
@@ -94,6 +115,9 @@ router.delete("/api/delete/:id", (req,res) => {
 
 
 // get user's id
+/*
+    pass username into url
+*/
 router.get("/api/user/:username", (req,res) => {
   db.User.findOne({username: req.params.username}, (err, user) => {
     if (err) {
@@ -117,10 +141,10 @@ router.get("/api/requests", isAuthenticated, (req,res) => {
     const array = [];
     requests.forEach(element => {
       if (JSON.stringify(element.to) === JSON.stringify(req.user._id)) {
-        let x = {toMe: true, from: element.from, date: element.date };
+        let x = {toMe: true, from: element.from, date: element.date, _id: element._id};
         array.push(x);
       } else {
-        let x = {toMe: false, to: element.to, date: element.date }
+        let x = {toMe: false, to: element.to, date: element.date, _id: element._id}
         array.push(x);
       }
       });
@@ -129,8 +153,11 @@ router.get("/api/requests", isAuthenticated, (req,res) => {
 })
 
 
-
+ 
 // send friend request [send username of person to make request to]
+/*
+    username: (type string) send the username of the person to make request to
+*/
 router.post("/api/request", isAuthenticated, async (req,res) => {
   // first get user id from user, then 
   db.User.findOne({username: req.body.username}, (err, user) => {
@@ -149,7 +176,48 @@ router.post("/api/request", isAuthenticated, async (req,res) => {
 
 
 
-// accept friend request
+
+
+
+// friend request (reject, delete, accept)
+/* 
+    action: (type string) "accept", "reject", "delete"
+    id: (type mongoose.Types.ObjectId) pass the _id of the friend request
+*/
+router.post("/api/accept-decline-request/", isAuthenticated, (req, res) => {
+  const {id, action} = req.body;
+
+  // if not the right response sent end the request
+  if (!["accept", "reject", "delete"].includes(action)) {
+    res.json({msg: "Please specify 'accept', 'reject', or 'delete'"})
+    return;
+  }
+
+  // let mongoID = mongoose.Types.ObjectId(id);
+  db.FriendRequest.findOneAndDelete({_id: id}, async function(err, request) {
+    // if it was sent to me
+    if (JSON.stringify(request.to) === JSON.stringify(req.user._id)) {
+      if (action.toLowerCase() == "accept")  {
+        const friend = request.from // user who sent the friend request
+        // add each other to friends array
+        await db.User.findOneAndUpdate({_id: req.user._id}, {$push: {friends: friend }});
+        await db.User.findOneAndUpdate({_id: friend}, {$push: {friends: req.user._id}});
+        res.json({msg: "Friend Request Accepted"})
+      } else {
+        // then the request is rejected
+        res.json({msg: "Friend Request Rejected"})
+      }
+    }
+
+    // if i want to delete friend request i sent
+    if (JSON.stringify(request.from) === JSON.stringify(req.user._id)) {
+      if (action.toLowerCase() == "delete") {
+        res.json({msg: "Friend Request Deleted From Sender"})
+      }
+    }
+  }) 
+})
+
 
 
 
