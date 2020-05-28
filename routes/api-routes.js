@@ -36,7 +36,8 @@ router.get("/api/friends", isAuthenticated, (req,res) => {
 
 
 
-// remove friend  (pass friend id as URL parameter)
+// remove friend  
+// pass friend ID as URL parameter
 router.delete("/api/friends/:id", isAuthenticated, async (req, res) => {
   const friendID = req.params.id;
 
