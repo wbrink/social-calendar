@@ -36,11 +36,17 @@ router.get("/api/friends", isAuthenticated, (req,res) => {
 
 
 
-// remove friend 
-router.delete("/api/friend/:id", (req, res) => {
-  const id = req.params.id;
+// remove friend  (pass friend id as URL parameter)
+router.delete("/api/friends/:id", isAuthenticated, async (req, res) => {
+  const friendID = req.params.id;
 
-  // db.
+  // remove user from logged in users friends
+  await db.User.findOneAndUpdate({_id: req.user._id}, {$pull: {friends: friendID}});
+
+  // remove logged in user from friendIDs friend list
+  await db.User.findOneAndUpdate({_id: friendID}, {$pull: {friends: req.user._id}});
+
+  res.json({msg: "Friend removed successfully"});
 })
 
 
