@@ -18,7 +18,8 @@ const UserSchema = new Schema({
   },
   friends: [
     {
-      type: Schema.Types.ObjectId
+      _id: Schema.Types.ObjectId,
+      date: Date
     }
   ],
   events: [{

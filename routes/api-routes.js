@@ -24,10 +24,19 @@ router.get("/api/get", (req,res) => {
 
 // logged in user's friends
 router.get("/api/friends", isAuthenticated, (req,res) => {
-  db.User.find({_id: {$in: req.user.friends}}, (err, users) => {
+  const arrayOfFriendIds = req.user.friends.map(elem => elem._id);
+
+  // find the users
+  db.User.find({_id: {$in: arrayOfFriendIds}}, (err, users) => {
     const array = [];
     users.forEach(obj => {
-      array.push({_id: obj._id, username: obj.username});
+      let friendSince;
+      for (var i = 0; i < req.user.friends.length; i++) {
+        if (JSON.stringify(obj._id) === JSON.stringify(req.user.friends[i]._id)) {
+          friendSince = req.user.friends[i].date;
+        }
+      }
+      array.push({_id: obj._id, username: obj.username, date: friendSince});
     })
     res.json(array);
   })
@@ -42,10 +51,10 @@ router.delete("/api/friends/:id", isAuthenticated, async (req, res) => {
   const friendID = req.params.id;
 
   // remove user from logged in users friends
-  await db.User.findOneAndUpdate({_id: req.user._id}, {$pull: {friends: friendID}});
+  await db.User.findOneAndUpdate({_id: req.user._id}, {$pull: {friends: {_id: friendID}}});
 
   // remove logged in user from friendIDs friend list
-  await db.User.findOneAndUpdate({_id: friendID}, {$pull: {friends: req.user._id}});
+  await db.User.findOneAndUpdate({_id: friendID}, {$pull: {friends: {_id: req.user._id}}});
 
   res.json({msg: "Friend removed successfully"});
 })
@@ -135,6 +144,8 @@ router.get("/api/user/:username", (req,res) => {
 }) 
 
 
+// development only
+// get all friend requests
 router.get("/api/get/requests", (req,res) => {
   db.FriendRequest.find({}, (err, requests) => {
     res.json(requests);
@@ -191,7 +202,7 @@ router.post("/api/request", isAuthenticated, async (req,res) => {
     action: (type string) "accept", "reject", "delete"
     id: (type mongoose.Types.ObjectId) pass the _id of the friend request
 */
-router.post("/api/accept-decline-request/", isAuthenticated, (req, res) => {
+router.post("/api/accept-decline-request", isAuthenticated, (req, res) => {
   const {id, action} = req.body;
 
   // if not the right response sent end the request
@@ -207,8 +218,8 @@ router.post("/api/accept-decline-request/", isAuthenticated, (req, res) => {
       if (action.toLowerCase() == "accept")  {
         const friend = request.from // user who sent the friend request
         // add each other to friends array
-        await db.User.findOneAndUpdate({_id: req.user._id}, {$push: {friends: friend }});
-        await db.User.findOneAndUpdate({_id: friend}, {$push: {friends: req.user._id}});
+        await db.User.findOneAndUpdate({_id: req.user._id}, {$push: {friends: {_id: friend, date: request.date }}});
+        await db.User.findOneAndUpdate({_id: friend}, {$push: {friends: {_id: req.user._id, date: request.date}}});
         res.json({msg: "Friend Request Accepted"})
       } else {
         // then the request is rejected
