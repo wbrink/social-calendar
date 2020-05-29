@@ -2,7 +2,7 @@ import React from "react";
 // import { Link } from "react-router-dom";
 // import "./LoginSignup.css"
 
-const Login = () => {
+const Signup = () => {
 
   return (
     
@@ -12,4 +12,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;

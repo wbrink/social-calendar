@@ -16,7 +16,7 @@ const LoginSignup = () => {
             </div>
             <div className="row justify-content-center">
                 <Link to={"/Login"}>
-                  <div className="links" >Log In</div>
+                  <div className="links">Log In</div>
                 </Link>
             </div>
             <Link>eee</Link>
