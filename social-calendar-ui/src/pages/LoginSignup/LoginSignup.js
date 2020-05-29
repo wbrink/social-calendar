@@ -5,17 +5,21 @@ import "./LoginSignup.css"
 const LoginSignup = () => {
 
   return (
+    
     <div className="container">{/* header will be a component inside of the sidenavbar component*/}
       <div className="row justify-content-center">
         <div className="col-8" id="LoginSignupContainer">
             <div className="row justify-content-center">
-              {/* <Link to={"/SignUp/"}> */}
-              <button className="col-5">Sign Up</button> {/* change button to a href links*/}
-              {/* </Link> */}
+              <Link to={"/SignUp/"}>
+              <div className="links" >Sign Up</div> {/* change button to a href links*/}
+              </Link>
             </div>
             <div className="row justify-content-center">
-              <button className="col-5">Log In</button>
+                <Link to={"/Login"}>
+                  <div className="links" >Log In</div>
+                </Link>
             </div>
+            <Link>eee</Link>
         </div>
       </div>
     </div>
