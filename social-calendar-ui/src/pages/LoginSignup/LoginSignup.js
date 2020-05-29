@@ -19,7 +19,6 @@ const LoginSignup = () => {
                   <div className="links">Log In</div>
                 </Link>
             </div>
-            <Link>eee</Link>
         </div>
       </div>
     </div>
