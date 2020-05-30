@@ -114,7 +114,7 @@ router.post("/api/login", (req, res, next) => {
       if (err) {return next(err);}
       // must save session before redirecting. Many web browsers will redirect before they even finish receiving the response
       // req.session.save(() => res.redirect('/profile'));
-      req.session.save(() => res.json({msg: "Logged in"}))
+      req.session.save(() => res.json({_id: user._id, username: user.username}))
     });
   })(req, res, next);
 })
