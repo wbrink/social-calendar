@@ -107,6 +107,7 @@ router.get("/api/user-search/:username", (req,res) => {
     password: (type: string)
 */
 router.post("/api/login", (req, res, next) => {
+  console.log(req.body)
   passport.authenticate("local", function(err, user, info) {
     if (err) {return next(err);}
     if (!user) {return res.status(422).json({msg: "Invalid login"})}

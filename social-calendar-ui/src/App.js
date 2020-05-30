@@ -1,21 +1,19 @@
-import React from 'react';
+import React, {useContext, createContext, useState} from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import LoginSignup from "./pages/LoginSignup/LoginSignup.js"
 import Login from "./pages/Login/Login.js"
-import Signup from "./pages/Signup/Signup.js"
-import ViewFriends from "./components/ViewFriends";
-
+import SignUp from "./pages/Signup/Signup.js"
+import UserContext from "./UserContext.js"
 function App() {
-  
+  // create logged in provider
+  const [user, setUser] = useState(false); // by defualt false
   return (
     //any links that are used in other pages must have a component and path specified here
     <Router>
-    <Route exact path="/LoginSignup" component={LoginSignup} />
-    <Route exact path="/Login" component={Login} />
-    <Route exact path="/Signup" component={Signup} />
-    <Route exact path="/friends" component={ViewFriends} />
+      <UserContext.Provider value={{user, setUser}}>
+        <Route exact path="/Login" component={Login} />
+        <Route exact path="/SignUp" component={SignUp} />
+      </UserContext.Provider>
     </Router>
   );
 }
-
 export default App;
