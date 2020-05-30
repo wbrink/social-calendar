@@ -1,0 +1,48 @@
+
+#SignupLink{
+    margin-top: 24px;
+    margin-bottom: 12px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border-style: solid;
+    border-color: #FF6A6A;
+    border-radius: 48px;
+    background-color: #FF6A6A;
+    color: white;
+    font-family: 'Fredoka One', cursive;
+    opacity: .85;
+    letter-spacing: 2px;
+    font-size: .9em;
+  }
+
+  #SignupLink:hover{
+    opacity: 1;
+    background-color: rgb(248, 86, 86);
+  }
+
+  #SignUpPageOr{
+    text-align: center;
+    color: grey;
+    font-size: .7em;
+    font-weight: bolder;
+  }
+
+  
+  #LoginButton{
+      margin-top: 18px;
+    margin-bottom: 40px;
+    border-style: solid;
+    border-color: white;
+    border-radius: 48px;
+    letter-spacing: 2px;
+    font-family: 'Fredoka One', cursive;
+    text-align: center;
+    color: #FF6A6A;
+    font-size: .9em;
+  }
+
+  #LoginButton:hover{
+      color: white;
+      background-color: #FF6A6A ;
+      border-color: #FF6A6A;
+  }

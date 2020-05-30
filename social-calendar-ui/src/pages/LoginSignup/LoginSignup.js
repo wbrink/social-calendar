@@ -10,7 +10,7 @@ const LoginSignup = () => {
       <div className="row justify-content-center">
         <div className="col-8 col-lg-10" id="LoginSignupContainer">
             <div className="row justify-content-center">
-              <Link to={"/SignUp/"}>
+              <Link to={"/SignUp"}>
               <div className="links" >Sign Up</div> {/* change button to a href links*/}
               </Link>
             </div>
