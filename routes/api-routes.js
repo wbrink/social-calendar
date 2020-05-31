@@ -97,9 +97,14 @@ router.get("/api/user-search/:username", (req,res) => {
   })
 })
 
-
-
-
+// route that gets the logged in user and returns the info
+router.get("/api/logged-in", (req,res) => {
+  if (req.user) {
+    res.json({_id: req.user._id, username: req.user.username})
+  } else {
+    res.json(false);
+  }
+})
 
 // login route
 /*
