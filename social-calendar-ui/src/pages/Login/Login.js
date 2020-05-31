@@ -4,7 +4,7 @@ import "./Login.css"
 // import API from "./LoginAPI.js"
 import UserContext from "../../UserContext";
 
-const Login = () => {
+const Login = (props) => {
     
     const {user, setUser } = useContext(UserContext)
     
@@ -33,13 +33,18 @@ const Login = () => {
               })
                 .then(response => response.json())
                 .then(data => {
-                    if (data.msg === "Please Login") {
-                    console.log("login");
-                    } else {
-                        console.log(data)
-                        // setUser({...setUser,})
-                        
+                  if ("msg" in data ) {
+                    if (data.msg.toLowerCase() === "invalid login") {
+                      // tell the user incorrect login
+                      console.log("Incorrect Login please try again");
                     }
+                  } else {
+                    // set user
+                    setUser(data);
+                    
+                    // redirect the user to another page
+                    props.history.push("/friends");
+                  }
                 })
         };
         //clear forms
