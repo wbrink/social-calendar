@@ -1,7 +1,13 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import "./style.css";
+import UserContext from "../../UserContext";
+import isLoggedIn from "../../utils/isLoggedIn"; // will redirect if the user is not logged in
 
-export default function ViewFriends() {
+export default function ViewFriends(props) {
+
+  // get access to userstate
+  const {user, setUser} = useContext(UserContext);
+
 
   const [friends, setFriends] = useState([]);
   const [search, setSearch] = useState("");
@@ -10,35 +16,26 @@ export default function ViewFriends() {
     console.log("clicked the list group");
   }
 
-  const handleButtonClick = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    console.log("clicked the Button");
-  }
-
   const handleChange = (e) => {
     setSearch(e.target.value.toLowerCase());
   }
 
 
-  // want to load the friends on mount
+  // want to load the friends on mount and check that the user is logged in
   useEffect(() => {
-    fetch('/api/friends')
-      .then(response => response.json())
-      .then(data => {
-        if (data.msg === "Please Login") {
-          console.log("login");
-        } else {
-          // data will be an array of objects
+    isLoggedIn(user, setUser, props, () => {
+      fetch('/api/friends')
+        .then(response => response.json())
+        .then(data => {
           setFriends(data)
-        }
-      })
+        })
+    })
   }, []);
 
-  const friendsList = ['Bob', 'Joe', 'Roger', 'Bill', 'Steve', 'Derek']
   
 
   return (
+    
     <div className="body">
       
       <form id="search-friend-list-form" onSubmit={e => {return e.preventDefault()}}>
@@ -56,17 +53,17 @@ export default function ViewFriends() {
         
         <ul className="list-group">
           {/* for production */}
-          {/* {friends.map((friend, index) => {
+          {friends.map((friend, index) => {
             if (search === "") {
               return <li key={friend._id} className="list-group-item">{friend.username}</li>
             }
             if (friend.username.toLowerCase().startsWith(search)) {
               return <li key={friend._id} className="list-group-item">{friend.username}</li>
             }
-          })} */}
+          })}
 
 
-          {friendsList.map((friend, index) => {
+          {/* {friendsList.map((friend, index) => {
             if (search === "") {
               return <li className="list-group-item">{friend}</li>
             } else {
@@ -74,7 +71,7 @@ export default function ViewFriends() {
                 return <li className="list-group-item">{friend}</li>
               }
             } 
-          })}
+          })} */}
         </ul>
       </div>
 
