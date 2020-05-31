@@ -1,12 +1,11 @@
-import React, {useContext, useState, useEffect}from "react";
+import React, {useContext, useState}from "react";
 import { Link } from "react-router-dom";
 import "./Login.css"
-// import API from "./LoginAPI.js"
 import UserContext from "../../UserContext";
 
 const Login = () => {
     
-    const {user, setUser } = useContext(UserContext)
+    const user = useContext(UserContext)
     
     const [formObject, setFormObject] = useState({
         username: "",
@@ -21,7 +20,7 @@ const Login = () => {
         event.preventDefault();
         if (formObject.username && formObject.password) {
             let userCredentials = {username: formObject.username, password: formObject.password}
-            console.log(userCredentials)
+            console.log("Login credintials sent to back end: " + JSON.stringify(userCredentials))
             fetch("/api/login", {
                 method: 'POST', // *GET, POST, PUT, DELETE, etc.
                 headers: {
@@ -33,16 +32,19 @@ const Login = () => {
               })
                 .then(response => response.json())
                 .then(data => {
-                    if (data.msg === "Please Login") {
-                    console.log("login");
+                    if (data.msg === "Invalid login") {
+                      invalidLogin(data.msg)
                     } else {
                         console.log(data)
-                        // setUser({...setUser,})
-                        
+                        user.logIn(data.username, data._id, true)
                     }
                 })
         };
         //clear forms
+
+        function invalidLogin(err){
+          console.log(err)
+        }
     }
   return (
     <div className="container">{/* header will be a component inside of the sidenavbar component*/}
@@ -77,6 +79,9 @@ const Login = () => {
                <Link className="col-9" to="/Signup">
                        Signup
                    </Link>
+                   <div>
+                     username: {user.username}
+                   </div>
                </div>
             </div>
           </div>
