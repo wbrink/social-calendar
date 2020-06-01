@@ -1,28 +1,22 @@
-/*
-  Function checks that the user is logged in (necessary incase the browser refreshes and 
-  state variables move back to their default value)
 
-  Arguments:
-  1: is the user state variable
-  2: setUser state variable
-  3: props argument that is needed for react router dom redirecting
-  4: callback
-*/
-function isLoggedIn(user, setUser, props, cb) {
-  if (user) {
+
+export function isLoggedInCB(userState, props, cb) {
+  if (userState.loggedIn === true) {
+    // user is already logged in don't run api call
     cb();
     return;
   } else {
+    // check if user is logged in on backend
     fetch("/api/logged-in")
       .then(response => response.json())
       .then(user => {
         if (user === false) {
-          // redirect to the login
+          // redirect to login
           props.history.push("/login");
           return;
         } else {
-          // successful so resolve the user object
-          setUser(user);
+          // user is logged in 
+          userState.logIn(user.username, user._id, true);
           cb();
           return;
         }
@@ -31,4 +25,23 @@ function isLoggedIn(user, setUser, props, cb) {
 }
 
 
-export default isLoggedIn;
+export function isLoggedIn(userState, props) {
+  if (userState.loggedIn === true) {
+    // user is already logged in don't run api call
+    return;
+  } else {
+    // check if user is logged in on backend
+    fetch("/api/logged-in")
+      .then(response => response.json())
+      .then(user => {
+        if (user === false) {
+          // redirect to login
+          props.history.push("/login");
+          return;
+        } else {
+          // user is logged in 
+          userState.logIn(user.username, user._id, true);
+        }
+      })
+  }
+}
