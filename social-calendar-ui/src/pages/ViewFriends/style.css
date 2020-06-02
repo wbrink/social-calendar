@@ -63,6 +63,5 @@ svg {
 .body {
   display: flex;
   flex-direction: column;
-  margin-top: 10vh;
   height: 90vh;
 }

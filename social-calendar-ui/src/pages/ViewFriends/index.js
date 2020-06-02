@@ -1,12 +1,13 @@
 import React, {useState, useEffect, useContext} from "react";
 import "./style.css";
+import {Link} from "react-router-dom";
 import UserContext from "../../UserContext";
-import isLoggedIn from "../../utils/isLoggedIn"; // will redirect if the user is not logged in
+import { isLoggedInCB } from "../../utils/isLoggedIn";
 
 export default function ViewFriends(props) {
 
   // get access to userstate
-  const {user, setUser} = useContext(UserContext);
+  const userState = useContext(UserContext);
 
 
   const [friends, setFriends] = useState([]);
@@ -23,16 +24,23 @@ export default function ViewFriends(props) {
 
   // want to load the friends on mount and check that the user is logged in
   useEffect(() => {
-    isLoggedIn(user, setUser, props, () => {
+    isLoggedInCB(userState, props, () => {
       fetch('/api/friends')
-        .then(response => response.json())
-        .then(data => {
-          setFriends(data)
-        })
+      .then(response => response.json())
+      .then(data => {
+        setFriends(data)
+        console.log(data);
+      })
     })
   }, []);
 
-  
+  // don't show the route if the user is not logged in
+  if (userState.loggedIn === false) {
+    return (
+      <body></body>
+    )
+  }
+
 
   return (
     
@@ -45,14 +53,13 @@ export default function ViewFriends(props) {
             <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
           </svg>
           <label htmlFor="search-friend-list">Search</label>
-          <input type="text" onChange={handleChange} placeholder="Search" id="search-friend-list" name="search"/>
+          <input type="text" onChange={handleChange} placeholder="Search" id="search-friend-list" name="search" autoComplete="off"/>
       </form>
       
       {/* holds the contacts */}
       <div className="friend-container">
         
         <ul className="list-group">
-          {/* for production */}
           {friends.map((friend, index) => {
             if (search === "") {
               return <li key={friend._id} className="list-group-item">{friend.username}</li>
@@ -62,22 +69,12 @@ export default function ViewFriends(props) {
             }
           })}
 
-
-          {/* {friendsList.map((friend, index) => {
-            if (search === "") {
-              return <li className="list-group-item">{friend}</li>
-            } else {
-              if (friend.toLowerCase().startsWith(search)) {
-                return <li className="list-group-item">{friend}</li>
-              }
-            } 
-          })} */}
         </ul>
       </div>
 
      
       <div className="bottom-container">
-        <button className="btn btn-primary">Add Friends</button>
+        <Link to="/addfriend" className="btn btn-primary">Add Friend</Link>
       </div>
     
     </div>

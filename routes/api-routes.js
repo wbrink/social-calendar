@@ -83,15 +83,18 @@ router.post("/api/create", (req,res) => {
 
 
 // username: partial search [pass string and search the database for user that matches search]
-router.get("/api/user-search/:username", (req,res) => {
+router.post("/api/user-search", (req,res) => {
   // using regex to search (option 'i' means case insensitive)
-  const regex = new RegExp("^" + req.params.username);
+  const regex = new RegExp("^" + req.body.username);
   db.User.find({username: { $regex: regex, $options: "i"}}, function(err, users) {
     if (err) {
-      res.json(err);
+      console.log("error was found in api/user-search")
+      res.json(false);
+      return;
     }
     if (users.length === 0) {
-      res.status(404).json({msg: "no users found"});
+      res.json(false);
+      return;
     }
     res.json(users);
   })

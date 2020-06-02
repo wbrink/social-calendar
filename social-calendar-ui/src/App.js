@@ -12,6 +12,8 @@ import Nav from "react-bootstrap/Nav";
 import "./App.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-datepicker/dist/react-datepicker.css";
+import AddFriends from "./pages/AddFriend/index.js";
+import ViewFriends from "./pages/ViewFriends/index.js";
 const history = createHistory();
 ////
 
@@ -49,6 +51,8 @@ function App({ calendarStore }) {
       <UserContext.Provider value={userState}>
         <Route exact path="/Login" component={Login} />
         <Route exact path="/SignUp" component={SignUp} />
+        <Route exact path="/addfriend" component={AddFriends} />
+        <Route exact path="/friends" component={ViewFriends} /> 
         <Route
           exact
           path="/Profile"
