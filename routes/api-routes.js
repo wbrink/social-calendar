@@ -33,7 +33,7 @@ router.get("/api/friends", isAuthenticated, (req,res) => {
   const arrayOfFriendIds = req.user.friends.map(elem => elem._id);
 
   // find the users
-  db.User.find({_id: {$in: arrayOfFriendIds}}, (err, users) => {
+  db.User.find({_id: {$in: arrayOfFriendIds}}).sort({username: 1}).exec(function (err, users) {
     const array = [];
     users.forEach(obj => {
       let friendSince;
@@ -92,7 +92,7 @@ router.post("/api/create", (req,res) => {
 router.post("/api/user-search", isAuthenticated, (req,res) => {
   // using regex to search (option 'i' means case insensitive)
   const regex = new RegExp("^" + `(?!${req.user.username})` + req.body.username);
-  db.User.find({username: { $regex: regex, $options: "i"}}, function(err, users) {
+  db.User.find({username: { $regex: regex, $options: "i"}}).sort({username: 1}).exec(function(err, users) {
     if (err) {
       console.log("error was found in api/user-search")
       res.json(false);
@@ -228,11 +228,21 @@ router.post("/api/request", isAuthenticated, async (req,res) => {
     if (err) {
       res.json({error: err})
     } else {
-      db.FriendRequest.create({from: req.user._id, to: user._id,}, (err, doc) => {
+      db.FriendRequest.find({from: req.user._id, to: user._id,}, (err, docs) => {
         if (err) {
-          res.json({error: err})
+          res.json(err);
+          return;
+        } else if (docs.length > 0) {
+          res.json({msg: "Friend Request is already Pending"});
+          return;
+        } else {
+          db.FriendRequest.create({from: req.user._id, to: user._id,}, (err, doc) => {
+            if (err) {
+              res.json({error: err})
+            }
+            res.json({msg: `Friend Request Sent To ${user.username}`})
+          })
         }
-        res.json({msg: `Friend Request Sent To ${user.username}`})
       })
     }
   })  
@@ -243,10 +253,11 @@ router.post("/api/request", isAuthenticated, async (req,res) => {
 // friend request (reject, delete, accept)
 /* 
     action: (type string) "accept", "reject", "delete"
-    id: (type mongoose.Types.ObjectId) pass the _id of the friend request
+    toID: (type mongoose.Types.ObjectId) pass the _id of the to field
+    fromID: (type mongoose.Types.ObjectId) pass the _id of the from field
 */
-router.post("/api/accept-decline-request", isAuthenticated, (req, res) => {
-  const {id, action} = req.body;
+router.post("/api/answer-request", isAuthenticated, (req, res) => {
+  const {toID, fromID, action} = req.body;
 
   // if not the right response sent end the request
   if (!["accept", "reject", "delete"].includes(action)) {
@@ -255,7 +266,11 @@ router.post("/api/accept-decline-request", isAuthenticated, (req, res) => {
   }
 
   // let mongoID = mongoose.Types.ObjectId(id);
-  db.FriendRequest.findOneAndDelete({_id: id}, async function(err, request) {
+  db.FriendRequest.findOneAndDelete({to: toID, from: fromID}, async function(err, request) {
+    if (request == null) {
+      return res.json({msg: "no results found"});
+    }
+    
     // if it was sent to me
     if (JSON.stringify(request.to) === JSON.stringify(req.user._id)) {
       if (action.toLowerCase() == "accept") {
@@ -263,17 +278,17 @@ router.post("/api/accept-decline-request", isAuthenticated, (req, res) => {
         // add each other to friends array
         await db.User.findOneAndUpdate({_id: req.user._id}, {$push: {friends: {_id: friend, date: request.date }}});
         await db.User.findOneAndUpdate({_id: friend}, {$push: {friends: {_id: req.user._id, date: request.date}}});
-        res.json({msg: "Friend Request Accepted"})
+        return res.json({msg: "Friend Request Accepted"});
       } else {
         // then the request is rejected
-        res.json({msg: "Friend Request Rejected"})
+        return res.json({msg: "Friend Request Rejected"})
       }
     }
 
     // if i want to delete friend request i sent
     if (JSON.stringify(request.from) === JSON.stringify(req.user._id)) {
       if (action.toLowerCase() == "delete") {
-        res.json({msg: "Friend Request Deleted From Sender"})
+        return res.json({msg: "Friend Request Deleted From Sender"})
       }
     }
   }) 
