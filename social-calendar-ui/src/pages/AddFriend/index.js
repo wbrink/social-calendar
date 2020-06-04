@@ -18,6 +18,9 @@ export default class AddFriend extends React.Component {
     this.handleButtonClick = this.handleButtonClick.bind(this);
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.sendFriendRequest = this.sendFriendRequest.bind(this);
+    this.deleteFriendRequest = this.deleteFriendRequest.bind(this);
+    this.acceptFriendRequest = this.acceptFriendRequest.bind(this);
+    this.rejectFriendRequest = this.rejectFriendRequest.bind(this);
   }
 
   // how to use context in class component
@@ -61,6 +64,58 @@ export default class AddFriend extends React.Component {
   }
 
   handleButtonClick() {
+  }
+
+  deleteFriendRequest(e, toID) {
+    let array = Array.from(this.state.sentFriendRequests);
+    fetch("/api/answer-request", {
+      method: "POST",
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({toID: toID, fromID: this.context._id, action: "delete" })
+    }).then(res => res.json())
+      .then(data => {
+        console.log(data);
+        
+        // remove id from this array
+        let index = array.indexOf(toID);
+        array.splice(index, 1);
+
+        this.setState({sentFriendRequests: array})
+      })
+  }
+
+  acceptFriendRequest(fromID) {
+    let array = Array.from(this.state.receivedFriendRequests);
+    fetch("/api/answer-request", {
+      method: "POST",
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({toID: this.context._id, fromID: fromID, action: "accept" })
+    }).then(res => res.json())
+      .then(data => {
+        console.log(data);
+        // remove id from this array
+        let index = array.indexOf(fromID);
+        array.splice(index, 1);
+
+        this.setState({receivedFriendRequests: array, currentFriends: [...this.state.currentFriends, fromID]});
+      })
+  }
+
+  rejectFriendRequest(fromID) {
+    let array = Array.from(this.state.receivedFriendRequests);
+    fetch("/api/answer-request", {
+      method: "POST",
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({toID: this.context._id, fromID: fromID, action: "reject" })
+    }).then(res => res.json())
+      .then(data => {
+        console.log(data);
+        // remove id from this array
+        let index = array.indexOf(fromID);
+        array.splice(index, 1);
+
+        this.setState({receivedFriendRequests: array});
+      })
   }
 
   sendFriendRequest(e, username, id) {
@@ -142,12 +197,14 @@ export default class AddFriend extends React.Component {
         // by defualt the button is add friend button
         let x = "default";
         let button = <button onClick={(e) => {this.sendFriendRequest(e, user.username, user._id)}} class="btn btn-primary">Add Friend</button>
-        let buttons = [<button onClick={(e) => {this.handleButtonClick(e, user._id)}} class="btn btn-success friend-btn">Accept</button>, <button onClick={(e) => {this.handleButtonClick(e, user._id)}} class="btn btn-danger friend-btn">Reject</button>];
-        let buttonSent = [<button onClick={(e) => {this.handleButtonClick(e, user._id)}} class="btn btn-danger friend-btn">Delete</button>, <button type="button" class="btn btn-outline-secondary friend-btn">Pending</button>]
-        // if user is already a friend display check mark
+        let buttons = [<button onClick={() => {this.acceptFriendRequest(user._id)}} class="btn btn-success friend-btn">Accept</button>, <button onClick={(e) => {this.rejectFriendRequest(user._id)}} class="btn btn-danger friend-btn">Reject</button>];
+        let buttonSent = [<button onClick={(e) => {this.deleteFriendRequest(e, user._id)}} class="btn btn-danger friend-btn">Delete</button>, <p>Pending</p>]
+        // if user is already a friend display check mark (instead of button)
         if (this.state.currentFriends.includes(user._id)) {
           x = "friend"
-          button = <button onClick={(e) => {this.handleButtonClick(e, user._id)}} class="btn btn-success">Check Mark</button>
+          button = (<svg class="bi bi-check" id="current-friend" width="2em" height="2em" viewBox="0 0 16 16" fill="green" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z"/>
+        </svg>)
         } else if (this.state.receivedFriendRequests.includes(user._id)) {
           x = "received";
         } else if (this.state.sentFriendRequests.includes(user._id)) {
@@ -160,12 +217,8 @@ export default class AddFriend extends React.Component {
             <li key={user._id} className='user-li'>{user.username}</li>
             {x == "default" && button}
             {x == "friend" && button}
-            {x == "received" && <div>{buttons.map(btn => btn)}</div>}
-            {x == "sent" && buttonSent.map(btn => btn)}
-          
-            {/* <button onClick={(e) => {this.handleButtonClick(e, user._id)}} class="btn btn-primary">Invite</button>
-            <button onClick={(e) => {this.handleButtonClick(e, user._id)}} class="btn btn-danger">Delete Invite</button>
-            <button onClick={(e) => {this.handleButtonClick(e, user._id)}} class="btn btn-success">Accept</button> */}
+            {x == "received" && <div className="friend-actions">{buttons.map(btn => btn)}</div>}
+            {x == "sent" && <div className="friend-actions">{buttonSent.map(btn => btn)}</div>}
           </div>
         )})
     }

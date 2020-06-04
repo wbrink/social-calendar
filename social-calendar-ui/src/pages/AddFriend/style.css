@@ -13,6 +13,21 @@
   list-style-type: none;
 }
 
+.friend-actions {
+  display: flex;
+  width: 150px;
+  align-items: center;
+  justify-content: center;
+}
+
+.friend-actions p {
+  color: rgb(83, 83, 83);
+}
+
 .friend-btn:first-child {
   margin-right: 20px;
+}
+
+#current-friend {
+  fill: green;
 }

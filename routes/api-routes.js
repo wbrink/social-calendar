@@ -2,8 +2,11 @@ const express = require("express");
 const passport = require("../passport");
 const isAuthenticated = require("../passport/isAuthenticated");
 const mongoose = require("mongoose");
+
 const router = express.Router();
+
 const db = require("../model");
+
 // Get all users
 router.get("/api/get", (req, res) => {
   db.User.find({}, function (err, users) {
@@ -14,14 +17,17 @@ router.get("/api/get", (req, res) => {
     }
   });
 });
+
 // get current logged in users friend ids [id, id, id...]
 router.get("/api/friendIDs", isAuthenticated, (req, res) => {
   const arrayOfFriendIds = req.user.friends.map((elem) => elem._id);
   res.json(arrayOfFriendIds);
 });
+
 // logged in user's friends {_id: id, username: username, date: friendsince}
 router.get("/api/friends", isAuthenticated, (req, res) => {
   const arrayOfFriendIds = req.user.friends.map((elem) => elem._id);
+
   // find the users
   db.User.find({ _id: { $in: arrayOfFriendIds } })
     .sort({ username: 1 })
@@ -41,25 +47,31 @@ router.get("/api/friends", isAuthenticated, (req, res) => {
       res.json(array);
     });
 });
+
 // remove friend
 // pass friend ID as URL parameter
 router.delete("/api/friends/:id", isAuthenticated, async (req, res) => {
   const friendID = req.params.id;
+
   // remove user from logged in users friends
   await db.User.findOneAndUpdate(
     { _id: req.user._id },
     { $pull: { friends: { _id: friendID } } }
   );
+
   // remove logged in user from friendIDs friend list
   await db.User.findOneAndUpdate(
     { _id: friendID },
     { $pull: { friends: { _id: req.user._id } } }
   );
+
   res.json({ msg: "Friend removed successfully" });
 });
+
 // create user [give username and password in the body]
 router.post("/api/create", (req, res) => {
   const { username, password } = req.body;
+
   db.User.create({ username: username, password: password }, function (
     err,
     user
@@ -78,6 +90,7 @@ router.post("/api/create", (req, res) => {
     }
   });
 });
+
 // username: partial search [pass string and search the database for user that matches search]
 router.post("/api/user-search", isAuthenticated, (req, res) => {
   // using regex to search (option 'i' means case insensitive)
@@ -99,6 +112,7 @@ router.post("/api/user-search", isAuthenticated, (req, res) => {
       res.json(users);
     });
 });
+
 // route that gets the logged in user and returns the info
 router.get("/api/logged-in", (req, res) => {
   if (req.user) {
@@ -107,6 +121,7 @@ router.get("/api/logged-in", (req, res) => {
     res.json(false);
   }
 });
+
 // login route
 /*
     username: (type: string)
@@ -133,11 +148,14 @@ router.post("/api/login", (req, res, next) => {
     });
   })(req, res, next);
 });
+
 // route to delete user
 router.delete("/api/delete/:id", (req, res) => {
   const id = req.params.id;
+
   // db.User.deleteOne({})
 });
+
 // get user's id
 /*
     pass username into url
@@ -150,6 +168,7 @@ router.get("/api/user/:username", (req, res) => {
     res.json(user._id);
   });
 });
+
 // development only
 // get all friend requests
 router.get("/api/get/requests", (req, res) => {
@@ -157,6 +176,7 @@ router.get("/api/get/requests", (req, res) => {
     res.json(requests);
   });
 });
+
 // pending friendRequests for logged in users both sent and recieved
 router.get("/api/requests", isAuthenticated, (req, res) => {
   db.FriendRequest.find(
@@ -186,6 +206,7 @@ router.get("/api/requests", isAuthenticated, (req, res) => {
     }
   );
 });
+
 // returns array of userIDs of the users that sent the logged in user a friend request
 router.get("/api/requests-received", isAuthenticated, (req, res) => {
   db.FriendRequest.find({ to: req.user._id }, (err, requests) => {
@@ -201,6 +222,7 @@ router.get("/api/requests-received", isAuthenticated, (req, res) => {
     res.json(array); //
   });
 });
+
 router.get("/api/requests-sent", isAuthenticated, (req, res) => {
   db.FriendRequest.find({ from: req.user._id }, (err, requests) => {
     if (err) {
@@ -215,6 +237,7 @@ router.get("/api/requests-sent", isAuthenticated, (req, res) => {
     res.json(array); //
   });
 });
+
 // send friend request [send username of person to make request to]
 /*
     username: (type string) send the username of the person to make request to
@@ -250,6 +273,7 @@ router.post("/api/request", isAuthenticated, async (req, res) => {
     }
   });
 });
+
 // friend request (reject, delete, accept)
 /* 
     action: (type string) "accept", "reject", "delete"
@@ -258,11 +282,13 @@ router.post("/api/request", isAuthenticated, async (req, res) => {
 */
 router.post("/api/answer-request", isAuthenticated, (req, res) => {
   const { toID, fromID, action } = req.body;
+
   // if not the right response sent end the request
   if (!["accept", "reject", "delete"].includes(action)) {
     res.json({ msg: "Please specify 'accept', 'reject', or 'delete'" });
     return;
   }
+
   // let mongoID = mongoose.Types.ObjectId(id);
   db.FriendRequest.findOneAndDelete({ to: toID, from: fromID }, async function (
     err,
@@ -271,6 +297,7 @@ router.post("/api/answer-request", isAuthenticated, (req, res) => {
     if (request == null) {
       return res.json({ msg: "no results found" });
     }
+
     // if it was sent to me
     if (JSON.stringify(request.to) === JSON.stringify(req.user._id)) {
       if (action.toLowerCase() == "accept") {
@@ -290,6 +317,7 @@ router.post("/api/answer-request", isAuthenticated, (req, res) => {
         return res.json({ msg: "Friend Request Rejected" });
       }
     }
+
     // if i want to delete friend request i sent
     if (JSON.stringify(request.from) === JSON.stringify(req.user._id)) {
       if (action.toLowerCase() == "delete") {
@@ -298,6 +326,7 @@ router.post("/api/answer-request", isAuthenticated, (req, res) => {
     }
   });
 });
+
 // logout [removes the session]
 router.get("/api/logout", isAuthenticated, (req, res) => {
   // remove the session from the session store (save space)
@@ -306,8 +335,10 @@ router.get("/api/logout", isAuthenticated, (req, res) => {
     res.json({ msg: "You are now logged out" });
   });
 });
+
 // test route to see that isAuthenticated middleware works
 router.get("/api/protected", isAuthenticated, (req, res) => {
   res.status(200).json({ msg: "you are allowed into protected route" });
 });
+
 module.exports = router;
