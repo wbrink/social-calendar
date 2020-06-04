@@ -46,7 +46,7 @@ function App({ calendarStore }) {
     //any links that are used in other pages must have a component and path specified here
     <Router history={history}>
       <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-end">
-        <a class="navbar-brand py-0" href="#">
+        <a class="navbar-brand py-0" href="/profile">
           SC
         </a>
 
@@ -103,13 +103,13 @@ function App({ calendarStore }) {
         >
           <ul class="navbar-nav text-right">
             <li class="nav-item active">
-              <a class="nav-link" href="#">
-                Right Link 1
+              <a class="nav-link" href="/friends">
+                View Friends
               </a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="#">
-                Right Link 2
+              <a class="nav-link" href="/login">
+                Logout
               </a>
             </li>
           </ul>

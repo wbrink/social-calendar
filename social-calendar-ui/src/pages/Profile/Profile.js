@@ -7,7 +7,10 @@ import Modal from "react-bootstrap/Modal";
 import CalendarForm from "../../components/CalendarForm.js";
 import { observer } from "mobx-react";
 import { getCalendar } from "./requests";
+import UserInfo from "../../components/userInfo/index.js";
+
 const localizer = momentLocalizer(moment);
+
 function HomePage({ calendarStore }) {
   const [showAddModal, setShowAddModal] = React.useState(false);
   const [showEditModal, setShowEditModal] = React.useState(false);
@@ -52,6 +55,10 @@ function HomePage({ calendarStore }) {
   });
   return (
     <div className="page">
+      {/* userinfo component */}
+      <UserInfo />
+
+      {/* Calendar component */}
       <Modal show={showAddModal} onHide={hideModals}>
         <Modal.Header closeButton>
           <Modal.Title>Add Calendar Event</Modal.Title>
