@@ -15,9 +15,16 @@ import "react-datepicker/dist/react-datepicker.css";
 import AddFriends from "./pages/AddFriend/index.js";
 import ViewFriends from "./pages/ViewFriends/index.js";
 const history = createHistory();
+
 ////
 
 function App({ calendarStore }) {
+  //handle change search bar
+  const handleChange = (e) => {
+    // setSearch(e.target.value.toLowerCase());
+  };
+  //
+  const [search, setSearch] = useState("");
   // create logged in provider
   // const [user, setUser] = useState(); // by defualt false
   const [userState, setuserState] = useState({
@@ -38,21 +45,81 @@ function App({ calendarStore }) {
   return (
     //any links that are used in other pages must have a component and path specified here
     <Router history={history}>
-      <Navbar bg="primary" expand="lg" variant="dark">
-        <Navbar.Brand href="#home">Calendar App</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mr-auto">
-            <Nav.Link href="/Profile">Home</Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
+      <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-end">
+        <a class="navbar-brand py-0" href="#">
+          SC
+        </a>
 
+        {/* <button class="btn btn-success ml-auto mr-1 py-0">Always Show</button> */}
+
+        {/* SEARCH FORM */}
+        <form
+          id="search-friend-list-form"
+          class="btn btn-success ml-auto mr-1 py-0"
+          onSubmit={(e) => {
+            return e.preventDefault();
+          }}
+        >
+          <svg
+            class="bi bi-search"
+            width="1em"
+            height="1em"
+            viewBox="0 0 16 16"
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"
+            />
+            <path
+              fill-rule="evenodd"
+              d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"
+            />
+          </svg>
+          <label htmlFor="search-friend-list">Search</label>
+          <input
+            type="text"
+            onChange={handleChange}
+            placeholder="Search"
+            id="search-friend-list"
+            name="search"
+            autoComplete="off"
+          />
+        </form>
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div
+          class="collapse navbar-collapse flex-grow-0 py-0"
+          id="navbarSupportedContent"
+        >
+          <ul class="navbar-nav text-right">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">
+                Right Link 1
+              </a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="#">
+                Right Link 2
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
       <UserContext.Provider value={userState}>
         <Route exact path="/Login" component={Login} />
         <Route exact path="/SignUp" component={SignUp} />
         <Route exact path="/addfriend" component={AddFriends} />
-        <Route exact path="/friends" component={ViewFriends} /> 
+        <Route exact path="/friends" component={ViewFriends} />
         <Route
           exact
           path="/Profile"

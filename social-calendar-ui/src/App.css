@@ -16,3 +16,29 @@
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
 }
+
+.navbar {
+  /* min-height:12px; */
+}
+.navbar a {
+  margin: auto;
+  font-size: small;
+}
+
+#search-friend-list-form {
+  background-color: rgb(44, 44, 44);
+
+  height: auto;
+
+  border: hidden;
+}
+
+#search-friend-list-form label {
+  display: none;
+}
+
+#search-friend-list-form input {
+  border-radius: 20px;
+  padding: 0.1em 0.5em;
+  margin: 0.3em;
+}

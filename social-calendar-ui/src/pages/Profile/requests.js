@@ -1,4 +1,4 @@
-const APIURL = "http://localhost:3002";
+const APIURL = "http://localhost:3003";
 const axios = require("axios");
 export const getCalendar = () => axios.get(`${APIURL}/calendar`);
 export const addCalendar = (data) => axios.post(`${APIURL}/calendar`, data);
