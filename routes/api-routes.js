@@ -21,8 +21,14 @@ router.get("/api/get", (req,res) => {
 })
 
 
+// get current logged in users friend ids [id, id, id...]
+router.get("/api/friendIDs", isAuthenticated, (req,res) => {
+  const arrayOfFriendIds = req.user.friends.map(elem => elem._id);
+  res.json(arrayOfFriendIds);
+})
 
-// logged in user's friends
+
+// logged in user's friends {_id: id, username: username, date: friendsince}
 router.get("/api/friends", isAuthenticated, (req,res) => {
   const arrayOfFriendIds = req.user.friends.map(elem => elem._id);
 
@@ -83,9 +89,9 @@ router.post("/api/create", (req,res) => {
 
 
 // username: partial search [pass string and search the database for user that matches search]
-router.post("/api/user-search", (req,res) => {
+router.post("/api/user-search", isAuthenticated, (req,res) => {
   // using regex to search (option 'i' means case insensitive)
-  const regex = new RegExp("^" + req.body.username);
+  const regex = new RegExp("^" + `(?!${req.user.username})` + req.body.username);
   db.User.find({username: { $regex: regex, $options: "i"}}, function(err, users) {
     if (err) {
       console.log("error was found in api/user-search")
@@ -162,7 +168,7 @@ router.get("/api/get/requests", (req,res) => {
 })
 
 
-// pending friendRequests for logged in users
+// pending friendRequests for logged in users both sent and recieved
 router.get("/api/requests", isAuthenticated, (req,res) => {
   db.FriendRequest.find({ $or: [{to: req.user._id}, {from: req.user._id}]}, (err, requests) => {
     const array = [];
@@ -179,6 +185,37 @@ router.get("/api/requests", isAuthenticated, (req,res) => {
   })
 })
 
+// returns array of userIDs of the users that sent the logged in user a friend request
+router.get("/api/requests-received", isAuthenticated, (req,res) => {
+  db.FriendRequest.find({to: req.user._id}, (err, requests) => {
+    if (err) {
+      res.json(err);
+      return;
+    }
+    const array = [];
+    requests.forEach(element => {
+      let x = element.from // user id of the person who sent the friend request
+      array.push(x);
+    })
+    res.json(array); // 
+  })
+})
+
+
+router.get("/api/requests-sent", isAuthenticated, (req,res) => {
+  db.FriendRequest.find({from: req.user._id}, (err, requests) => {
+    if (err) {
+      res.json(err);
+      return;
+    }
+    const array = [];
+    requests.forEach(element => {
+      let x = element.to // user id of the person who sent the friend request
+      array.push(x);
+    })
+    res.json(array); // 
+  })
+})
 
  
 // send friend request [send username of person to make request to]
@@ -203,9 +240,6 @@ router.post("/api/request", isAuthenticated, async (req,res) => {
 
 
 
-
-
-
 // friend request (reject, delete, accept)
 /* 
     action: (type string) "accept", "reject", "delete"
@@ -224,7 +258,7 @@ router.post("/api/accept-decline-request", isAuthenticated, (req, res) => {
   db.FriendRequest.findOneAndDelete({_id: id}, async function(err, request) {
     // if it was sent to me
     if (JSON.stringify(request.to) === JSON.stringify(req.user._id)) {
-      if (action.toLowerCase() == "accept")  {
+      if (action.toLowerCase() == "accept") {
         const friend = request.from // user who sent the friend request
         // add each other to friends array
         await db.User.findOneAndUpdate({_id: req.user._id}, {$push: {friends: {_id: friend, date: request.date }}});

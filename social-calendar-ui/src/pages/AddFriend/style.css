@@ -12,3 +12,7 @@
 .user-li {
   list-style-type: none;
 }
+
+.friend-btn:first-child {
+  margin-right: 20px;
+}
