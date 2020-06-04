@@ -37,4 +37,10 @@ mongoose_db.once("open",function() {
   })
 })
 
+mongoose_db.close((err) => {
+  if (err) {
+    console.log(err);
+  }
+  console.log("closing connection");
+})
 return;
