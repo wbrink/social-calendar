@@ -11,7 +11,8 @@ import UserInfo from "../../components/userInfo/index.js";
 
 const localizer = momentLocalizer(moment);
 
-function HomePage({ calendarStore }) {
+function HomePage({ calendarStore, location }) {
+  console.log(location.state.user);
   const [showAddModal, setShowAddModal] = React.useState(false);
   const [showEditModal, setShowEditModal] = React.useState(false);
   const [calendarEvent, setCalendarEvent] = React.useState({});
@@ -56,7 +57,7 @@ function HomePage({ calendarStore }) {
   return (
     <div className="page">
       {/* userinfo component */}
-      <UserInfo />
+      <UserInfo {...location}/>
 
       {/* Calendar component */}
       <Modal show={showAddModal} onHide={hideModals}>

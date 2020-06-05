@@ -1,4 +1,5 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
+import React from "react";
+import {Redirect} from "react-router-dom";
 import "./style.css";
 import UserContext from "../../UserContext";
 import { isLoggedIn } from "../../utils/isLoggedIn";
@@ -12,15 +13,17 @@ export default class AddFriend extends React.Component {
       search: "",
       currentFriends: [], // array of user_ids 
       sentFriendRequests: [], 
-      receivedFriendRequests: [] 
+      receivedFriendRequests: [],
+      redirect: false,
+      clickedUser: {}
     }
 
-    this.handleButtonClick = this.handleButtonClick.bind(this);
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.sendFriendRequest = this.sendFriendRequest.bind(this);
     this.deleteFriendRequest = this.deleteFriendRequest.bind(this);
     this.acceptFriendRequest = this.acceptFriendRequest.bind(this);
     this.rejectFriendRequest = this.rejectFriendRequest.bind(this);
+    this.clickedUser = this.clickedUser.bind(this);
   }
 
   // how to use context in class component
@@ -63,10 +66,9 @@ export default class AddFriend extends React.Component {
     })
   }
 
-  handleButtonClick() {
-  }
-
   deleteFriendRequest(e, toID) {
+    e.preventDefault();
+    e.stopPropagation();
     let array = Array.from(this.state.sentFriendRequests);
     fetch("/api/answer-request", {
       method: "POST",
@@ -84,7 +86,9 @@ export default class AddFriend extends React.Component {
       })
   }
 
-  acceptFriendRequest(fromID) {
+  acceptFriendRequest(e, fromID) {
+    e.preventDefault();
+    e.stopPropagation();
     let array = Array.from(this.state.receivedFriendRequests);
     fetch("/api/answer-request", {
       method: "POST",
@@ -101,7 +105,9 @@ export default class AddFriend extends React.Component {
       })
   }
 
-  rejectFriendRequest(fromID) {
+  rejectFriendRequest(e, fromID) {
+    e.preventDefault();
+    e.stopPropagation();
     let array = Array.from(this.state.receivedFriendRequests);
     fetch("/api/answer-request", {
       method: "POST",
@@ -119,6 +125,8 @@ export default class AddFriend extends React.Component {
   }
 
   sendFriendRequest(e, username, id) {
+    e.preventDefault();
+    e.stopPropagation();
     fetch("/api/request", {
       method: "POST",
       headers: {'Content-Type': 'application/json'},
@@ -151,8 +159,11 @@ export default class AddFriend extends React.Component {
           }
         })
     });
-    
+  }
 
+  clickedUser(e, user) {
+    console.log("clicked user", user);
+    this.setState({redirect: true, clickedUser: user});
   }
 
 
@@ -160,9 +171,16 @@ export default class AddFriend extends React.Component {
     console.log(this.state);
     let element = [];
     // if user is not logged in don't show any of the route
-    if(this.context.loggedIn === false) {
+    if (this.context.loggedIn === false) {
       return (
         <body></body>
+      )
+    }
+
+    // if redirect is true then redirect page
+    if (this.state.redirect) {
+      return (
+        <Redirect to={{ pathname: "/profile", state: {user: this.state.clickedUser} }} />
       )
     }
 
@@ -197,7 +215,7 @@ export default class AddFriend extends React.Component {
         // by defualt the button is add friend button
         let x = "default";
         let button = <button onClick={(e) => {this.sendFriendRequest(e, user.username, user._id)}} class="btn btn-primary">Add Friend</button>
-        let buttons = [<button onClick={() => {this.acceptFriendRequest(user._id)}} class="btn btn-success friend-btn">Accept</button>, <button onClick={(e) => {this.rejectFriendRequest(user._id)}} class="btn btn-danger friend-btn">Reject</button>];
+        let buttons = [<button onClick={(e) => {this.acceptFriendRequest(e, user._id)}} class="btn btn-success friend-btn">Accept</button>, <button onClick={(e) => {this.rejectFriendRequest(e, user._id)}} class="btn btn-danger friend-btn">Reject</button>];
         let buttonSent = [<button onClick={(e) => {this.deleteFriendRequest(e, user._id)}} class="btn btn-danger friend-btn">Delete</button>, <p>Pending</p>]
         // if user is already a friend display check mark (instead of button)
         if (this.state.currentFriends.includes(user._id)) {
@@ -214,7 +232,7 @@ export default class AddFriend extends React.Component {
         
         return (
           <div className="list-item">
-            <li key={user._id} className='user-li'>{user.username}</li>
+            <li key={user._id} onClick={(e) => {this.clickedUser(e, user)}} className='user-li'>{user.username}</li>
             {x == "default" && button}
             {x == "friend" && button}
             {x == "received" && <div className="friend-actions">{buttons.map(btn => btn)}</div>}

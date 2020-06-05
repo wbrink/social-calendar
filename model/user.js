@@ -22,11 +22,23 @@ const UserSchema = new Schema({
       date: Date
     }
   ],
+  bio: {
+    type: String,
+    minlength: 1,
+    maxlength: 50,
+    trim: true
+  },
+  location: {
+    type: String,
+    minlength: 1,
+    maxlength: 50,
+    trim: true
+  },
   events: [{
     type: Schema.Types.ObjectId,
     ref: "Event"
   }]
-})
+}, {timestamps: true})
 
 
 // pre save hook use bcrypt to hash password

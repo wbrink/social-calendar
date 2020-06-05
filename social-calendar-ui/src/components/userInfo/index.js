@@ -11,13 +11,12 @@ export default function UserInfo(props) {
 
   return (
     <div id="main">
-      <div class="row">username</div>
+      <div class="row">username {props.state.user.username}</div>
       <div class="row">Edit Profile Button</div>
-      <div class="row">UserName</div>
-      <div class="row">Location </div>
-      <div class="row">Bio</div>
-      <div class="row"> Date Created</div>
-      <div class="row">Friends</div>
+      <div class="row">Location {props.state.user.location}</div>
+      <div class="row">Bio {props.state.user.bio}</div>
+      <div class="row"> Date Created {props.state.user.createdAt}</div>
+      <div class="row">Friends {props.state.user.friends.length}</div>
     </div>
   );
 }
