@@ -1,0 +1,49 @@
+#rowcss {
+  background-color: white;
+  margin: 0;
+}
+
+#rowcss1 {
+  background-color: white;
+  margin: 0;
+  border-top: lightgray;
+  border-bottom: white;
+  border-left: white;
+  border-right: white;
+  border-style: solid;
+  margin-top: 5px;
+}
+
+#main {
+  background-color: white;
+  border-style: solid;
+  border-color: white;
+  border-radius: 4px;
+}
+
+#profilepic {
+  margin-top: 7px;
+  margin-bottom: 5px;
+  border-style: solid;
+  border-color: white;
+  border-radius: 2px;
+}
+
+h4 {
+  border-style: solid;
+  border-color: white;
+  border-radius: 48px;
+  letter-spacing: 2px;
+  font-family: "Fredoka One", cursive;
+  text-align: center;
+  color: #ff6a6a;
+  margin-top: 7px;
+}
+
+a {
+  margin-bottom: 7px !important;
+}
+
+strong {
+  color: #ff6a6a;
+}
