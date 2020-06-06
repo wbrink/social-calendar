@@ -10,7 +10,7 @@ const UserSchema = new Schema(
       required: true,
       trim: true,
       minlength: 1,
-      maxlength: 50,
+      maxlength: 20,
       unique: true,
     },
     name: {
@@ -18,7 +18,7 @@ const UserSchema = new Schema(
       required: true,
       trim: true,
       minlength: 1,
-      maxlength: 15,
+      maxlength: 20,
     },
     password: {
       type: String,

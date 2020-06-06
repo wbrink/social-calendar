@@ -36,7 +36,7 @@ const Login = () => {
                       invalidLogin(data.msg)
                     } else {
                         console.log(data)
-                        user.logIn(data.username, data._id, true)
+                        user.logIn(data.username, data.name, data._id, data.friends, data.bio, data.location, data.events, data.createdAt, true);
                     }
                 })
         };

@@ -49,3 +49,33 @@ a {
 strong {
   color: #ff6a6a;
 }
+
+.buttons {
+  opacity: 0.85;
+  letter-spacing: 2px;
+  font-size: 0.9em;
+  margin-top: 24px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-style: solid;
+  border-color: #ff6a6a;
+  border-radius: 48px;
+  background-color: #ff6a6a;
+  color: white;
+  font-family: "Fredoka One", cursive;
+}
+.buttons:hover {
+  opacity: 1;
+  background-color: rgb(248, 86, 86);
+  text-decoration: none;
+}
+
+/* class that edits the original button class for edit profile button */
+.edit-profile {
+  width: 100%;
+  display: block;
+  margin-top: 15px;
+  padding: 2px;
+  background-color: grey;
+  border-color: grey;
+}

@@ -31,15 +31,17 @@ function App({ calendarStore }) {
   const [userState, setuserState] = useState({
     loggedIn: false,
     username: "",
+    name: "",
     _id: "",
-    userProps: {
-      friendsList: [{}],
-      events: [{}],
-    },
-    logIn: (username, _id, loggedIn) => {
+    friends: [],
+    bio: "",
+    userLocation: "",
+    events: [],
+    createdAt: "",
+    logIn: (username, name, _id, friends, bio, userLocation, events, createdAt, loggedIn) => {
       console.log(username, _id, loggedIn);
-      setuserState({ ...userState, username, _id, loggedIn });
-      console.log("new user state: " + username, _id, loggedIn);
+      setuserState({ ...userState, username, name, _id, friends, bio, userLocation, events, createdAt, loggedIn });
+      console.log("new user state: " + username, name,  _id, friends, bio, userLocation, events, createdAt, loggedIn);
     },
   });
 

@@ -4,6 +4,8 @@ import {
   Switch,
   Route,
   useParams,
+  Redirect,
+  Link
 } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import "./style.css";
@@ -12,6 +14,7 @@ export default function UserInfo(props) {
   let { user } = useParams();
 
   return (
+
     <div id="main">
       <div class="row" id="rowcss">
         <div class="col-3">
@@ -24,9 +27,10 @@ export default function UserInfo(props) {
               <h4>username {props.state.user.username}</h4>
             </p>
           </center>
-          <Button variant="secondary" size="sm" block>
+          <Link to="/editProfile" className="buttons edit-profile">Edit Profile</Link>
+          {/* <Button onto="/editProfile" variant="secondary" size="sm" block>
             Edit Profile
-          </Button>
+          </Button> */}
         </div>
       </div>
 
@@ -51,8 +55,7 @@ export default function UserInfo(props) {
         </div>
       </div>
       <div class="row" id="rowcss">
-        This is the bio section. This is the coolest app ever and i just need to
-        fill it with a bio {props.state.user.bio}
+        {props.state.user.bio}
       </div>
 
       <div class="row" id="rowcss1">
