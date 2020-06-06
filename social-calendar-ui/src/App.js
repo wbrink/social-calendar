@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom"; //edited file
 import Login from "./pages/Login/Login.js";
 import SignUp from "./pages/Signup/Signup.js";
 import EditProfile from "./pages/EditProfile/EditProfile.js";
+import EditProfilePic from "./pages/EditProfilePic/EditProfilePic.js";
 import UserContext from "./UserContext.js";
 ////
 
@@ -27,23 +28,35 @@ function App({ calendarStore }) {
   //
   const [search, setSearch] = useState("");
   // create logged in provider
-  // const [user, setUser] = useState(); // by defualt false
-  const [userState, setuserState] = useState({
-    loggedIn: false,
+  const [userState, setUserState] = useState({
     username: "",
-    name: "",
-    _id: "",
+    name: "", 
+    _id: "", 
     friends: [],
-    bio: "",
-    userLocation: "",
-    events: [],
-    createdAt: "",
-    logIn: (username, name, _id, friends, bio, userLocation, events, createdAt, loggedIn) => {
-      console.log(username, _id, loggedIn);
-      setuserState({ ...userState, username, name, _id, friends, bio, userLocation, events, createdAt, loggedIn });
-      console.log("new user state: " + username, name,  _id, friends, bio, userLocation, events, createdAt, loggedIn);
-    },
+    bio: "", 
+    location: "", 
+    events: [], 
+    createdAt: "", 
+    loggedIn: false
   });
+
+
+  // const [userState, setuserState] = useState({
+  //   loggedIn: false,
+  //   username: "",
+  //   name: "",
+  //   _id: "",
+  //   friends: [],
+  //   bio: "",
+  //   userLocation: "",
+  //   events: [],
+  //   createdAt: "",
+  //   logIn: (username, name, _id, friends, bio, userLocation, events, createdAt, loggedIn) => {
+  //     console.log(username, _id, loggedIn);
+  //     setuserState({ ...userState, username, name, _id, friends, bio, userLocation, events, createdAt, loggedIn });
+  //     console.log("new user state: " + username, name,  _id, friends, bio, userLocation, events, createdAt, loggedIn);
+  //   },
+  // });
 
   return (
     //any links that are used in other pages must have a component and path specified here
@@ -118,12 +131,13 @@ function App({ calendarStore }) {
           </ul>
         </div>
       </nav>
-      <UserContext.Provider value={userState}>
+      <UserContext.Provider value={{userState, setUserState}}>
         <Route exact path="/Login" component={Login} />
         <Route exact path="/SignUp" component={SignUp} />
         <Route exact path="/addfriend" component={AddFriends} />
         <Route exact path="/friends" component={ViewFriends} />
         <Route exact path="/EditProfile" component={EditProfile} />
+        <Route exact path="/EditProfilePic" component={EditProfilePic} />
         <Route
           exact
           path="/Profile"

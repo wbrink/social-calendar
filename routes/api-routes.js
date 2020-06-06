@@ -116,7 +116,16 @@ router.post("/api/user-search", isAuthenticated, (req, res) => {
 // route that gets the logged in user and returns the info
 router.get("/api/logged-in", (req, res) => {
   if (req.user) {
-    res.json({ _id: req.user._id, username: req.user.username });
+    res.json({
+      _id: req.user._id, 
+      username: req.user.username, 
+      name: req.user.name, 
+      bio: req.user.bio, 
+      location: req.user.location, 
+      friends: req.user.friends, 
+      events: req.user.events, 
+      createdAt: req.user.createdAt
+    });
   } else {
     res.json(false);
   }
@@ -142,9 +151,19 @@ router.post("/api/login", (req, res, next) => {
       }
       // must save session before redirecting. Many web browsers will redirect before they even finish receiving the response
       // req.session.save(() => res.redirect('/profile'));
-      req.session.save(() =>
-        res.json({ _id: user._id, username: user.username })
-      );
+      req.session.save(() => {
+        console.log(user);
+        return res.json({
+          _id: user._id, 
+          username: user.username, 
+          name: user.name, 
+          bio: user.bio, 
+          location: user.location, 
+          friends: user.friends, 
+          events: user.events, 
+          createdAt: user.createdAt
+        });
+      });
     });
   })(req, res, next);
 });

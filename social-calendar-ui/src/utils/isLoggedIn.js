@@ -1,6 +1,6 @@
 
 
-export function isLoggedInCB(userState, props, cb) {
+export function isLoggedInCB(userState, setUserState, props, cb) {
   if (userState.loggedIn === true) {
     // user is already logged in don't run api call
     cb();
@@ -16,7 +16,7 @@ export function isLoggedInCB(userState, props, cb) {
           return;
         } else {
           // user is logged in 
-          userState.logIn(user.username, user._id, true);
+          setUserState({...userState, username: user.username, name: user.name, _id: user._id, friends: user.friends, bio: user.bio, location: user.location, events: user.events, createdAt: user.createdAt, loggedIn: true})
           cb();
           return;
         }
@@ -25,7 +25,7 @@ export function isLoggedInCB(userState, props, cb) {
 }
 
 
-export function isLoggedIn(userState, props) {
+export function isLoggedIn(userState, setUserState, props) {
   if (userState.loggedIn === true) {
     // user is already logged in don't run api call
     return;
@@ -39,8 +39,9 @@ export function isLoggedIn(userState, props) {
           props.history.push("/login");
           return;
         } else {
+          console.log("this is the user object", user);
           // user is logged in 
-          userState.logIn(user.username, user._id, true);
+          setUserState({...userState, username: user.username, name: user.name, _id: user._id, friends: user.friends, bio: user.bio, location: user.location, events: user.events, createdAt: user.createdAt, loggedIn: true})
         }
       })
   }

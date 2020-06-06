@@ -1,77 +1,68 @@
 #LoginContainer {
-    border-style: solid;
-    background-color: white;
-    border-color: white;
-    border-radius: 4px;
-    margin-top: 140px;
-  }
-
-  #LoginHeader{
-      margin-top: 12px;
-      text-align: center;
-      font-size: 1.2em;
-      font-family: 'Passion One', cursive;
-  }
-
-  .labels{
-    margin-top: 24px;
-    font-size: .8em;
-    font-family: 'Raleway', sans-serif;
-  }
-
-  ::placeholder{
-      font-size: .66em;
-  }
-  input{
-      background-color: #F9F9F9;
-      border-style: none;
-      border-bottom-style: solid;
-      border-bottom-width: 1px;
-  }
-
-  .buttons{
-    opacity: .85;
-    letter-spacing: 2px;
-    font-size: .9em;
-    margin-top: 24px;
-    padding-top: 4px;
-    padding-bottom: 4px;
-    border-style: solid;
-    border-color: #FF6A6A;
-    border-radius: 48px;
-    background-color: #FF6A6A;
-    color: white;
-    font-family: 'Fredoka One', cursive;
-  }
-
-  .buttons:hover{
-    opacity: 1;
-    background-color: rgb(248, 86, 86);
-
-  }
-
-  #or{
-      padding: 12px;
-      text-align: center;
-      color: grey;
-      font-size: .7em;
-      font-weight: bolder;
-  }
-
-  a{
-    margin-bottom: 40px;
-    border-style: solid;
-    border-color: white;
-    border-radius: 48px;
-    letter-spacing: 2px;
-    font-family: 'Fredoka One', cursive;
-    text-align: center;
-    color: #FF6A6A;
-    font-size: .9em;
-  }
-
-  a:hover{
-      color: white;
-      background-color: #FF6A6A ;
-      border-color: #FF6A6A;
-  }
+  border-style: solid;
+  background-color: white;
+  border-color: white;
+  border-radius: 4px;
+  margin-top: 140px;
+}
+#LoginHeader {
+  margin-top: 12px;
+  text-align: center;
+  font-size: 1.2em;
+  font-family: "Passion One", cursive;
+}
+.labels {
+  margin-top: 24px;
+  font-size: 0.8em;
+  font-family: "Raleway", sans-serif;
+}
+::placeholder {
+  font-size: 0.66em;
+}
+input {
+  background-color: #f9f9f9;
+  border-style: none;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+}
+.buttons {
+  opacity: 0.85;
+  letter-spacing: 2px;
+  font-size: 0.9em;
+  margin-top: 24px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-style: solid;
+  border-color: #ff6a6a;
+  border-radius: 48px;
+  background-color: #ff6a6a;
+  color: white;
+  font-family: "Fredoka One", cursive;
+}
+.buttons:hover {
+  opacity: 1;
+  background-color: rgb(248, 86, 86);
+}
+#or {
+  padding: 12px;
+  text-align: center;
+  color: grey;
+  font-size: 0.7em;
+  font-weight: bolder;
+}
+a {
+  margin-bottom: 40px;
+  border-style: solid;
+  border-color: white;
+  border-radius: 48px;
+  letter-spacing: 2px;
+  font-family: "Fredoka One", cursive;
+  text-align: center;
+  color: #ff6a6a;
+  font-size: 0.9em;
+}
+a:hover {
+  color: white;
+  background-color: #ff6a6a;
+  border-color: #ff6a6a;
+}

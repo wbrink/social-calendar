@@ -29,10 +29,10 @@ export default class AddFriend extends React.Component {
   // how to use context in class component
   static contextType = UserContext;
   
-
+  
   async componentDidMount() {
     console.log("compdidmount");
-    isLoggedIn(this.context, this.props);
+    isLoggedIn(this.context.userState, this.context.setUserState, this.props);
     this.init(); // function that sets current friends and friend requests
   }
 
@@ -73,7 +73,7 @@ export default class AddFriend extends React.Component {
     fetch("/api/answer-request", {
       method: "POST",
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({toID: toID, fromID: this.context._id, action: "delete" })
+      body: JSON.stringify({toID: toID, fromID: this.context.userState._id, action: "delete" })
     }).then(res => res.json())
       .then(data => {
         console.log(data);
@@ -93,7 +93,7 @@ export default class AddFriend extends React.Component {
     fetch("/api/answer-request", {
       method: "POST",
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({toID: this.context._id, fromID: fromID, action: "accept" })
+      body: JSON.stringify({toID: this.context.userState._id, fromID: fromID, action: "accept" })
     }).then(res => res.json())
       .then(data => {
         console.log(data);
@@ -112,7 +112,7 @@ export default class AddFriend extends React.Component {
     fetch("/api/answer-request", {
       method: "POST",
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({toID: this.context._id, fromID: fromID, action: "reject" })
+      body: JSON.stringify({toID: this.context.userState._id, fromID: fromID, action: "reject" })
     }).then(res => res.json())
       .then(data => {
         console.log(data);
@@ -168,10 +168,13 @@ export default class AddFriend extends React.Component {
 
 
   render() {
+    console.log("context userstate", this.context.userState);
+    console.log("whole context object", this.context);
+
     console.log(this.state);
     let element = [];
     // if user is not logged in don't show any of the route
-    if (this.context.loggedIn === false) {
+    if (this.context.userState.loggedIn === false) {
       return (
         <body></body>
       )

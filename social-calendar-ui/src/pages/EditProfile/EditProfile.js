@@ -6,18 +6,19 @@ import "./EditProfile.css";
 
 const EditProfile = (props) => {
 
-  const userState = useContext(UserContext);
+  const {userState, setUserState} = useContext(UserContext);
   
   // state variables to edit
-  const [name, setName] = useState(props.location.state.name);
-  const [bio, setBio] = useState(props.location.state.bio);
-  const [location, setLocation] = useState(props.location.state.location);
+  const [name, setName] = useState(userState.name);
+  const [bio, setBio] = useState(userState.bio);
+  const [location, setLocation] = useState(userState.userLocation);
 
+  console.log(props);
   return (
     <div className="container">
       <div className="row justify-content-center">
-        <div className="col" id="LoginContainer">
-          <div className="col-fliud" id="LoginHeader">
+        <div className="col" id="EditContainer">
+          <div className="col-fliud" id="EditHeader">
             Edit Profile
           </div>
 
@@ -28,10 +29,10 @@ const EditProfile = (props) => {
               <center>
                 <p class="text-uppercase">
                   <small>
-                    <h4>Username {props.location.state.username}</h4>
+                    <h4>Username {userState.username}</h4>
                   </small>
                 </p>
-                <a href="\">Change Profile Photo</a>
+                <a href="/editprofilepic">Change Profile Photo</a>
               </center>
             </div>
           </div>

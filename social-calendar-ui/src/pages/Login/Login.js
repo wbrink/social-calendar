@@ -5,7 +5,7 @@ import UserContext from "../../UserContext";
 
 const Login = () => {
     
-    const user = useContext(UserContext)
+    const {userState, setUserState} = useContext(UserContext)
     
     const [formObject, setFormObject] = useState({
         username: "",
@@ -36,7 +36,8 @@ const Login = () => {
                       invalidLogin(data.msg)
                     } else {
                         console.log(data)
-                        user.logIn(data.username, data.name, data._id, data.friends, data.bio, data.location, data.events, data.createdAt, true);
+                        // user.logIn(data.username, data.name, data._id, data.friends, data.bio, data.location, data.events, data.createdAt, true);
+                        setUserState({...userState, username: data.username, name: data.name, _id: data._id, friends: data.friends, bio: data.bio, location: data.location, events: data.events, createdAt: data.createdAt, loggedIn: true})
                     }
                 })
         };
@@ -80,7 +81,7 @@ const Login = () => {
                        Signup
                    </Link>
                    <div>
-                     username: {user.username}
+                     username: {userState.username}
                    </div>
                </div>
             </div>

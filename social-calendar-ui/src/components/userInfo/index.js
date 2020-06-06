@@ -18,7 +18,7 @@ export default function UserInfo(props) {
     <div id="main">
       <div class="row" id="rowcss">
         <div class="col-3">
-          <img id="profilepic" src="https://via.placeholder.com/90" />
+          <a href="/editprofilepic"><img id="profilepic" src="https://via.placeholder.com/90" /></a>
         </div>
         <div class="col-1"></div>
         <div class="col-8">

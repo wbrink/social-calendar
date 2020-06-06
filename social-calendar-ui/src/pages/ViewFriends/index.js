@@ -7,7 +7,7 @@ import { isLoggedInCB } from "../../utils/isLoggedIn";
 export default function ViewFriends(props) {
 
   // get access to userstate
-  const userState = useContext(UserContext);
+  const {userState, setUserState} = useContext(UserContext);
 
 
   const [friends, setFriends] = useState([]);
@@ -24,7 +24,7 @@ export default function ViewFriends(props) {
 
   // want to load the friends on mount and check that the user is logged in
   useEffect(() => {
-    isLoggedInCB(userState, props, () => {
+    isLoggedInCB(userState, setUserState, props, () => {
       fetch('/api/friends')
       .then(response => response.json())
       .then(data => {
