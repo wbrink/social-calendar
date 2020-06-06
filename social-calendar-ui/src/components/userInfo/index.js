@@ -27,7 +27,7 @@ export default function UserInfo(props) {
               <h4>username {props.state.user.username}</h4>
             </p>
           </center>
-          <Link to="/editProfile" className="buttons edit-profile">Edit Profile</Link>
+          <Link to={{pathname: "/editprofile", state: {...props.state.user}}} className="buttons edit-profile">Edit Profile</Link>
           {/* <Button onto="/editProfile" variant="secondary" size="sm" block>
             Edit Profile
           </Button> */}

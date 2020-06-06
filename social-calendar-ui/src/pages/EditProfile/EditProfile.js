@@ -1,9 +1,18 @@
-import React from "react";
+import React, {useState, useEffect, useContext} from "react";
 import { Link } from "react-router-dom";
+import UserContext from "../../UserContext";
 
 import "./EditProfile.css";
 
 const EditProfile = (props) => {
+
+  const userState = useContext(UserContext);
+  
+  // state variables to edit
+  const [name, setName] = useState(props.location.state.name);
+  const [bio, setBio] = useState(props.location.state.bio);
+  const [location, setLocation] = useState(props.location.state.location);
+
   return (
     <div className="container">
       <div className="row justify-content-center">
@@ -19,9 +28,10 @@ const EditProfile = (props) => {
               <center>
                 <p class="text-uppercase">
                   <small>
-                    <h4>username</h4>
+                    <h4>Username {props.location.state.username}</h4>
                   </small>
                 </p>
+                <a href="\">Change Profile Photo</a>
               </center>
             </div>
           </div>
