@@ -34,10 +34,12 @@ h4 {
   border-color: white;
   border-radius: 48px;
   letter-spacing: 2px;
-  font-family: "Fredoka One", cursive;
+
   text-align: center;
   color: #ff6a6a;
   margin-top: 7px;
+  font-size: 1.2em;
+  font-family: "Passion One", cursive;
 }
 
 a {
