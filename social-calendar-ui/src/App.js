@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom"; //edited file
 import Login from "./pages/Login/Login.js";
 import SignUp from "./pages/Signup/Signup.js";
+import EditProfile from "./pages/EditProfile/EditProfile.js";
 import UserContext from "./UserContext.js";
 ////
 
@@ -120,6 +121,7 @@ function App({ calendarStore }) {
         <Route exact path="/SignUp" component={SignUp} />
         <Route exact path="/addfriend" component={AddFriends} />
         <Route exact path="/friends" component={ViewFriends} />
+        <Route exact path="/EditProfile" component={EditProfile} />
         <Route
           exact
           path="/Profile"

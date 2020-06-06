@@ -3,59 +3,67 @@ const bcrypt = require("bcrypt");
 
 const Schema = mongoose.Schema;
 
-const UserSchema = new Schema({
-  username: {
-    type: String,
-    required: true,
-    trim: true,
-    minlength: 1,
-    maxlength: 50,
-    unique: true 
+const UserSchema = new Schema(
+  {
+    username: {
+      type: String,
+      required: true,
+      trim: true,
+      minlength: 1,
+      maxlength: 50,
+      unique: true,
+    },
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+      minlength: 1,
+      maxlength: 15,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    friends: [
+      {
+        _id: Schema.Types.ObjectId,
+        date: Date,
+      },
+    ],
+    bio: {
+      type: String,
+      minlength: 1,
+      maxlength: 50,
+      trim: true,
+    },
+    location: {
+      type: String,
+      minlength: 1,
+      maxlength: 50,
+      trim: true,
+    },
+    events: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Event",
+      },
+    ],
   },
-  password: {
-    type: String, 
-    required: true,
-  },
-  friends: [
-    {
-      _id: Schema.Types.ObjectId,
-      date: Date
-    }
-  ],
-  bio: {
-    type: String,
-    minlength: 1,
-    maxlength: 50,
-    trim: true
-  },
-  location: {
-    type: String,
-    minlength: 1,
-    maxlength: 50,
-    trim: true
-  },
-  events: [{
-    type: Schema.Types.ObjectId,
-    ref: "Event"
-  }]
-}, {timestamps: true})
-
+  { timestamps: true }
+);
 
 // pre save hook use bcrypt to hash password
-UserSchema.pre("save", function(next) {
+UserSchema.pre("save", function (next) {
   const hash = bcrypt.hashSync(this.password, 10);
   this.password = hash;
   next(); // must be called on mongoose middleware
-})
-
+});
 
 // instance method that checks the password (method is attached to the document)
-UserSchema.methods.checkPassword = function(password) {
+UserSchema.methods.checkPassword = function (password) {
   return bcrypt.compareSync(password, this.password);
-}
-
+};
 
 const User = mongoose.model("User", UserSchema);
-
 
 module.exports = User;

@@ -31,13 +31,24 @@ export default function UserInfo(props) {
       </div>
 
       <div class="row" id="rowcss">
-        <center>
-          <small>
+        <div class="col-2">
+          {" "}
+          <center>
             <strong>
-              <em>Location {props.state.user.location}</em>
+              <em>Name {props.state.user.name}</em>
             </strong>
-          </small>{" "}
-        </center>
+          </center>
+        </div>
+        <div class="col-4"></div>
+        <div class="col-6">
+          <center>
+            <small>
+              <strong>
+                <em>Location {props.state.user.location}</em>
+              </strong>
+            </small>{" "}
+          </center>
+        </div>
       </div>
       <div class="row" id="rowcss">
         This is the bio section. This is the coolest app ever and i just need to
