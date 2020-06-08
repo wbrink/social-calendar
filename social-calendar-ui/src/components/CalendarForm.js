@@ -13,11 +13,15 @@ import {
 } from "../pages/Profile/requests";
 import { observer } from "mobx-react";
 const buttonStyle = { marginRight: 10 };
+
+
 function CalendarForm({ calendarStore, calendarEvent, onCancel, edit }) {
   const [start, setStart] = React.useState(null);
   const [end, setEnd] = React.useState(null);
   const [title, setTitle] = React.useState("");
   const [id, setId] = React.useState(null);
+
+  // on every change of title, start, end, id 
   React.useEffect(() => {
     setTitle(calendarEvent.title);
     setStart(calendarEvent.start);
@@ -29,6 +33,9 @@ function CalendarForm({ calendarStore, calendarEvent, onCancel, edit }) {
     calendarEvent.end,
     calendarEvent.id,
   ]);
+
+
+  // when submit calendar form
   const handleSubmit = async (ev) => {
     ev.preventDefault();
     if (!title || !start || !end) {
@@ -38,16 +45,24 @@ function CalendarForm({ calendarStore, calendarEvent, onCancel, edit }) {
       alert("Start date must be earlier than end date");
       return;
     }
-    const data = { id, title, start, end };
+    
+    // if creating event (don't need id since one will be created)
     if (!edit) {
+      const data = { title, start, end };
       await addCalendar(data);
-    } else {
+    }
+    // updating an event 
+    else {
+      const data = { id, title, start, end };
       await editCalendar(data);
     }
     const response = await getCalendar();
     const evs = response.data.map((d) => {
       return {
-        ...d,
+        // ...d,
+        id: d._id,
+        title: d.title,
+        allday: d.allDay,
         start: new Date(d.start),
         end: new Date(d.end),
       };
@@ -55,15 +70,20 @@ function CalendarForm({ calendarStore, calendarEvent, onCancel, edit }) {
     calendarStore.setCalendarEvents(evs);
     onCancel();
   };
+
   const handleStartChange = (date) => setStart(date);
   const handleEndChange = (date) => setEnd(date);
   const handleTitleChange = (ev) => setTitle(ev.target.value);
+  
   const deleteCalendarEvent = async () => {
     await deleteCalendar(calendarEvent.id);
     const response = await getCalendar();
     const evs = response.data.map((d) => {
       return {
-        ...d,
+        // ...d,
+        id: d._id,
+        title: d.title,
+        allday: d.allDay,
         start: new Date(d.start),
         end: new Date(d.end),
       };
@@ -71,6 +91,8 @@ function CalendarForm({ calendarStore, calendarEvent, onCancel, edit }) {
     calendarStore.setCalendarEvents(evs);
     onCancel();
   };
+  
+  
   return (
     <Form noValidate onSubmit={handleSubmit}>
       <Form.Row>

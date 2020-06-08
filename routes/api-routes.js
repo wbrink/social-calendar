@@ -317,6 +317,9 @@ router.post("/api/answer-request", isAuthenticated, (req, res) => {
       return res.json({ msg: "no results found" });
     }
 
+    // create new date utc
+    let newDate = Date.now();
+
     // if it was sent to me
     if (JSON.stringify(request.to) === JSON.stringify(req.user._id)) {
       if (action.toLowerCase() == "accept") {
@@ -324,11 +327,11 @@ router.post("/api/answer-request", isAuthenticated, (req, res) => {
         // add each other to friends array
         await db.User.findOneAndUpdate(
           { _id: req.user._id },
-          { $push: { friends: { _id: friend, date: request.date } } }
+          { $push: { friends: { _id: friend, date: newDate } } }
         );
         await db.User.findOneAndUpdate(
           { _id: friend },
-          { $push: { friends: { _id: req.user._id, date: request.date } } }
+          { $push: { friends: { _id: req.user._id, date: newDate } } }
         );
         return res.json({ msg: "Friend Request Accepted" });
       } else {
@@ -345,6 +348,48 @@ router.post("/api/answer-request", isAuthenticated, (req, res) => {
     }
   });
 });
+
+// get the calendar for loggedin user
+router.get("/api/calendar", isAuthenticated, (req,res) => {
+  db.User.findOne({_id: req.user._id}).populate("events").exec(function (err, user) {
+    if (err) { return res.json(err)}
+    res.json(user.events);
+    console.log(user.events);
+  })
+})
+
+
+// Post calendar data for logged in user
+router.post("/api/calendar", isAuthenticated, (req,res) => {
+  db.Event.create({title: req.body.title, start: req.body.start, end: req.body.end, from: req.user._id}, async (err, event) => {
+    if (err) {
+      return res.json({err: "An error occurred tyring to create an event"});
+    } else {
+      await db.User.findOneAndUpdate({_id: req.user._id}, {$push: {events: event._id}});
+    }
+    return res.json({msg: "event created successfully"})
+  })
+})
+
+
+// update a calendar based on id
+router.put("/api/calendar/:id", isAuthenticated, async (req,res) => {
+  const id = req.params.id;
+  await db.Event.findByIdAndUpdate({_id: id}, {title: req.body.title, start: req.body.start, end: req.body.end});
+  return res.json({msg: "updated successfully"});
+})
+
+// delete an event based on id
+router.delete("/api/calendar/:id", isAuthenticated, async (req,res) => {
+  const id = req.params.id;
+  await db.Event.findByIdAndDelete({_id: id});
+  await db.User.findOneAndUpdate({_id: req.user._id}, {$pull: {events: id}} );
+  return res.json({msg: "event deleted successfully"});
+})
+
+
+
+
 
 // logout [removes the session]
 router.get("/api/logout", isAuthenticated, (req, res) => {

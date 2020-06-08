@@ -58,13 +58,6 @@ export default class AddFriend extends React.Component {
     })
   }
 
-  getFriendRequests() {
-    fetch("/api/requests")
-    .then(response => response.json())
-    .then(data => {
-      this.setState({friendRequests: data});
-    })
-  }
 
   deleteFriendRequest(e, toID) {
     e.preventDefault();
@@ -100,7 +93,13 @@ export default class AddFriend extends React.Component {
         // remove id from this array
         let index = array.indexOf(fromID);
         array.splice(index, 1);
+        
 
+        // must add friend to the context provider as well
+        const friendsArray = Array.from(this.state.currentFriends);
+        this.context.setUserState({...this.context.userState, friends: [...friendsArray, {_id: fromID, date: Date.now()}]});
+
+        // set current components state received requests and current friends
         this.setState({receivedFriendRequests: array, currentFriends: [...this.state.currentFriends, fromID]});
       })
   }
@@ -124,6 +123,7 @@ export default class AddFriend extends React.Component {
       })
   }
 
+  // send the friend request to clicked user
   sendFriendRequest(e, username, id) {
     e.preventDefault();
     e.stopPropagation();
@@ -133,8 +133,9 @@ export default class AddFriend extends React.Component {
       body: JSON.stringify({username: username})
     }).then(response => response.json())
       .then(data => {
+        // successful sent request
         console.log(data);
-        this.setState({sentFriendRequests: [...this.state.sentFriendRequests, id]})
+        this.setState({sentFriendRequests: [...this.state.sentFriendRequests, id]});
       })
   }
 
@@ -168,10 +169,7 @@ export default class AddFriend extends React.Component {
 
 
   render() {
-    console.log("context userstate", this.context.userState);
-    console.log("whole context object", this.context);
-
-    console.log(this.state);
+    
     let element = [];
     // if user is not logged in don't show any of the route
     if (this.context.userState.loggedIn === false) {
@@ -201,7 +199,7 @@ export default class AddFriend extends React.Component {
         </form>
         <div className="friend-container">
           <ul className="list-group">
-            <p> Please Search Here </p>
+            <p id="search-here"> Please Search Here </p>
           </ul>
         </div>
         </div>
@@ -211,8 +209,6 @@ export default class AddFriend extends React.Component {
 
     // if users match the search
     if (this.state.users.length > 0) {
-
-
       element = this.state.users.map((user) => {
         
         // by defualt the button is add friend button
