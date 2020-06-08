@@ -3,17 +3,50 @@ import { Link } from "react-router-dom";
 import UserContext from "../../UserContext";
 import "./EditProfilePic.css";
 const EditProfilePic = (props) => {
-  const {userState, setUserState} = useContext(UserContext);
+  const { userState, setUserState } = useContext(UserContext);
   // state variables to edit
   const [name, setName] = useState(userState.name);
   const [bio, setBio] = useState(userState.bio);
   const [location, setLocation] = useState(userState.location);
+
   return (
     <div className="container">
       <div className="row justify-content-center">
-        <img id="profilepic" src="https://via.placeholder.com/90" />
-        <img id="profilepic" src="https://via.placeholder.com/90" />
-        <img id="profilepic" src="https://via.placeholder.com/90" />
+        <div className="col" id="EditContainer">
+          <div className="col-fliud" id="EditHeader">
+            Edit Profile Picture
+          </div>
+
+          <div className="row justify-content-center">
+            <div class="row" id="rowcss">
+              <img id="profilepic" src="https://via.placeholder.com/90" />
+              <img id="profilepic" src="https://via.placeholder.com/90" />
+              <img id="profilepic" src="https://via.placeholder.com/90" />
+            </div>
+            {/* <div class="row" id="rowcss">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="exampleRadios"
+                id="exampleRadios1"
+                value="option1"
+                checked
+              />
+            </div> */}
+            <div class="row" id="rowcss">
+              <img id="profilepic" src="https://via.placeholder.com/90" />
+              <img id="profilepic" src="https://via.placeholder.com/90" />
+              <img id="profilepic" src="https://via.placeholder.com/90" />
+            </div>
+          </div>
+
+          <div className="row justify-content-center">
+            <Link className="col-9" id="SignupLink" to="/editprofile">
+              {/*have an onclick event that runs a function that sends img to user model*/}
+              Save
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   );
