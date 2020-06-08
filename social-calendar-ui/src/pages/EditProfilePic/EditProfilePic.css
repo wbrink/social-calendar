@@ -3,7 +3,7 @@
   background-color: white;
   border-color: white;
   border-radius: 4px;
-  margin-top: 140px;
+  margin-top: 100px;
   margin-left: 30px;
   margin-right: 30px;
 }
@@ -74,6 +74,7 @@ a:hover {
   border-style: solid;
   border-color: white;
   border-radius: 2px;
+  width: 100px;
 }
 h4 {
   border-style: solid;
@@ -87,7 +88,8 @@ h4 {
 }
 
 .form-check-input {
-  position: relative;
+  /* margin-left: 120px;
+  margin-top: 45px; */
 }
 
 .selected {

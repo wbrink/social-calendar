@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import UserContext from "../../UserContext";
 import "./EditProfilePic.css";
+
 const EditProfilePic = (props) => {
   const { userState, setUserState } = useContext(UserContext);
   // state variables to edit
@@ -19,11 +20,14 @@ const EditProfilePic = (props) => {
 
           <div className="row justify-content-center">
             <div class="row" id="rowcss">
-              <img id="profilepic" src="https://via.placeholder.com/90" />
-              <img id="profilepic" src="https://via.placeholder.com/90" />
-              <img id="profilepic" src="https://via.placeholder.com/90" />
+              <img src={require("./images/guy.png")} id="profilepic" />
+              <img src={require("./images/girl1.png")} id="profilepic" />
+              <img src={require("./images/guy2.png")} id="profilepic" />
             </div>
-            {/* <div class="row" id="rowcss">
+            {/* 
+            RADIO BUTTON IF NEEDED 
+            
+            <div class="row" id="rowcss">
               <input
                 class="form-check-input"
                 type="radio"
@@ -34,9 +38,18 @@ const EditProfilePic = (props) => {
               />
             </div> */}
             <div class="row" id="rowcss">
-              <img id="profilepic" src="https://via.placeholder.com/90" />
-              <img id="profilepic" src="https://via.placeholder.com/90" />
-              <img id="profilepic" src="https://via.placeholder.com/90" />
+              <img src={require("./images/girl2.png")} id="profilepic" />
+              <img src={require("./images/girl3.png")} id="profilepic" />
+              <img src={require("./images/bluemonster.jpg")} id="profilepic" />
+            </div>
+
+            <div class="row" id="rowcss">
+              <img
+                src={require("./images/orangemonster.jpg")}
+                id="profilepic"
+              />
+              <img src={require("./images/flower.png")} id="profilepic" />
+              <img src={require("./images/dog.jpg")} id="profilepic" />
             </div>
           </div>
 
