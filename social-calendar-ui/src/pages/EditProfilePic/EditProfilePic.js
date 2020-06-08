@@ -26,7 +26,7 @@ const EditProfilePic = (props) => {
             </div>
             {/* 
             RADIO BUTTON IF NEEDED 
-            
+
             <div class="row" id="rowcss">
               <input
                 class="form-check-input"
@@ -48,7 +48,7 @@ const EditProfilePic = (props) => {
                 src={require("./images/orangemonster.jpg")}
                 id="profilepic"
               />
-              <img src={require("./images/flower.png")} id="profilepic" />
+              <img src={require("./images/flower.jpeg")} id="profilepic" />
               <img src={require("./images/dog.jpg")} id="profilepic" />
             </div>
           </div>
