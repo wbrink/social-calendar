@@ -81,9 +81,6 @@ const Login = () => {
                <Link className="col-9" to="/Signup">
                        Signup
                    </Link>
-                   <div>
-                     username: {userState.username}
-                   </div>
                </div>
             </div>
           </div>

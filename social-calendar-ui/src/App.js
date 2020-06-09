@@ -5,12 +5,13 @@ import SignUp from "./pages/Signup/Signup.js";
 import EditProfile from "./pages/EditProfile/EditProfile.js";
 import EditProfilePic from "./pages/EditProfilePic/EditProfilePic.js";
 import UserContext from "./UserContext.js";
+import Nav from "./components/nav/Nav.js"
 ////
 
 import Profile from "./pages/Profile/Profile.js";
 import { createBrowserHistory as createHistory } from "history";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
+// import Navbar from "react-bootstrap/Navbar";
+// import Nav from "react-bootstrap/Nav";
 import "./App.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-datepicker/dist/react-datepicker.css";
@@ -61,47 +62,12 @@ function App({ calendarStore }) {
   return (
     //any links that are used in other pages must have a component and path specified here
     <Router history={history}>
-      <nav class="navbar navbar-expand-sm bg-dark navbar-dark ">
-        <a class="navbar-brand py-0 justify-content-end" href="/profile">
-          SC
-        </a>
-        {/* <button class="btn btn-success ml-auto mr-1 py-0">Always Show</button> */}
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarSupportedContent"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div
-          class="collapse navbar-collapse flex-grow-0 py-0"
-          id="navbarSupportedContent"
-        >
-          <ul class="navbar-nav text-right">
-            <li class="nav-item active">
-              <a class="nav-link" href="/friends">
-                View Friends
-              </a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="/addfriend">
-                Add Friends
-              </a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="/login">
-                Logout
-              </a>
-            </li>
-          </ul>
-        </div>
-      </nav>
+      <Nav/>
       <UserContext.Provider value={{userState, setUserState}}>
       <Route exact path ="/"> 
         <Redirect to="/Login" />
         </Route>
-        <Route exact path="/Login">
+        <Route path="/">
           {userState.loggedIn ? <Redirect to="/profile" /> : <Redirect to="/Login" />}
         </Route>
         <Route exact path="/Login" component={Login} />
