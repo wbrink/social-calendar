@@ -41,13 +41,17 @@
 
 #scIcon{
   font-size: 1.3em;
-  padding: 8px !important;
+  padding: 6px !important;
 }
 
-.nav-link{
-  border-radius: 12px !important;
-  margin: 8px !important;
-  opacity: .97;
+@media only screen and (min-width: 600px) {
+  .nav-link{
+    border-radius: 12px !important;
+    margin-bottom: 8px !important;
+    margin-right: 8px !important;
+    margin-top: 8px !important;
+    opacity: .97;
+  }
 }
 
 .nav-link:hover{
