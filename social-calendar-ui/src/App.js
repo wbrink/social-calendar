@@ -61,7 +61,7 @@ function App({ calendarStore }) {
   return (
     //any links that are used in other pages must have a component and path specified here
     <Router history={history}>
-      <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-end">
+      <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <a class="navbar-brand py-0" href="/profile">
           SC
         </a>
