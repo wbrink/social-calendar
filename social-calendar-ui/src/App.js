@@ -146,6 +146,9 @@ function App({ calendarStore }) {
             <Profile {...props} calendarStore={calendarStore} />
           )}
         />
+
+        <Route exact path="/Profile/:usernameParam" component={(props) => (<Profile {...props} calendarStore={calendarStore} />)}  />
+
       </UserContext.Provider>
     </Router>
   );

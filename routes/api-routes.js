@@ -18,6 +18,26 @@ router.get("/api/get", (req, res) => {
   });
 });
 
+// get user by id
+router.get("/api/get/:id", (req, res) => {
+  db.User.findOne({_id: req.params.id}, (err, user) => {
+    if (err) {
+      return res.json({msg: "error"});
+    } else {
+      return res.json({
+        _id: user._id, 
+        username: user.username, 
+        name: user.name, 
+        bio: user.bio, 
+        location: user.location, 
+        friends: user.friends, 
+        events: user.events, 
+        createdAt: user.createdAt
+      });
+    }
+  })
+})
+
 // get current logged in users friend ids [id, id, id...]
 router.get("/api/friendIDs", isAuthenticated, (req, res) => {
   const arrayOfFriendIds = req.user.friends.map((elem) => elem._id);
@@ -180,7 +200,8 @@ router.delete("/api/delete/:id", (req, res) => {
     pass username into url
 */
 router.get("/api/user/:username", (req, res) => {
-  db.User.findOne({ username: req.params.username }, (err, user) => {
+  const regex = new RegExp(req.params.username);
+  db.User.findOne({ username: { $regex: regex, $options: "i" } }, (err, user) => {
     if (err) {
       res.json({ error: err });
     }
@@ -350,8 +371,14 @@ router.post("/api/answer-request", isAuthenticated, (req, res) => {
 });
 
 // get the calendar for loggedin user
-router.get("/api/calendar", isAuthenticated, (req,res) => {
-  db.User.findOne({_id: req.user._id}).populate("events").exec(function (err, user) {
+router.get("/api/calendar/:id", isAuthenticated, (req,res) => {
+  // if the id is in the friends array of objects
+  const found = req.user.friends.some(el => el._id === req.params.id);
+
+  if (req.params.id == req.user._id || found ) {
+    console.log("same id in the api/calendar or is a friend");
+  }
+  db.User.findOne({_id: req.params.id}).populate("events").exec(function (err, user) {
     if (err) { return res.json(err)}
     res.json(user.events);
     console.log(user.events);

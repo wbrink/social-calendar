@@ -9,14 +9,15 @@ import { observer } from "mobx-react";
 import { getCalendar } from "./requests";
 import UserInfo from "../../components/userInfo/index.js";
 import UserContext from "../../UserContext.js";
-import { isLoggedInCB } from "../../utils/isLoggedIn.js";
+import { isLoggedInCB, isLoggedIn } from "../../utils/isLoggedIn.js";
+import {useParams} from "react-router-dom";
 
 const localizer = momentLocalizer(moment);
 
 function HomePage(props) {
 
   const {userState, setUserState} = useContext(UserContext);
-
+  const {usernameParam} = useParams();
   // if props.location.state == undefined then we were redirected from another page to view either logged in users friend or someone else
   const loggedInUsersProfile = (props.location.state == undefined) ? false : true;
   
@@ -24,6 +25,8 @@ function HomePage(props) {
   const [showEditModal, setShowEditModal] = React.useState(false);
   const [calendarEvent, setCalendarEvent] = React.useState({});
   const [initialized, setInitialized] = React.useState(false);
+  const [id, setID] = useState(null);
+  const [otherUser, setOtherUser] = useState(null);
   
   // hide Modals : called by
   const hideModals = () => {
@@ -32,9 +35,10 @@ function HomePage(props) {
   };
 
   // called
-  const getCalendarEvents = async () => {
+  const getCalendarEvents = async (id) => {
+    console.log("in the getCalendar", userState);
     // if (userState.loggedIn) {
-      const response = await getCalendar();
+      const response = await getCalendar(id);
       console.log(response);
       if (response.data.length == 0) {
         console.log("no elements in array")
@@ -91,12 +95,59 @@ function HomePage(props) {
   // this logs the user in when the page refreshes since userstate is reset to default
   useEffect(() => {
     if (userState.loggedIn === false) {
-      isLoggedInCB(userState, setUserState, props, () => {
-        getCalendarEvents();
-        console.log("here");
-      });
+      isLoggedIn(userState, setUserState, props);
+    } else {
+      // if they are logged in 
+      if (usernameParam == undefined) { 
+        // then we are we are only using /profile (personal profile);
+        getCalendarEvents(userState._id);
+      } else {
+        // then we are in someone elses profile
+        fetch(`/api/user/${usernameParam}`)
+          .then(res => res.json())
+          .then(id => {
+            const found = userState.friends.some(el => el._id === id);
+            if (found) {
+              getCalendarEvents(id);
+            } 
+            
+          })
+      }
     }
   }, [])
+
+  // this runs when the userstate is changed (i.e after first useEffect that logs in the user in)
+  useEffect(() => {
+    console.log("changed user State");
+    if (userState.loggedIn) {
+      // copy here and down
+      if (usernameParam == undefined) { 
+        // then we are we are only using /profile (personal profile);
+        getCalendarEvents(userState._id);
+      } else {
+        // then we are in someone elses profile
+        fetch(`/api/user/${usernameParam}`)
+          .then(res => res.json())
+          .then(id => {
+            // setID(id);
+            const found = userState.friends.some(el => el._id === id);
+            if (found) {
+              getCalendarEvents(id);
+            } 
+          })
+      }
+    }
+  }, [userState])
+
+
+  // useEffect(() => {
+  //   fetch(`/api/user/${id}`)
+  //     .then(res => res.json())
+  //     .then(user => {
+  //       // check if error
+  //       setOtherUser({username: user.username, name: user.name, _id: user._id, friends: user.friends, bio: user.bio, location: user.location, events: user.events, createdAt: user.createdAt})
+  //     })
+  // }, [id])
 
 
   // if not logged in don't show the route at all
@@ -108,7 +159,7 @@ function HomePage(props) {
     <div className="page">
       {/* userinfo component */}
   
-
+      {/* {usernameParam == undefined ? <UserInfo state={{user: {...userState}}} /> : <UserInfo state={{user: {...otherUser}}} />} */}
       {props.location.state == undefined ? <UserInfo state={{user: {...userState}}}/> : <UserInfo {...props.location}/>}
       
 
@@ -121,6 +172,7 @@ function HomePage(props) {
           <CalendarForm
             calendarStore={props.calendarStore}
             calendarEvent={calendarEvent}
+            userID={userState._id}
             onCancel={hideModals.bind(this)}
             edit={false}
           />
@@ -134,6 +186,7 @@ function HomePage(props) {
           <CalendarForm
             calendarStore={props.calendarStore}
             calendarEvent={calendarEvent}
+            userID={userState._id}
             onCancel={hideModals.bind(this)}
             edit={true}
           />
@@ -141,16 +194,26 @@ function HomePage(props) {
       </Modal>
 
       {/* calendar Component*/}
-      <Calendar
-        localizer={localizer}
-        events={props.calendarStore.calendarEvents}
-        startAccessor="start"
-        endAccessor="end"
-        selectable={true}
-        style={{ height: "70vh" }}
-        onSelectSlot={handleSelect}
-        onSelectEvent={handleSelectEvent}
-      />
+      {usernameParam == undefined 
+        ? <Calendar
+            localizer={localizer}
+            events={props.calendarStore.calendarEvents}
+            startAccessor="start"
+            endAccessor="end"
+            selectable={true}
+            style={{ height: "70vh" }}
+            onSelectSlot={handleSelect}
+            onSelectEvent={handleSelectEvent}
+          />
+        : <Calendar
+            localizer={localizer}
+            events={props.calendarStore.calendarEvents}
+            startAccessor="start"
+            endAccessor="end"
+            selectable={false}
+            style={{ height: "70vh" }}
+          />
+      }
     </div>
   );
 }

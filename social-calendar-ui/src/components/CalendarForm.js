@@ -15,7 +15,7 @@ import { observer } from "mobx-react";
 const buttonStyle = { marginRight: 10 };
 
 
-function CalendarForm({ calendarStore, calendarEvent, onCancel, edit }) {
+function CalendarForm({ calendarStore, calendarEvent, onCancel, edit, userID }) {
   const [start, setStart] = React.useState(null);
   const [end, setEnd] = React.useState(null);
   const [title, setTitle] = React.useState("");
@@ -56,7 +56,7 @@ function CalendarForm({ calendarStore, calendarEvent, onCancel, edit }) {
       const data = { id, title, start, end };
       await editCalendar(data);
     }
-    const response = await getCalendar();
+    const response = await getCalendar(userID);
     const evs = response.data.map((d) => {
       return {
         // ...d,
@@ -77,7 +77,7 @@ function CalendarForm({ calendarStore, calendarEvent, onCancel, edit }) {
   
   const deleteCalendarEvent = async () => {
     await deleteCalendar(calendarEvent.id);
-    const response = await getCalendar();
+    const response = await getCalendar(userID);
     const evs = response.data.map((d) => {
       return {
         // ...d,
