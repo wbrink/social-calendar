@@ -11,7 +11,7 @@ function Nav(){
     }
     return(
         <nav class="navbar navbar-expand-sm bg-dark navbar-dark ">
-        <a class="navbar-brand py-0 justify-content-end" href="/profile">
+        <a class="navbar-brand py-0 justify-content-end" id="scIcon" href="/profile">
           SC
         </a>
         {/* <button class="btn btn-success ml-auto mr-1 py-0">Always Show</button> */}
