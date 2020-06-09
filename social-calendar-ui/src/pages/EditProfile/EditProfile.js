@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useContext} from "react";
 import { Link } from "react-router-dom";
 import UserContext from "../../UserContext";
+import {isLoggedInCB, isLoggedIn} from "../../utils/isLoggedIn";
 
 import "./EditProfile.css";
 
@@ -11,9 +12,39 @@ const EditProfile = (props) => {
   // state variables to edit
   const [name, setName] = useState(userState.name);
   const [bio, setBio] = useState(userState.bio);
-  const [location, setLocation] = useState(userState.userLocation);
+  const [location, setLocation] = useState(userState.location);
 
-  console.log(props);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    fetch("/api/logged-in", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: name,
+        bio: bio,
+        location: location,
+      }),
+    }).then(res => res.json())
+      .then(data => {
+        console.log(data);
+        props.history.push("/profile");
+        setUserState({...userState, bio: bio, location: location, name: name })
+      })
+  }
+
+  useEffect(() => {
+    isLoggedIn(userState, setUserState, props) 
+  }, []);
+
+  useEffect(() => {
+    setName(userState.name);
+    setLocation(userState.location);
+    setBio(userState.bio);
+  }, [userState])
+
+
+  console.log("name", name);
   return (
     <div className="container">
       <div className="row justify-content-center">
@@ -37,32 +68,30 @@ const EditProfile = (props) => {
             </div>
           </div>
           <div className="col-12" id="FormContainer">
-            <div className="col labels">Edit Name</div>
-            <form className="col" action="">
-              <input className="col" placeholder="Type your Name" type="text" />
-            </form>
-            <div className="col labels">Edit Bio</div>
-            <form className="col" action="">
+            
+            <form className="col" action="" onSubmit={handleSubmit}>
+              <div className="col labels">Edit Name</div>
+              <input className="col" placeholder="Type your Name" type="text" value={name} onChange={(e) => setName(e.target.value)} />
+              <div className="col labels">Edit Bio</div>
               <input
                 className="col"
                 placeholder="Type your Bio"
+                value={bio}
+                name="bio"
+                onChange={(e => setBio(e.target.value))}
                 type="textbox"
               />
-            </form>
-            <div className="col labels">Edit Location</div>
-            <form className="col" action="">
-              <input
+               <div className="col labels">Edit Location</div>
+               <input
                 className="col"
                 placeholder="Type your Location"
+                name="location"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
                 type="text"
               />
+              <input type="submit" value="Save" />
             </form>
-            <div className="row justify-content-center">
-              <Link className="col-9" id="SignupLink" to="/Signup">
-                {/*have an onclick event that runs a function that sends an api request to create a new user*/}
-                Save
-              </Link>
-            </div>
           </div>
         </div>
       </div>

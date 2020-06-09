@@ -432,4 +432,19 @@ router.get("/api/protected", isAuthenticated, (req, res) => {
   res.status(200).json({ msg: "you are allowed into protected route" });
 });
 
+
+// update logged in users info
+router.put("/api/logged-in", async (req,res) => {
+  const {bio, location, name} = req.body;
+
+  db.User.findOneAndUpdate({_id: req.user._id}, {$set: {bio: bio, location: location, name: name}}, (err, doc) => {
+    if (err) {
+      return res.json(err);
+    } else {
+      res.json(doc);
+    }
+  })
+})
+
+
 module.exports = router;
