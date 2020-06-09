@@ -17,9 +17,6 @@
     sans-serif;
 }
 
-.navbar {
-  /* min-height:12px; */
-}
 .navbar a {
   font-size: small;
 }
@@ -40,4 +37,19 @@
   border-radius: 20px;
   padding: 0.1em 0.5em;
   margin: 0.3em;
+}
+
+#scIcon{
+  font-size: 1.3em;
+  padding: 8px !important;
+}
+
+.nav-link{
+  border-radius: 12px !important;
+  margin: 8px !important;
+  opacity: .97;
+}
+
+.nav-link:hover{
+  opacity: 1;
 }
