@@ -6,12 +6,16 @@
 #rowcss1 {
   background-color: white;
   margin: 0;
-  border-top: lightgray;
+  padding-top: 18px;
+  border-top-color: #343a40!important;
+  border-top-width: 4px !important;
+  border-top-left-radius: 4px !important;
+  border-top-right-radius: 4px !important;
   border-bottom: white;
   border-left: white;
   border-right: white;
   border-style: solid;
-  margin-top: 5px;
+  margin-top: 12px;
   border-width: thin;
 }
 
@@ -23,6 +27,7 @@
 }
 
 #profilepic {
+  margin-left: 8px;
   margin-top: 7px;
   margin-bottom: 5px;
   border-style: solid;
@@ -37,7 +42,7 @@ h4 {
   letter-spacing: 2px;
 
   text-align: center;
-  color: #ff6a6a;
+  color: black;
   margin-top: 7px;
   font-size: 1.2em;
   font-family: "Passion One", cursive;
@@ -45,6 +50,7 @@ h4 {
 
 a {
   margin-bottom: 7px !important;
+  color: black;
 }
 
 strong {
@@ -73,10 +79,79 @@ strong {
 
 /* class that edits the original button class for edit profile button */
 .edit-profile {
+  margin-top: 0px !important;
   width: 100%;
   display: block;
-  margin-top: 15px;
   padding: 2px;
-  background-color: grey;
-  border-color: grey;
+  background-color: #5DADE2;
+  border-color: #5DADE2;
+  border-radius: 8px !important;
+}
+
+
+
+#subHeaderUsername{
+  font-size: 1.65em;
+  color: black;
+  margin-left: 16px;
+}
+
+img{
+  margin-top: 20px !important;
+  width: 132px !important;
+  height: 160px;
+}
+
+.userInfoContainer{
+  max-height: 212px;
+  margin-top: 18px !important;
+}
+
+.userDesc{
+  padding-bottom: 8px;
+  padding-right: 0px !important;
+  margin-right: 14px;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  font-size: .8em;
+  max-height: 86px;
+  overflow-y: scroll;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: black;
+}
+
+#userLocation{
+  margin-top: 32px !important;
+  margin-left: 22px;
+  font-size: .79em;
+  color: black;
+}
+
+#userCreatedAt{
+  color: black;
+}
+
+
+#userFriends{
+  margin-top: 10px !important;
+  border-color: #ff6a6a;
+  background-color: #ff6a6a;
+  color: white;
+  font-family: "Fredoka One", cursive;
+  padding: 5px;
+  padding-left: 12px;
+  padding-right: 12px;
+  border-radius: 8px !important;
+}
+
+#userFriends:hover{
+  background-color: #f75d5d !important;
+  border-color: #f75d5d !important;
+}
+
+.edit-profile:hover{
+  background-color: #5DADE2 !important;
+  border-color: #5DADE2 !important;
+  opacity: .9 !important;
 }

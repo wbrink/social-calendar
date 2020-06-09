@@ -47,13 +47,14 @@
 @media only screen and (min-width: 600px) {
   .nav-link{
     border-radius: 12px !important;
+    border-style: solid;
+    /* border-style: none; */
     margin-bottom: 8px !important;
     margin-right: 8px !important;
     margin-top: 8px !important;
-    opacity: .97;
   }
 }
 
 .nav-link:hover{
-  opacity: 1;
+  opacity: .9;
 }

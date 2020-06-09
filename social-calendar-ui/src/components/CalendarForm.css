@@ -1,0 +1,99 @@
+.rbc-day-bg{
+    background-color: whitesmoke;
+}
+
+.rbc-header{
+    background-color: white;
+
+}
+
+.rbc-calendar{
+    
+    background-color: white;
+}
+
+/* a{
+    border-style: none;
+} */
+
+.rbc-toolbar{
+    margin-bottom: 0px !important;
+    font-family: "Passion One", cursive;
+}
+
+
+.rbc-day:hover{
+    opacity: .9 !important;
+}
+
+.rbc-toolbar button{
+    border-width: 1px !important;
+    border-radius: 1px !important;
+    font-family: "Passion One", cursive;
+}
+
+
+.rbc-date-cell a{
+    border-style: none;
+}
+
+.rbc-today{
+    background-color: white !important;
+}
+
+.rbc-toolbar-label{
+    padding-top: 3px !important;
+    padding-bottom: 3px !important;
+    background-color: #5DADE2 !important;
+    color: white !important;
+}
+
+.rbc-event{
+    height: 8px !important;
+    border-radius: 9px !important;
+    background-color: #ff6a6a !important;
+    margin: 1px !important;
+    overflow: hidden !important;
+}
+
+.rbc-event-content{
+    display: none !important;
+}
+
+@media only screen and (min-width: 600px) {
+    .rbc-event{
+        text-align: center !important;
+        height: auto !important;
+    }
+
+    .rbc-event-content{
+        overflow: hidden !important;
+        display: inline !important;
+    }
+  }
+
+/*
+
+.rbc-event{
+    background-color: #ff6a6a !important;
+}
+
+.rbc-event-allday{
+    margin-top: 4px !important;
+    text-align: center !important;
+
+    background-color: #ff6a6a !important;
+}
+
+.rbc-event-content:hover{
+    background-color: #5DADE2 !important;
+}
+
+.rbc-event:hover{
+    background-color: #5DADE2 !important;
+}
+
+.rbc-event-allday:hover{
+    background-color: #5DADE2 !important;
+}
+*/
