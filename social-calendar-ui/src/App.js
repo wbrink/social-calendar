@@ -101,6 +101,9 @@ function App({ calendarStore }) {
       <Route exact path ="/"> 
         <Redirect to="/Login" />
         </Route>
+        <Route exact path="/Login">
+          {userState.loggedIn ? <Redirect to="/profile" /> : <Redirect to="/Login" />}
+        </Route>
         <Route exact path="/Login" component={Login} />
         <Route exact path="/SignUp" component={SignUp} />
         <Route exact path="/addfriend" component={AddFriends} />
