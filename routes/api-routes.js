@@ -200,12 +200,12 @@ router.delete("/api/delete/:id", (req, res) => {
     pass username into url
 */
 router.get("/api/user/:username", (req, res) => {
-  const regex = new RegExp(req.params.username);
+  const regex = new RegExp("^" + req.params.username);
   db.User.findOne({ username: { $regex: regex, $options: "i" } }, (err, user) => {
     if (err) {
       res.json({ error: err });
     }
-    res.json(user._id);
+    res.json(user);
   });
 });
 
