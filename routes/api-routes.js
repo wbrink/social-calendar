@@ -62,7 +62,7 @@ router.get("/api/friends", isAuthenticated, (req, res) => {
             friendSince = req.user.friends[i].date;
           }
         }
-        array.push({ _id: obj._id, username: obj.username, date: friendSince });
+        array.push({ _id: obj._id, username: obj.username, date: friendSince, name: obj.name });
       });
       res.json(array);
     });
