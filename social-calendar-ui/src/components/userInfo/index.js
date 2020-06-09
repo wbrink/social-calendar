@@ -5,21 +5,21 @@ import {
   Route,
   useParams,
   Redirect,
-  Link
+  Link,
 } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import "./style.css";
 
 export default function UserInfo(props) {
   // let { user } = useParams();
-  
 
   return (
-
     <div id="main">
       <div class="row" id="rowcss">
         <div class="col-3">
-          <a href="/editprofilepic"><img id="profilepic" src="https://via.placeholder.com/90" /></a>
+          <a href="/editprofilepic">
+            <img id="profilepic" src="https://via.placeholder.com/90" />
+          </a>
         </div>
         <div class="col-1"></div>
         <div class="col-8">
@@ -28,7 +28,12 @@ export default function UserInfo(props) {
               <h4>username {props.state.user.username}</h4>
             </p>
           </center>
-          <Link to={{pathname: "/editprofile", state: {...props.state.user}}} className="buttons edit-profile">Edit Profile</Link>
+          <Link
+            to={{ pathname: "/editprofile", state: { ...props.state.user } }}
+            className="buttons edit-profile"
+          >
+            Edit Profile
+          </Link>
           {/* <Button onto="/editProfile" variant="secondary" size="sm" block>
             Edit Profile
           </Button> */}
