@@ -1,5 +1,5 @@
 import React, {useContext, useState}from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import "./Login.css"
 import UserContext from "../../UserContext";
 
@@ -38,6 +38,7 @@ const Login = () => {
                         console.log(data)
                         // user.logIn(data.username, data.name, data._id, data.friends, data.bio, data.location, data.events, data.createdAt, true);
                         setUserState({...userState, username: data.username, name: data.name, _id: data._id, friends: data.friends, bio: data.bio, location: data.location, events: data.events, createdAt: data.createdAt, loggedIn: true})
+                        
                     }
                 })
         };
