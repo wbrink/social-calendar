@@ -25,8 +25,7 @@ function HomePage(props) {
   const [showEditModal, setShowEditModal] = React.useState(false);
   const [calendarEvent, setCalendarEvent] = React.useState({});
   const [initialized, setInitialized] = React.useState(false);
-  const [id, setID] = useState(null);
-  const [otherUser, setOtherUser] = useState(null);
+  const [found, setFound] = useState(false);
   
   // hide Modals : called by
   const hideModals = () => {
@@ -105,10 +104,11 @@ function HomePage(props) {
         // then we are in someone elses profile
         fetch(`/api/user/${usernameParam}`)
           .then(res => res.json())
-          .then(id => {
-            const found = userState.friends.some(el => el._id === id);
-            if (found) {
-              getCalendarEvents(id);
+          .then(user => {
+            const bool = userState.friends.some(el => el._id === user._id);
+            if (bool) {
+              getCalendarEvents(user._id);
+              setFound(true);
             } 
             
           })
@@ -128,26 +128,18 @@ function HomePage(props) {
         // then we are in someone elses profile
         fetch(`/api/user/${usernameParam}`)
           .then(res => res.json())
-          .then(id => {
+          .then(user => {
             // setID(id);
-            const found = userState.friends.some(el => el._id === id);
-            if (found) {
-              getCalendarEvents(id);
+            const bool = userState.friends.some(el => el._id === user._id);
+            if (bool) {
+              getCalendarEvents(user._id);
+              setFound(true);
             } 
           })
       }
     }
   }, [userState])
 
-
-  // useEffect(() => {
-  //   fetch(`/api/user/${id}`)
-  //     .then(res => res.json())
-  //     .then(user => {
-  //       // check if error
-  //       setOtherUser({username: user.username, name: user.name, _id: user._id, friends: user.friends, bio: user.bio, location: user.location, events: user.events, createdAt: user.createdAt})
-  //     })
-  // }, [id])
 
 
   // if not logged in don't show the route at all
@@ -159,8 +151,10 @@ function HomePage(props) {
     <div className="page">
       {/* userinfo component */}
   
-      {/* {usernameParam == undefined ? <UserInfo state={{user: {...userState}}} /> : <UserInfo state={{user: {...otherUser}}} />} */}
-      {props.location.state == undefined ? <UserInfo state={{user: {...userState}}}/> : <UserInfo {...props.location}/>}
+      {usernameParam == undefined 
+      ? <UserInfo name={userState.username} /> 
+      : <UserInfo name={usernameParam} />}
+      {/* {props.location.state == undefined ? <UserInfo state={{user: {...userState}}}/> : <UserInfo {...props.location}/>} */}
       
 
       {/* Modal component */}
@@ -194,7 +188,7 @@ function HomePage(props) {
       </Modal>
 
       {/* calendar Component*/}
-      {usernameParam == undefined 
+      {usernameParam == undefined
         ? <Calendar
             localizer={localizer}
             events={props.calendarStore.calendarEvents}
@@ -205,14 +199,16 @@ function HomePage(props) {
             onSelectSlot={handleSelect}
             onSelectEvent={handleSelectEvent}
           />
-        : <Calendar
-            localizer={localizer}
-            events={props.calendarStore.calendarEvents}
-            startAccessor="start"
-            endAccessor="end"
-            selectable={false}
-            style={{ height: "70vh" }}
-          />
+        : usernameParam != undefined && found == false 
+          ? <p>Person is not your friend</p> 
+          : <Calendar
+              localizer={localizer}
+              events={props.calendarStore.calendarEvents}
+              startAccessor="start"
+              endAccessor="end"
+              selectable={false}
+              style={{ height: "70vh" }}
+            />
       }
     </div>
   );
