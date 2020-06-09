@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom"; //edited file
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom"; //edited file
 import Login from "./pages/Login/Login.js";
 import SignUp from "./pages/Signup/Signup.js";
 import EditProfile from "./pages/EditProfile/EditProfile.js";
@@ -61,49 +61,11 @@ function App({ calendarStore }) {
   return (
     //any links that are used in other pages must have a component and path specified here
     <Router history={history}>
-      <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-        <a class="navbar-brand py-0" href="/profile">
+      <nav class="navbar navbar-expand-sm bg-dark navbar-dark ">
+        <a class="navbar-brand py-0 justify-content-end" href="/profile">
           SC
         </a>
-
         {/* <button class="btn btn-success ml-auto mr-1 py-0">Always Show</button> */}
-
-        {/* SEARCH FORM */}
-        <form
-          id="search-friend-list-form"
-          class="btn btn-success ml-auto mr-1 py-0"
-          onSubmit={(e) => {
-            return e.preventDefault();
-          }}
-        >
-          <svg
-            class="bi bi-search"
-            width="1em"
-            height="1em"
-            viewBox="0 0 16 16"
-            fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"
-            />
-            <path
-              fill-rule="evenodd"
-              d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"
-            />
-          </svg>
-          <label htmlFor="search-friend-list">Search</label>
-          <input
-            type="text"
-            onChange={handleChange}
-            placeholder="Search"
-            id="search-friend-list"
-            name="search"
-            autoComplete="off"
-          />
-        </form>
-
         <button
           class="navbar-toggler"
           type="button"
@@ -112,7 +74,6 @@ function App({ calendarStore }) {
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-
         <div
           class="collapse navbar-collapse flex-grow-0 py-0"
           id="navbarSupportedContent"
@@ -124,6 +85,11 @@ function App({ calendarStore }) {
               </a>
             </li>
             <li class="nav-item active">
+              <a class="nav-link" href="/addfriend">
+                Add Friends
+              </a>
+            </li>
+            <li class="nav-item active">
               <a class="nav-link" href="/login">
                 Logout
               </a>
@@ -132,6 +98,9 @@ function App({ calendarStore }) {
         </div>
       </nav>
       <UserContext.Provider value={{userState, setUserState}}>
+      <Route exact path ="/"> 
+        <Redirect to="/Login" />
+        </Route>
         <Route exact path="/Login" component={Login} />
         <Route exact path="/SignUp" component={SignUp} />
         <Route exact path="/addfriend" component={AddFriends} />
