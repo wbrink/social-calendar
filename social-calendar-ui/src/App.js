@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom"; //edited file
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom"; //edited file
 import Login from "./pages/Login/Login.js";
 import SignUp from "./pages/Signup/Signup.js";
 import EditProfile from "./pages/EditProfile/EditProfile.js";
@@ -132,6 +132,9 @@ function App({ calendarStore }) {
         </div>
       </nav>
       <UserContext.Provider value={{userState, setUserState}}>
+        <Route exact path ="/"> 
+        <Redirect to="/Login" />
+        </Route>
         <Route exact path="/Login" component={Login} />
         <Route exact path="/SignUp" component={SignUp} />
         <Route exact path="/addfriend" component={AddFriends} />
