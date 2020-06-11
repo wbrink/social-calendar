@@ -188,9 +188,12 @@ export default class AddFriend extends React.Component {
     });
   }
 
-  clickedUser(e, user) {
-    console.log("clicked user", user);
-    this.setState({ redirect: true, clickedUser: user });
+  clickedUser(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log("clicked user", e.target.dataset.username);
+    this.props.history.push(`/profile/${e.target.dataset.username}`);
+    // this.setState({ redirect: true, clickedUser: user });
   }
 
   render() {
@@ -327,18 +330,15 @@ export default class AddFriend extends React.Component {
         }
 
         return (
-          <div className="list-item">
+          <div className="list-item" data-username={user.username} onClick={this.clickedUser}>
             <li
               key={user._id}
-              onClick={(e) => {
-                this.clickedUser(e, user);
-              }}
               className="user-li"
             >
               {/* ADD PROFILE PICTURE FROM MODEL BELOW */}
-              <img id="friendpic" src="https://via.placeholder.com/50" />
-              <strong>{user.username}</strong>
-              <small>({user.name})</small>
+              <img id="friendpic" src="https://via.placeholder.com/50" data-username={user.username} onClick={this.clickedUser}/>
+              <strong data-username={user.username} onClick={this.clickedUser}>{user.username}</strong>
+              <small data-username={user.username} onClick={this.clickedUser}>({user.name})</small>
             </li>
             {x == "default" && button}
             {x == "friend" && button}

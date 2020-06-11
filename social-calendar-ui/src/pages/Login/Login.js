@@ -1,9 +1,10 @@
-import React, {useContext, useState}from "react";
+import React, {useContext, useState, useEffect}from "react";
 import { Link, Redirect } from "react-router-dom";
 import "./Login.css"
 import UserContext from "../../UserContext";
+import { isLoggedInURL } from "../../utils/isLoggedIn";
 
-const Login = () => {
+const Login = (props) => {
     
     const {userState, setUserState} = useContext(UserContext)
     
@@ -48,6 +49,12 @@ const Login = () => {
           console.log(err)
         }
     }
+
+  useEffect(() => {
+    isLoggedInURL(userState,setUserState, props, "/profile");
+  }, [])
+
+  
   return (
     <div className="container">{/* header will be a component inside of the sidenavbar component*/}
     <div className="row justify-content-center">
@@ -58,30 +65,30 @@ const Login = () => {
           <div className="row justify-content-center">
             <div className="col-12" id="FormContainer">
             <div className="col labels">
-                   Username
-               </div>
-               <form className="col" action="">
-                   <input className="col" placeholder="Type your Username" name="username" onChange={handleInputChange} type="text"/>
-               </form>
-               <div className="col labels">
-                   Password
-               </div>
-               <form className="col" action="">
-                   <input className="col" placeholder="Type your Password" name="password" onChange={handleInputChange} type="password"/>
-               </form>
-               <div className="row justify-content-center" id="LoginButtonContainer">
-                   <input className="col-9 buttons" type="submit" onClick={handleFormSubmit} value="Login"/>
-               </div>
-               <div className="row justify-content-center">
-                   <div className="col" id="or">
-                       Or
-                   </div>
-               </div>
-               <div className="row justify-content-center">
-               <Link className="col-9" id="signUp" to="/Signup">
-                       Signup
-                   </Link>
-               </div>
+                    Username
+                </div>
+                <form className="col" action="">
+                    <input className="col" placeholder="Type your Username" name="username" onChange={handleInputChange} type="text"/>
+                </form>
+                <div className="col labels">
+                    Password
+                </div>
+                <form className="col" action="">
+                    <input className="col" placeholder="Type your Password" name="password" onChange={handleInputChange} type="password"/>
+                </form>
+                <div className="row justify-content-center" id="LoginButtonContainer">
+                    <input className="col-9 buttons" type="submit" onClick={handleFormSubmit} value="Login"/>
+                </div>
+                <div className="row justify-content-center">
+                    <div className="col" id="or">
+                        Or
+                    </div>
+                </div>
+                <div className="row justify-content-center">
+                <Link className="col-9" id="signUp" to="/Signup">
+                        Signup
+                    </Link>
+                </div>
             </div>
           </div>
       </div>

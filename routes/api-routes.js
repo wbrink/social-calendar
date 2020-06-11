@@ -219,9 +219,9 @@ router.get("/api/get/requests", (req, res) => {
 
 // pending friendRequests for logged in users both sent and recieved
 router.get("/api/requests", isAuthenticated, (req, res) => {
-  db.FriendRequest.find(
-    { $or: [{ to: req.user._id }, { from: req.user._id }] },
-    (err, requests) => {
+  db.FriendRequest.find({ $or: [{ to: req.user._id }, { from: req.user._id }] })
+    .sort({date: -1})
+    .exec(function(err, requests) {
       const array = [];
       requests.forEach((element) => {
         if (JSON.stringify(element.to) === JSON.stringify(req.user._id)) {
@@ -246,6 +246,55 @@ router.get("/api/requests", isAuthenticated, (req, res) => {
     }
   );
 });
+
+
+// difference to v1 is that it will retrieve user info as well
+router.get("/api/requests-v2", isAuthenticated, (req, res) => {
+  db.FriendRequest.find({ $or: [{ to: req.user._id }, { from: req.user._id }] })
+    .sort({date: -1})
+    .exec(function(err, requests) {
+      const ids = [];
+      const array = [];
+      requests.forEach( (element) => {
+        if (JSON.stringify(element.to) === JSON.stringify(req.user._id)) {
+          let x = {
+            toMe: true,
+            userID: element.from,
+            date: element.date,
+            _id: element._id,
+          };
+          ids.push(element.from);
+          array.push(x);
+        } else {
+          let x = {
+            toMe: false,
+            userID: element.to,
+            date: element.date,
+            _id: element._id,
+          };
+          ids.push(element.to);
+          array.push(x);
+        }
+      });
+      res.json(array);
+    }
+  );
+});
+
+router.post("/api/requests-userinfo-v2", (req,res) => {
+  const {ids} = req.body;
+
+  db.User.find({_id: {$in : ids}}, (err, users) => {
+    if (err) {
+      return res.json(err);
+    } else {
+      return res.json(users);
+    }
+  }) 
+})
+
+
+
 
 // returns array of userIDs of the users that sent the logged in user a friend request
 router.get("/api/requests-received", isAuthenticated, (req, res) => {

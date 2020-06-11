@@ -17,6 +17,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-datepicker/dist/react-datepicker.css";
 import AddFriends from "./pages/AddFriend/index.js";
 import ViewFriends from "./pages/ViewFriends/index.js";
+import ViewFriendRequests from "./pages/ViewFriendRequests/index";
 const history = createHistory();
 
 ////
@@ -86,6 +87,7 @@ function App({ calendarStore }) {
         />
 
         <Route exact path="/Profile/:usernameParam" component={(props) => (<Profile {...props} calendarStore={calendarStore} />)}  />
+        <Route exact path="/friend-requests" component={ViewFriendRequests}  />
 
       </UserContext.Provider>
     </Router>

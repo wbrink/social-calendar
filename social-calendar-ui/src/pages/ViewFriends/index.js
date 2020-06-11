@@ -11,8 +11,9 @@ export default function ViewFriends(props) {
   const [friends, setFriends] = useState([]);
   const [search, setSearch] = useState("");
 
-  const handleClick = () => {
-    console.log("clicked the list group");
+  const handleClick = (e) => {
+    let url = `/profile/${e.target.dataset.username}`;
+    props.history.push(url);
   };
 
   const handleChange = (e) => {
@@ -78,7 +79,7 @@ export default function ViewFriends(props) {
           {friends.map((friend, index) => {
             if (search === "") {
               return (
-                <li key={friend._id} className="list-group-item">
+                <li key={friend._id} className="list-group-item" data-username={friend.username} onClick={(e) => handleClick(e)}>
                   {/* ADD PROFILE PICTURE FROM MODEL BELOW */}
                   <img id="friendpic" src="https://via.placeholder.com/50" />
                   <strong>{friend.username}</strong>
@@ -88,7 +89,7 @@ export default function ViewFriends(props) {
             }
             if (friend.username.toLowerCase().startsWith(search)) {
               return (
-                <li key={friend._id} className="list-group-item">
+                <li key={friend._id} className="list-group-item" data-username={friend.username} onClick={(e) => handleClick(e)}>
                   {friend.username}
                 </li>
               );

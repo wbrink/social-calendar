@@ -1,0 +1,30 @@
+#choiceBtns {
+  display: flex;
+  justify-content: center;
+}
+
+#choiceBtns .buttons:first-child {
+  margin-right: 40px;
+}
+
+#choiceBtns .buttons {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  width: 150px;
+  transition: 0.3s all ease;
+}
+
+.secondary {
+  border: none;
+  background-color: rgb(112, 112, 112);
+  transition: 0.3s all ease;
+}
+
+.secondary:hover {
+  background-color: rgb(77, 77, 77);
+}
+
+.title {
+  margin-top: 20px;
+  text-align: center;
+}
