@@ -5,7 +5,7 @@ import SignUp from "./pages/Signup/Signup.js";
 import EditProfile from "./pages/EditProfile/EditProfile.js";
 import EditProfilePic from "./pages/EditProfilePic/EditProfilePic.js";
 import UserContext from "./UserContext.js";
-import Nav from "./components/nav/Nav.js"
+import Nav from "./components/nav/Nav.js";
 ////
 
 import Profile from "./pages/Profile/Profile.js";
@@ -32,16 +32,16 @@ function App({ calendarStore }) {
   // create logged in provider
   const [userState, setUserState] = useState({
     username: "",
-    name: "", 
-    _id: "", 
+    name: "",
+    _id: "",
     friends: [],
-    bio: "", 
-    location: "", 
-    events: [], 
-    createdAt: "", 
-    loggedIn: false
+    bio: "",
+    location: "",
+    events: [],
+    createdAt: "",
+    profilePic: "",
+    loggedIn: false,
   });
-
 
   // const [userState, setuserState] = useState({
   //   loggedIn: false,
@@ -63,13 +63,17 @@ function App({ calendarStore }) {
   return (
     //any links that are used in other pages must have a component and path specified here
     <Router history={history}>
-      <Nav/>
-      <UserContext.Provider value={{userState, setUserState}}>
-      <Route exact path ="/"> 
-        <Redirect to="/Login" />
+      <Nav />
+      <UserContext.Provider value={{ userState, setUserState }}>
+        <Route exact path="/">
+          <Redirect to="/Login" />
         </Route>
         <Route path="/Login">
-          {userState.loggedIn ? <Redirect to="/profile" /> : <Redirect to="/Login" />}
+          {userState.loggedIn ? (
+            <Redirect to="/profile" />
+          ) : (
+            <Redirect to="/Login" />
+          )}
         </Route>
         <Route exact path="/Login" component={Login} />
         <Route exact path="/SignUp" component={SignUp} />
@@ -86,9 +90,14 @@ function App({ calendarStore }) {
           )}
         />
 
-        <Route exact path="/Profile/:usernameParam" component={(props) => (<Profile {...props} calendarStore={calendarStore} />)}  />
-        <Route exact path="/friend-requests" component={ViewFriendRequests}  />
-
+        <Route
+          exact
+          path="/Profile/:usernameParam"
+          component={(props) => (
+            <Profile {...props} calendarStore={calendarStore} />
+          )}
+        />
+        <Route exact path="/friend-requests" component={ViewFriendRequests} />
       </UserContext.Provider>
     </Router>
   );

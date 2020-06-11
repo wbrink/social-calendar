@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import UserContext from "../../UserContext";
+import { isLoggedInCB, isLoggedIn } from "../../utils/isLoggedIn";
 import "./EditProfilePic.css";
 
 const EditProfilePic = (props) => {
@@ -9,6 +10,46 @@ const EditProfilePic = (props) => {
   const [name, setName] = useState(userState.name);
   const [bio, setBio] = useState(userState.bio);
   const [location, setLocation] = useState(userState.location);
+  const [profilePic, setprofilePic] = useState(userState.profilePic);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    fetch("/api/logged-in", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: name,
+        bio: bio,
+        location: location,
+        profilePic: profilePic,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        props.history.push("/profile");
+        setUserState({
+          ...userState,
+          bio: bio,
+          location: location,
+          name: name,
+          profilePic: profilePic,
+        });
+      });
+  };
+
+  useEffect(() => {
+    isLoggedIn(userState, setUserState, props);
+  }, []);
+
+  useEffect(() => {
+    setName(userState.name);
+    setLocation(userState.location);
+    setBio(userState.bio);
+    setprofilePic(userState.profilePic);
+  }, [userState]);
+
+  console.log("name", name, "profilePic", profilePic);
 
   return (
     <div className="container">

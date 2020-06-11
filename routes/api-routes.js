@@ -20,23 +20,23 @@ router.get("/api/get", (req, res) => {
 
 // get user by id
 router.get("/api/get/:id", (req, res) => {
-  db.User.findOne({_id: req.params.id}, (err, user) => {
+  db.User.findOne({ _id: req.params.id }, (err, user) => {
     if (err) {
-      return res.json({msg: "error"});
+      return res.json({ msg: "error" });
     } else {
       return res.json({
-        _id: user._id, 
-        username: user.username, 
-        name: user.name, 
-        bio: user.bio, 
-        location: user.location, 
-        friends: user.friends, 
-        events: user.events, 
-        createdAt: user.createdAt
+        _id: user._id,
+        username: user.username,
+        name: user.name,
+        bio: user.bio,
+        location: user.location,
+        friends: user.friends,
+        events: user.events,
+        createdAt: user.createdAt,
       });
     }
-  })
-})
+  });
+});
 
 // get current logged in users friend ids [id, id, id...]
 router.get("/api/friendIDs", isAuthenticated, (req, res) => {
@@ -62,7 +62,12 @@ router.get("/api/friends", isAuthenticated, (req, res) => {
             friendSince = req.user.friends[i].date;
           }
         }
-        array.push({ _id: obj._id, username: obj.username, date: friendSince, name: obj.name });
+        array.push({
+          _id: obj._id,
+          username: obj.username,
+          date: friendSince,
+          name: obj.name,
+        });
       });
       res.json(array);
     });
@@ -137,14 +142,14 @@ router.post("/api/user-search", isAuthenticated, (req, res) => {
 router.get("/api/logged-in", (req, res) => {
   if (req.user) {
     res.json({
-      _id: req.user._id, 
-      username: req.user.username, 
-      name: req.user.name, 
-      bio: req.user.bio, 
-      location: req.user.location, 
-      friends: req.user.friends, 
-      events: req.user.events, 
-      createdAt: req.user.createdAt
+      _id: req.user._id,
+      username: req.user.username,
+      name: req.user.name,
+      bio: req.user.bio,
+      location: req.user.location,
+      friends: req.user.friends,
+      events: req.user.events,
+      createdAt: req.user.createdAt,
     });
   } else {
     res.json(false);
@@ -174,14 +179,14 @@ router.post("/api/login", (req, res, next) => {
       req.session.save(() => {
         console.log(user);
         return res.json({
-          _id: user._id, 
-          username: user.username, 
-          name: user.name, 
-          bio: user.bio, 
-          location: user.location, 
-          friends: user.friends, 
-          events: user.events, 
-          createdAt: user.createdAt
+          _id: user._id,
+          username: user.username,
+          name: user.name,
+          bio: user.bio,
+          location: user.location,
+          friends: user.friends,
+          events: user.events,
+          createdAt: user.createdAt,
         });
       });
     });
@@ -201,12 +206,15 @@ router.delete("/api/delete/:id", (req, res) => {
 */
 router.get("/api/user/:username", (req, res) => {
   const regex = new RegExp("^" + req.params.username);
-  db.User.findOne({ username: { $regex: regex, $options: "i" } }, (err, user) => {
-    if (err) {
-      res.json({ error: err });
+  db.User.findOne(
+    { username: { $regex: regex, $options: "i" } },
+    (err, user) => {
+      if (err) {
+        res.json({ error: err });
+      }
+      res.json(user);
     }
-    res.json(user);
-  });
+  );
 });
 
 // development only
@@ -220,8 +228,8 @@ router.get("/api/get/requests", (req, res) => {
 // pending friendRequests for logged in users both sent and recieved
 router.get("/api/requests", isAuthenticated, (req, res) => {
   db.FriendRequest.find({ $or: [{ to: req.user._id }, { from: req.user._id }] })
-    .sort({date: -1})
-    .exec(function(err, requests) {
+    .sort({ date: -1 })
+    .exec(function (err, requests) {
       const array = [];
       requests.forEach((element) => {
         if (JSON.stringify(element.to) === JSON.stringify(req.user._id)) {
@@ -243,19 +251,17 @@ router.get("/api/requests", isAuthenticated, (req, res) => {
         }
       });
       res.json(array);
-    }
-  );
+    });
 });
-
 
 // difference to v1 is that it will retrieve user info as well
 router.get("/api/requests-v2", isAuthenticated, (req, res) => {
   db.FriendRequest.find({ $or: [{ to: req.user._id }, { from: req.user._id }] })
-    .sort({date: -1})
-    .exec(function(err, requests) {
+    .sort({ date: -1 })
+    .exec(function (err, requests) {
       const ids = [];
       const array = [];
-      requests.forEach( (element) => {
+      requests.forEach((element) => {
         if (JSON.stringify(element.to) === JSON.stringify(req.user._id)) {
           let x = {
             toMe: true,
@@ -277,24 +283,20 @@ router.get("/api/requests-v2", isAuthenticated, (req, res) => {
         }
       });
       res.json(array);
-    }
-  );
+    });
 });
 
-router.post("/api/requests-userinfo-v2", (req,res) => {
-  const {ids} = req.body;
+router.post("/api/requests-userinfo-v2", (req, res) => {
+  const { ids } = req.body;
 
-  db.User.find({_id: {$in : ids}}, (err, users) => {
+  db.User.find({ _id: { $in: ids } }, (err, users) => {
     if (err) {
       return res.json(err);
     } else {
       return res.json(users);
     }
-  }) 
-})
-
-
-
+  });
+});
 
 // returns array of userIDs of the users that sent the logged in user a friend request
 router.get("/api/requests-received", isAuthenticated, (req, res) => {
@@ -420,52 +422,67 @@ router.post("/api/answer-request", isAuthenticated, (req, res) => {
 });
 
 // get the calendar for loggedin user
-router.get("/api/calendar/:id", isAuthenticated, (req,res) => {
+router.get("/api/calendar/:id", isAuthenticated, (req, res) => {
   // if the id is in the friends array of objects
-  const found = req.user.friends.some(el => el._id === req.params.id);
+  const found = req.user.friends.some((el) => el._id === req.params.id);
 
-  if (req.params.id == req.user._id || found ) {
+  if (req.params.id == req.user._id || found) {
     console.log("same id in the api/calendar or is a friend");
   }
-  db.User.findOne({_id: req.params.id}).populate("events").exec(function (err, user) {
-    if (err) { return res.json(err)}
-    res.json(user.events);
-    console.log(user.events);
-  })
-})
-
+  db.User.findOne({ _id: req.params.id })
+    .populate("events")
+    .exec(function (err, user) {
+      if (err) {
+        return res.json(err);
+      }
+      res.json(user.events);
+      console.log(user.events);
+    });
+});
 
 // Post calendar data for logged in user
-router.post("/api/calendar", isAuthenticated, (req,res) => {
-  db.Event.create({title: req.body.title, start: req.body.start, end: req.body.end, from: req.user._id}, async (err, event) => {
-    if (err) {
-      return res.json({err: "An error occurred tyring to create an event"});
-    } else {
-      await db.User.findOneAndUpdate({_id: req.user._id}, {$push: {events: event._id}});
+router.post("/api/calendar", isAuthenticated, (req, res) => {
+  db.Event.create(
+    {
+      title: req.body.title,
+      start: req.body.start,
+      end: req.body.end,
+      from: req.user._id,
+    },
+    async (err, event) => {
+      if (err) {
+        return res.json({ err: "An error occurred tyring to create an event" });
+      } else {
+        await db.User.findOneAndUpdate(
+          { _id: req.user._id },
+          { $push: { events: event._id } }
+        );
+      }
+      return res.json({ msg: "event created successfully" });
     }
-    return res.json({msg: "event created successfully"})
-  })
-})
-
+  );
+});
 
 // update a calendar based on id
-router.put("/api/calendar/:id", isAuthenticated, async (req,res) => {
+router.put("/api/calendar/:id", isAuthenticated, async (req, res) => {
   const id = req.params.id;
-  await db.Event.findByIdAndUpdate({_id: id}, {title: req.body.title, start: req.body.start, end: req.body.end});
-  return res.json({msg: "updated successfully"});
-})
+  await db.Event.findByIdAndUpdate(
+    { _id: id },
+    { title: req.body.title, start: req.body.start, end: req.body.end }
+  );
+  return res.json({ msg: "updated successfully" });
+});
 
 // delete an event based on id
-router.delete("/api/calendar/:id", isAuthenticated, async (req,res) => {
+router.delete("/api/calendar/:id", isAuthenticated, async (req, res) => {
   const id = req.params.id;
-  await db.Event.findByIdAndDelete({_id: id});
-  await db.User.findOneAndUpdate({_id: req.user._id}, {$pull: {events: id}} );
-  return res.json({msg: "event deleted successfully"});
-})
-
-
-
-
+  await db.Event.findByIdAndDelete({ _id: id });
+  await db.User.findOneAndUpdate(
+    { _id: req.user._id },
+    { $pull: { events: id } }
+  );
+  return res.json({ msg: "event deleted successfully" });
+});
 
 // logout [removes the session]
 router.get("/api/logout", isAuthenticated, (req, res) => {
@@ -481,19 +498,35 @@ router.get("/api/protected", isAuthenticated, (req, res) => {
   res.status(200).json({ msg: "you are allowed into protected route" });
 });
 
-
 // update logged in users info
-router.put("/api/logged-in", async (req,res) => {
-  const {bio, location, name} = req.body;
+router.put("/api/logged-in", async (req, res) => {
+  const { bio, location, name } = req.body;
 
-  db.User.findOneAndUpdate({_id: req.user._id}, {$set: {bio: bio, location: location, name: name}}, (err, doc) => {
-    if (err) {
-      return res.json(err);
-    } else {
-      res.json(doc);
+  db.User.findOneAndUpdate(
+    { _id: req.user._id },
+    { $set: { bio: bio, location: location, name: name } },
+    (err, doc) => {
+      if (err) {
+        return res.json(err);
+      } else {
+        res.json(doc);
+      }
     }
-  })
-})
+  );
+});
 
+router.put("/api/edit-profile-pic", isAuthenticated, (req, res) => {
+  db.User.findOneAndUpdate(
+    { _id: req.user._id },
+    { profilePic: req.body.profilePic },
+    (err, doc) => {
+      if (err) {
+        return res.json(err);
+      } else {
+        return res.json(doc);
+      }
+    }
+  );
+});
 
 module.exports = router;

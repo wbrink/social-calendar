@@ -42,6 +42,11 @@ const UserSchema = new Schema(
       maxlength: 50,
       trim: true,
     },
+    profilePic: {
+      type: String,
+      maxlength: 50,
+      trim: true,
+    },
     events: [
       {
         type: Schema.Types.ObjectId,
