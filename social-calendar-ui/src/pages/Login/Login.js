@@ -38,7 +38,7 @@ const Login = (props) => {
                     } else {
                         console.log(data)
                         // user.logIn(data.username, data.name, data._id, data.friends, data.bio, data.location, data.events, data.createdAt, true);
-                        setUserState({...userState, username: data.username, name: data.name, _id: data._id, friends: data.friends, bio: data.bio, location: data.location, events: data.events, createdAt: data.createdAt, loggedIn: true})
+                        setUserState({...userState, username: data.username, name: data.name, _id: data._id, friends: data.friends, bio: data.bio, location: data.location, events: data.events, createdAt: data.createdAt, profilePic: data.profilePic, loggedIn: true})
                         
                     }
                 })

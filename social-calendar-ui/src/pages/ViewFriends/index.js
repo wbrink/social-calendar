@@ -81,7 +81,7 @@ export default function ViewFriends(props) {
               return (
                 <li key={friend._id} className="list-group-item" data-username={friend.username} onClick={(e) => handleClick(e)}>
                   {/* ADD PROFILE PICTURE FROM MODEL BELOW */}
-                  <img id="friendpic" src="https://via.placeholder.com/50" />
+                  <img id="friendpic" src={friend.profilePic} />
                   <strong>{friend.username}</strong>
                   <small>({friend.name})</small>
                 </li>
@@ -90,7 +90,10 @@ export default function ViewFriends(props) {
             if (friend.username.toLowerCase().startsWith(search)) {
               return (
                 <li key={friend._id} className="list-group-item" data-username={friend.username} onClick={(e) => handleClick(e)}>
-                  {friend.username}
+                  {/* ADD PROFILE PICTURE FROM MODEL BELOW */}
+                  <img id="friendpic" src={friend.profilePic} />
+                  <strong>{friend.username}</strong>
+                  <small>({friend.name})</small>
                 </li>
               );
             }

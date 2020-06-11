@@ -33,6 +33,7 @@ router.get("/api/get/:id", (req, res) => {
         friends: user.friends,
         events: user.events,
         createdAt: user.createdAt,
+        profilePic: user.profilePic
       });
     }
   });
@@ -67,6 +68,7 @@ router.get("/api/friends", isAuthenticated, (req, res) => {
           username: obj.username,
           date: friendSince,
           name: obj.name,
+          profilePic: obj.profilePic
         });
       });
       res.json(array);
@@ -150,6 +152,7 @@ router.get("/api/logged-in", (req, res) => {
       friends: req.user.friends,
       events: req.user.events,
       createdAt: req.user.createdAt,
+      profilePic: req.user.profilePic
     });
   } else {
     res.json(false);
@@ -187,6 +190,7 @@ router.post("/api/login", (req, res, next) => {
           friends: user.friends,
           events: user.events,
           createdAt: user.createdAt,
+          profilePic: user.profilePic
         });
       });
     });
@@ -217,13 +221,13 @@ router.get("/api/user/:username", (req, res) => {
   );
 });
 
-// development only
-// get all friend requests
-router.get("/api/get/requests", (req, res) => {
-  db.FriendRequest.find({}, (err, requests) => {
-    res.json(requests);
-  });
-});
+// // development only
+// // get all friend requests
+// router.get("/api/get/requests", (req, res) => {
+//   db.FriendRequest.find({}, (err, requests) => {
+//     res.json(requests);
+//   });
+// });
 
 // pending friendRequests for logged in users both sent and recieved
 router.get("/api/requests", isAuthenticated, (req, res) => {

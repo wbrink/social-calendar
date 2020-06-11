@@ -336,7 +336,7 @@ export default class AddFriend extends React.Component {
               className="user-li"
             >
               {/* ADD PROFILE PICTURE FROM MODEL BELOW */}
-              <img id="friendpic" src="https://via.placeholder.com/50" data-username={user.username} onClick={this.clickedUser}/>
+              <img id="friendpic" src={user.profilePic} data-username={user.username} onClick={this.clickedUser}/>
               <strong data-username={user.username} onClick={this.clickedUser}>{user.username}</strong>
               <small data-username={user.username} onClick={this.clickedUser}>({user.name})</small>
             </li>
