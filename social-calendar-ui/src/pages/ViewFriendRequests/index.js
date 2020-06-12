@@ -42,7 +42,7 @@ function ViewFriendRequests(props) {
           .then(data => {
             const userMap = new Map();
             data.forEach(user => {
-              userMap.set(user._id, {username: user.username, name: user.name})
+              userMap.set(user._id, {username: user.username, name: user.name, profilePic: user.profilePic})
             })
             setRequests({sentFriendRequests: sent, recievedFriendRequests: recieved, init: true, userInfo: userMap})
 
@@ -187,12 +187,13 @@ function ViewFriendRequests(props) {
         {/* recieved requests */}
         {choice == "recieved" && requests.recievedFriendRequests.map(el => {
           const username = requests.userInfo.get(el.userID).username;
+          const profilePic = requests.userInfo.get(el.userID).profilePic;
           const name = requests.userInfo.get(el.userID).name;
           return (
             <div className="list-item" data-username={username} onClick={clickedUser}>
               <li key={el.userID} className="user-li">
                 {/* ADD PROFILE PICTURE FROM MODEL BELOW */}
-                <img id="friendpic" src="https://via.placeholder.com/50" data-username={username} onClick={clickedUser}/>
+                <img id="friendpic" src={profilePic} data-username={username} onClick={clickedUser}/>
                 <strong data-username={username} onClick={clickedUser}>{username}</strong>
                 <small data-username={username} onClick={clickedUser}>({name})</small>
               </li>
@@ -209,12 +210,13 @@ function ViewFriendRequests(props) {
         {/* sent requests */}
         {choice == "sent" && requests.sentFriendRequests.map(el => {
           const username = requests.userInfo.get(el.userID).username;
+          const profilePic = requests.userInfo.get(el.userID).profilePic;
           const name = requests.userInfo.get(el.userID).name;
           return (
             <div className="list-item" data-username={username} onClick={clickedUser}>
               <li key={el.userID} className="user-li">
                 {/* ADD PROFILE PICTURE FROM MODEL BELOW */}
-                <img id="friendpic" src="https://via.placeholder.com/50" data-username={username} onClick={clickedUser}/>
+                <img id="friendpic" src={profilePic} data-username={username} onClick={clickedUser}/>
                 <strong data-username={username} onClick={clickedUser}>{username}</strong>
                 <small data-username={username} onClick={clickedUser}>({name})</small>
               </li>
