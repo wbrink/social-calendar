@@ -54,6 +54,9 @@ if (process.env.NODE_ENV === 'production') {
 // api routes
 app.use(require("./routes/api-routes"));
 
+app.get("*", (req,res) => {
+  res.sendFile(path.join(__dirname, "/social-calendar-ui/build/index.html"));
+})
 
 const PORT = process.env.PORT || 3001;
 
