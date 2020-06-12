@@ -40,17 +40,14 @@ export default function UserInfo(props) {
             </p>
           </div>
         </div>
-        <div class="col-6 userInfoContainer">
+        <div class="col-6 col-md-9 col-lg-10 col-xl-11 userInfoContainer">
           <center>
             <div id="subHeaderUsername">{user.name}</div>
           </center>
-          <div className="row justify-content-center">
-            <em className=" col-11 col-md-11 col-lg-6 userDesc">
-              "If you think I'm available, your wrong. I'm too busy making this
-              app..."
-            </em>
+          <div className="row">
+          <em  className=" col-11 userDesc" >"If you think I'm available, your wrong. I'm too busy making this app..."</em>
           </div>
-          <div className="row justify-content-center">
+          <div className="row">
             <small className="col-12">
               <div id="userCreatedAt">
                 {" "}

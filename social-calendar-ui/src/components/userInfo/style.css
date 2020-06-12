@@ -107,6 +107,12 @@ img{
   margin-top: 18px !important;
 }
 
+@media screen and (min-width: 1200px) {
+  .userInfoContainer{
+    padding-left: 100px !important;
+  }
+}
+
 .userDesc{
   padding-bottom: 8px;
   padding-right: 0px !important;

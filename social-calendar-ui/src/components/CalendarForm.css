@@ -37,6 +37,11 @@
     border-style: none;
 }
 
+.rbc-date-cell a:hover{
+    background-color: whitesmoke;
+
+}
+
 .rbc-today{
     background-color: white !important;
 }
@@ -56,19 +61,42 @@
     overflow: hidden !important;
 }
 
+.rbc-show-more{
+    color: white !important;
+    height: 8px !important;
+    border-radius: 9px !important;
+    background-color: #ff6a6a !important;
+    margin: 1px !important;
+    overflow: hidden !important;
+}
+
 .rbc-event-content{
     display: none !important;
 }
 
 @media only screen and (min-width: 600px) {
     .rbc-event{
+        font-family: "Passion One", cursive;
         text-align: center !important;
         height: auto !important;
+        letter-spacing: .1em;
     }
+    
+    .rbc-event:hover{
+        padding-top: 2px !important;
+        padding-bottom: 2px !important;
+    }    
 
     .rbc-event-content{
+        font-family: "Passion One", cursive;
         overflow: hidden !important;
         display: inline !important;
+    }
+    .rbc-show-more{
+        padding-top: 2px !important;
+        padding-bottom: 2px !important;
+        height: auto !important;
+        text-align: center !important;
     }
   }
 
