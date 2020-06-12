@@ -25,7 +25,7 @@ mongoose_db.once("open", async function () {
     friends: [],
     bio: "test user for us to use",
     location: "Central Valley, CA",
-    profilePic: "https://via.placeholder.com/40",
+    profilePic: "/images/dog.jpg",
   });
 
   var Bob = new db.User({
@@ -35,6 +35,7 @@ mongoose_db.once("open", async function () {
     friends: [{ _id: a._id, date: date }],
     bio: "test bio for bob",
     location: "New York",
+    profilePic: "/images/guy.png"
   });
   var Billy = new db.User({
     username: "Billy",
@@ -43,6 +44,7 @@ mongoose_db.once("open", async function () {
     friends: [{ _id: a._id, date: date }],
     bio: "test bio for billy",
     location: "New York",
+    profilePic: "/images/orangemonster.jpg"
   });
   var Julia = new db.User({
     username: "Julia",
@@ -51,6 +53,7 @@ mongoose_db.once("open", async function () {
     friends: [],
     bio: "test bio for Julia",
     location: "New York",
+    profilePic: "/images/girl2.png"
   });
   var Kramer = new db.User({
     username: "Kramer",
@@ -59,6 +62,7 @@ mongoose_db.once("open", async function () {
     friends: [],
     bio: "test bio Kramer",
     location: "New York",
+    profilePic: "/images/dog.jpg"
   });
   var Michael = new db.User({
     username: "Michael",
@@ -67,6 +71,7 @@ mongoose_db.once("open", async function () {
     friends: [],
     bio: "test bio Michael",
     location: "New York",
+    profilePic: "/images/bluemonster.jpg"
   });
   var Jason = new db.User({
     username: "Jason",
@@ -75,6 +80,7 @@ mongoose_db.once("open", async function () {
     friends: [],
     bio: "test bio Jason",
     location: "New York",
+    profilePic: "/images/flower.jpg"
   });
   var George = new db.User({
     username: "George",
@@ -83,6 +89,7 @@ mongoose_db.once("open", async function () {
     friends: [],
     bio: "test bio George",
     location: "New York",
+    profilePic: "/images/guy2.png"
   });
   var Jerry = new db.User({
     username: "Jerry",
@@ -91,6 +98,7 @@ mongoose_db.once("open", async function () {
     friends: [],
     bio: "test bio Jerry",
     location: "New York",
+    profilePic: "/images/guy2.png"
   });
   var Elaine = new db.User({
     username: "Elaine",
@@ -99,6 +107,7 @@ mongoose_db.once("open", async function () {
     friends: [{ _id: a._id, date: date }],
     bio: "test bio Elaine",
     location: "New York",
+    profilePic: "/images/girl1.png"
   });
   var Elton = new db.User({
     username: "Elton",
@@ -107,6 +116,7 @@ mongoose_db.once("open", async function () {
     friends: [],
     bio: "test bio Elton",
     location: "New York",
+    profilePic: "/images/guy2.png"
   });
   var Ernie = new db.User({
     username: "Ernie",
@@ -115,6 +125,7 @@ mongoose_db.once("open", async function () {
     friends: [{ _id: a._id, date: date }],
     bio: "test bio Ernie",
     location: "New York",
+    profilePic: "/images/guy2.png"
   });
   var Bernie = new db.User({
     username: "Bernie",
@@ -123,6 +134,7 @@ mongoose_db.once("open", async function () {
     friends: [],
     bio: "test bio Bernie",
     location: "New York",
+    profilePic: "/images/guy2.png"
   });
   var Bert = new db.User({
     username: "Bert",
@@ -131,6 +143,7 @@ mongoose_db.once("open", async function () {
     friends: [{ _id: a._id, date: date }],
     bio: "test bio Bert",
     location: "New York",
+    profilePic: "/images/guy2.png"
   });
   var Fred = new db.User({
     username: "Fred",
@@ -139,6 +152,7 @@ mongoose_db.once("open", async function () {
     friends: [],
     bio: "test bio Fred",
     location: "New York",
+    profilePic: "/images/guy2.png"
   });
   var Bo = new db.User({
     username: "Bo",
@@ -147,6 +161,7 @@ mongoose_db.once("open", async function () {
     friends: [],
     bio: "test bio Bo",
     location: "New York",
+    profilePic: "/images/guy2.png"
   });
   var Bella = new db.User({
     username: "Bella",
@@ -155,6 +170,7 @@ mongoose_db.once("open", async function () {
     friends: [],
     bio: "test bio Bella",
     location: "New York",
+    profilePic: "/images/girl3.png"
   });
   var Blake = new db.User({
     username: "Blake",
@@ -163,6 +179,7 @@ mongoose_db.once("open", async function () {
     friends: [],
     bio: "test bio Blake",
     location: "New York",
+    profilePic: "/images/bluemonster.jpg"
   });
 
   a.friends = [
