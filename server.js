@@ -46,6 +46,10 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static("social-calendar-ui/build"));
+}
+
 
 // api routes
 app.use(require("./routes/api-routes"));
