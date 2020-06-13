@@ -6,6 +6,7 @@ import EditProfile from "./pages/EditProfile/EditProfile.js";
 import EditProfilePic from "./pages/EditProfilePic/EditProfilePic.js";
 import UserContext from "./UserContext.js";
 import Nav from "./components/nav/Nav.js";
+import NoNav from "./components/noNav/NoNav.js"
 ////
 
 import Profile from "./pages/Profile/Profile.js";
@@ -63,7 +64,11 @@ function App({ calendarStore }) {
   return (
     //any links that are used in other pages must have a component and path specified here
     <Router history={history}>
-      <Nav />
+      {userState.loggedIn ? (
+            <Nav/>
+          ) : (
+            <NoNav/>
+          )}
       <UserContext.Provider value={{ userState, setUserState }}>
         <Route exact path="/">
           <Redirect to="/Login" />

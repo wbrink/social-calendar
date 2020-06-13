@@ -58,7 +58,7 @@ const Login = (props) => {
   return (
     <div className="container">{/* header will be a component inside of the sidenavbar component*/}
     <div className="row justify-content-center">
-      <div className="col-8 col-md-12" id="LoginContainer">
+      <div className="col-8 col-md-12 box" id="LoginContainer">
           <div className="col-fliud" id="LoginHeader">
               Login
           </div>

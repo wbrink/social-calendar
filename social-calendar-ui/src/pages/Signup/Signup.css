@@ -29,9 +29,16 @@ body{background-color: #5DADE2;}
     font-weight: bolder;
   }
 
+  #ErrorMsgDiv{
+    margin-top: 12px !important;
+    font-size: .7em !important;
+    color: red !important;
+  }
   
   #LoginButton{
-      margin-top: 18px;
+    padding-top: 4px !important;
+    padding-bottom: 6px !important;
+    margin-top: 18px;
     margin-bottom: 40px;
     border-style: solid;
     border-color: white;
