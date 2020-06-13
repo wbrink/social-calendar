@@ -31,7 +31,7 @@ const Signup = () => {
                 },
                 redirect: 'follow', // manual, *follow, error
                 body: JSON.stringify(userCredentials) // body data type must match "Content-Type" header
-              })
+                })
                 .then(response => response.json())
                 .then(data => {
                     console.log(data)
