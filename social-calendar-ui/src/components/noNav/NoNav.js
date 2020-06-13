@@ -3,7 +3,7 @@ function NoNav(){
 
     return(
         <div className="col">
-            e
+            
         </div>
     )
 }
