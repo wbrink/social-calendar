@@ -68,6 +68,7 @@ a:hover {
   background-color: #ff6a6a;
   border-color: #ff6a6a;
 }
+
 #profilepic {
   margin-top: 7px;
   margin-bottom: 5px;
@@ -76,6 +77,15 @@ a:hover {
   border-radius: 2px;
   width: 100px;
 }
+
+#profilepic:hover {
+  border: 4px ridge red;
+}
+
+.clicked {
+  border: 4px ridge red !important;
+}
+
 h4 {
   border-style: solid;
   border-color: white;
@@ -85,6 +95,30 @@ h4 {
   text-align: center;
   color: #ff6a6a;
   margin-top: 7px;
+}
+
+#CancelButton {
+  padding-top: 4px !important;
+  padding-bottom: 6px !important;
+  margin-top: 18px;
+  margin-bottom: 40px;
+  border-style: solid;
+  border-color: white;
+  border-radius: 48px;
+  letter-spacing: 2px;
+  font-family: "Fredoka One", cursive;
+  text-align: center;
+  color: white;
+  background-color: #8cadc9;
+  font-size: 0.9em;
+  transition: 0.2s all ease-in;
+  cursor: pointer;
+}
+
+#CancelButton:hover {
+  color: white;
+  background-color: #677886;
+  /* border-color: #ff6a6a; */
 }
 
 .form-check-input {
