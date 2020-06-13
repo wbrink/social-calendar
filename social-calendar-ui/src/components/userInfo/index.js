@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import moment from "moment";
 import {
   BrowserRouter as Router,
   Switch,
@@ -17,7 +18,8 @@ export default function UserInfo(props) {
     fetch(`/api/user/${props.name}`)
       .then((res) => res.json())
       .then((userData) => {
-        setUser({ ...userData });
+        const date = moment(userData.createdAt)
+        setUser({ ...userData, createdAt: date.format('LL') });
       });
   }, []);
 
@@ -52,7 +54,7 @@ export default function UserInfo(props) {
               <div id="userCreatedAt">
                 {" "}
                 <b>Member Since:</b> <br />
-                {user.createdAt}
+                { user.createdAt}
               </div>
             </small>
           </div>
