@@ -1,0 +1,33 @@
+#calendar-blur {
+  background-image: url("/images/calendar_pic_smallScreens_blur.png");
+  height: 70vh;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+}
+
+.warning {
+  color: rgba(247, 139, 16, 0.959);
+  border-radius: 8px;
+  font-size: 1.3em;
+  font-weight: bold;
+}
+
+#message-box {
+  width: 300px;
+  text-align: center;
+  margin-top: 110px;
+}
+
+#alert-icon {
+  fill: rgba(247, 139, 16, 0.959);
+  margin-right: 15px;
+}
+
+@media screen and (min-width: 500px) {
+  #calendar-blur {
+    background-image: url("/images/calendar_pic_bigScreens_blur.png");
+  }
+}
