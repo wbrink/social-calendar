@@ -534,8 +534,9 @@ router.put("/api/edit-profile-pic", isAuthenticated, (req, res) => {
 });
 
 router.post("/api/createUser", (req,res) => {
-  const {username, password} = req.body
+  const {username, password, name} = req.body
   db.User.create({
+    name: name,
     username: username,
     password: password
   }, (err, doc) => {

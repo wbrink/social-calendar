@@ -1,0 +1,20 @@
+#friendRequestBtn{
+    padding-right: 18px !important;
+    padding-left: 18px !important;
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+    background-color: #FB7D7D !important;
+    color: white !important;
+    font-family: "Fredoka One", cursive;
+    font-size: .7em !important;
+    border-radius: 8px;
+    border-color: #FB7D7D;
+    letter-spacing: .1em;
+    border-style: none;
+}
+
+.greentxt{
+    font-size: .7em;
+    margin-top: 8px !important;
+    color: green !important;
+}

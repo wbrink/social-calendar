@@ -24,6 +24,7 @@
   border-style: solid;
   border-color: white;
   border-radius: 4px;
+  padding-bottom: 12px !important;
 }
 
 #profilepic {
@@ -138,9 +139,12 @@ img{
   color: black;
 }
 
+#profilepicContainer:hover{
+  background-color: white !important;
+  border-color: white !important;
+}
 
 #userFriends{
-  margin-top: 10px !important;
   border-color: #FB7D7D;
   background-color: #FB7D7D;
   color: white;

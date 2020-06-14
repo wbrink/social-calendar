@@ -16,6 +16,7 @@ const Signup = () => {
         message: ""
     })
     const [formObject, setFormObject] = useState({
+        name: "",
         username: "",
         password: "",
         confirmPassword: ""
@@ -33,7 +34,7 @@ const Signup = () => {
             console.log("passwords do not match")
             seterrorHandle({message: "Passwords do not match"})
           }else{
-            let userCredentials = {username: formObject.username, password: formObject.password}
+            let userCredentials = {username: formObject.username, password: formObject.password, name: formObject.name}
             console.log("Login credintials sent to back end: " + JSON.stringify(userCredentials))
             fetch("/api/createUser", {
                 method: 'POST', // *GET, POST, PUT, DELETE, etc.

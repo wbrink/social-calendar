@@ -48,31 +48,35 @@ const EditProfile = (props) => {
   return (
     <div className="container">
       <div className="row justify-content-center">
-        <div className="col" id="EditContainer">
+        <div className="col box" id="EditContainer">
           <div className="col-fliud" id="EditHeader">
             Edit Profile
           </div>
 
-          <div className="row justify-content-center">
-            <div class="row" id="rowcss">
-              <img id="profilepic" src="https://via.placeholder.com/90" />
+          <div className="row justify-content-center" id="rowcss">
+              <div className="col-12">
+                <div className="row justify-content-center">
+                <img id="profilepic" src="https://via.placeholder.com/90" />
+                </div>
+              </div>
               <br></br>
               <center>
                 <p class="text-uppercase">
                   <small>
-                    <h4>Username {userState.username}</h4>
+                    <h4>Username 
+                      <br/>
+                      {userState.username}</h4>
                   </small>
                 </p>
-                <a href="/editprofilepic">Change Profile Photo</a>
+                <a id="changeProfilePhoto" href="/editprofilepic">Change Profile Photo</a>
               </center>
-            </div>
           </div>
           <div className="col-12" id="FormContainer">
             
             <form className="col" action="" onSubmit={handleSubmit}>
-              <div className="col labels">Edit Name</div>
+              <div className="col labels">Change Name</div>
               <input className="col" placeholder="Type your Name" type="text" value={name} onChange={(e) => setName(e.target.value)} />
-              <div className="col labels">Edit Bio</div>
+              <div className="col labels">Change Bio</div>
               <input
                 className="col"
                 placeholder="Type your Bio"
@@ -81,7 +85,7 @@ const EditProfile = (props) => {
                 onChange={(e => setBio(e.target.value))}
                 type="textbox"
               />
-               <div className="col labels">Edit Location</div>
+               <div className="col labels">Change Location</div>
                <input
                 className="col"
                 placeholder="Type your Location"
@@ -90,7 +94,9 @@ const EditProfile = (props) => {
                 onChange={(e) => setLocation(e.target.value)}
                 type="text"
               />
-              <input type="submit" value="Save" />
+              <div className="row justify-content-center">
+              <input type="submit" id="editProfileSaveBtn" value="Save" />
+              </div>
             </form>
           </div>
         </div>

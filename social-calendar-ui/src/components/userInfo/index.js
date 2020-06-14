@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
+import UserContext from "../../UserContext.js"
 import moment from "moment";
+import AddFriendBtn from "../addFriendBtn/AddFriendBtn.js"
 import {
   BrowserRouter as Router,
   Switch,
@@ -13,6 +15,7 @@ import "./style.css";
 
 export default function UserInfo(props) {
   const [user, setUser] = useState(null);
+  const {userState, setUserState} = useContext(UserContext);
 
   useEffect(() => {
     fetch(`/api/user/${props.name}`)
@@ -27,13 +30,15 @@ export default function UserInfo(props) {
     return <body></body>;
   }
 
+  console.log(user.friends)
+
   return (
     <div id="main">
       <div class="row" id="rowcss">
         <div class="col-6">
-          <a href="/editprofilepic">
+          <Link id="profilepicContainer" to={"/editprofilepic"}>
             <img id="profilepic" src={user.profilePic} />
-          </a>
+          </Link>
           <div className="row">
             <p class="text-uppercase">
               <strong>
@@ -47,7 +52,7 @@ export default function UserInfo(props) {
             <div id="subHeaderUsername">{user.name}</div>
           </center>
           <div className="row">
-          <em  className=" col-11 userDesc" >"If you think I'm available, your wrong. I'm too busy making this app..."</em>
+          <em  className=" col-11 userDesc" >"{user.bio}"</em>
           </div>
           <div className="row">
             <small className="col-12">
@@ -80,13 +85,31 @@ export default function UserInfo(props) {
             Friends {user.friends.length}
           </a>
         </div>
-        <div className="col-6">
-          <Link
+        <div className="col-6 col-md-4 col-lg-3">
+          {user.friends.some(el => el._id === userState._id)
+          ? 
+          <div className="col"></div>
+          : user._id === userState._id
+          ? <Link
+          to={{ pathname: "/editprofile", state: { ...user } }}
+          className=" buttons edit-profile"
+          >
+          Edit Profile
+        </Link>
+          : <AddFriendBtn state={({...user})}/>
+        }
+        {/* {userState.loggedIn ? (
+            <Nav/>
+          ) : (
+            <NoNav/>
+          )} */}
+
+          {/* <Link
             to={{ pathname: "/editprofile", state: { ...user } }}
             className=" buttons edit-profile"
           >
             Edit Profile
-          </Link>
+          </Link> */}
         </div>
       </div>
     </div>

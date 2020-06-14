@@ -53,6 +53,7 @@ const UserSchema = new Schema(
         ref: "Event",
       },
     ],
+    createdAt: Date
   },
   { timestamps: true }
 );
