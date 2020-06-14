@@ -7,10 +7,84 @@
   text-decoration: none;
   background-color: #fff;
   border: 1px solid rgba(0, 0, 0, 0.125);
+  transition: background-color 0.1s ease-in;
 }
 
 .user-li {
   list-style-type: none;
+  padding: 10px 0px;
+  display: flex;
+  align-items: center;
+}
+
+.list-item:hover {
+  background-color: rgb(231, 231, 231);
+}
+
+.list-item:active {
+  background-color: rgb(212, 212, 212);
+}
+
+#friendpic {
+  width: 75px !important;
+  height: 75px !important;
+  border-radius: 50px;
+  margin-top: 0px !important;
+  margin-right: 10px;
+}
+
+/* add delete reject button */
+.btn2 {
+  padding: 10px !important;
+  border: none;
+  cursor: pointer;
+  /* border: 2px solid gray; */
+  /* border-style: solid; */
+  /* border-color: rgb(141, 38, 38); */
+  border-radius: 15px;
+  letter-spacing: 2px;
+  font-family: "Fredoka One", cursive;
+  text-align: center;
+  color: #ff6a6a;
+  font-size: 0.9em;
+  transition: 0.2s all ease-in;
+}
+
+.user-li img {
+  display: block;
+}
+
+.names {
+  display: flex;
+  flex-direction: column;
+}
+
+.btn2-primary {
+  background-color: #0b78c0;
+  color: white;
+}
+
+.btn2-primary:hover {
+  background-color: #53b0ee;
+  color: white;
+}
+
+.btn2-success {
+  background-color: #47c24d;
+  color: white;
+}
+
+.btn2-success:hover {
+  background-color: #10eb52;
+}
+
+.btn2-danger {
+  background-color: #ff6a6a;
+  color: white;
+}
+
+.btn2-danger:hover {
+  background-color: #ff3b3b;
 }
 
 .friend-actions {
@@ -18,6 +92,7 @@
   width: 150px;
   align-items: center;
   justify-content: center;
+  margin-right: 10px;
 }
 
 .friend-actions p {
@@ -25,9 +100,61 @@
 }
 
 .friend-btn:first-child {
-  margin-right: 20px;
+  margin-right: 10px;
 }
 
 #current-friend {
   fill: green;
+}
+
+#search-message-icon {
+  fill: rgb(187, 200, 219);
+  width: 15rem;
+  height: 15rem;
+}
+
+.search-here {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 60px;
+}
+
+.search-here div:nth-child(2) {
+  font-size: 2rem;
+  font-family: "Fredoka One", cursive;
+  color: rgb(164, 168, 175);
+  text-align: center;
+  margin-top: 50px;
+}
+
+@media only screen and (max-width: 600px) {
+  #friendpic {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .list-item {
+    padding: 0.5rem 0.4rem;
+  }
+
+  .btn2 {
+    padding: 10px 7px !important;
+    font-size: small;
+  }
+}
+
+@media only screen and (min-width: 900px) {
+  #search-message-icon {
+    fill: rgb(187, 200, 219);
+    width: 25rem;
+    height: 25rem;
+  }
+
+  .search-here {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 70px;
+  }
 }

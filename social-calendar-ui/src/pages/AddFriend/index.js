@@ -224,6 +224,7 @@ export default class AddFriend extends React.Component {
           >
             <svg
               class="bi bi-search"
+              id="magnifying-search-icon"
               width="1em"
               height="1em"
               viewBox="0 0 16 16"
@@ -252,75 +253,66 @@ export default class AddFriend extends React.Component {
             />
           </form>
           <div className="friend-container">
-            <ul className="list-group">
-              <p id="search-here"> Please Search Here </p>
-            </ul>
+            <div className="search-here">
+              <svg id="search-message-icon" class="bi bi-search" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+                <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+              </svg>
+              <div>Search Here To Find Friends</div>
+            </div>
           </div>
         </div>
       );
     }
+
+    // if no users found
+    if (this.state.users.length == 0 && this.state.search.length > 0) {
+      return (
+        <div className="body">
+          <form id="search-friend-list-form" onSubmit={(e) => {return e.preventDefault(); }}>
+            <svg id="magnifying-search-icon" class="bi bi-search" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+              <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
+            </svg>
+            <label htmlFor="search-friend-list">Search</label>
+            <input type="text" onChange={(e) => {this.handleSearchChange(e);}} placeholder="Search" id="search-friend-list" name="search" autoComplete="off"/>
+          </form>
+          <div className="friend-container">
+            <div className="search-here">
+              <svg id="search-message-icon" class="bi bi-search" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+                <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+              </svg>
+              <div>No Users Found</div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
 
     // if users match the search
     if (this.state.users.length > 0) {
       element = this.state.users.map((user) => {
         // by defualt the button is add friend button
         let x = "default";
-        let button = (
-          <button
-            onClick={(e) => {
-              this.sendFriendRequest(e, user.username, user._id);
-            }}
-            class="btn btn-primary"
-          >
-            Add Friend
-          </button>
-        );
+        let button = (<button onClick={(e) => { this.sendFriendRequest(e, user.username, user._id);}} class="btn2 btn2-primary">Add Friend</button>);
         let buttons = [
-          <button
-            onClick={(e) => {
-              this.acceptFriendRequest(e, user._id);
-            }}
-            class="btn btn-success friend-btn"
-          >
-            Accept
-          </button>,
-          <button
-            onClick={(e) => {
-              this.rejectFriendRequest(e, user._id);
-            }}
-            class="btn btn-danger friend-btn"
-          >
-            Reject
-          </button>,
+          <button onClick={(e) => {this.acceptFriendRequest(e, user._id);}} class="btn2 btn2-success friend-btn">Accept</button>,
+          <button onClick={(e) => {this.rejectFriendRequest(e, user._id);}} class="btn2 btn2-danger friend-btn">Reject</button>
         ];
+        
         let buttonSent = [
-          <button
-            onClick={(e) => {
-              this.deleteFriendRequest(e, user._id);
-            }}
-            class="btn btn-danger friend-btn"
-          >
-            Delete
-          </button>,
+          <button onClick={(e) => {this.deleteFriendRequest(e, user._id);}} class="btn2 btn2-danger friend-btn">Delete</button>, 
           <p>Pending</p>,
         ];
+
         // if user is already a friend display check mark (instead of button)
         if (this.state.currentFriends.includes(user._id)) {
           x = "friend";
           button = (
-            <svg
-              class="bi bi-check"
-              id="current-friend"
-              width="2em"
-              height="2em"
-              viewBox="0 0 16 16"
-              fill="green"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z"
-              />
+            <svg class="bi bi-check" id="current-friend" width="2em" height="2em" viewBox="0 0 16 16" fill="green" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z"/>
             </svg>
           );
         } else if (this.state.receivedFriendRequests.includes(user._id)) {
@@ -331,14 +323,17 @@ export default class AddFriend extends React.Component {
 
         return (
           <div className="list-item" data-username={user.username} onClick={this.clickedUser}>
-            <li
-              key={user._id}
-              className="user-li"
-            >
+            <li key={user._id} className="user-li">
               {/* ADD PROFILE PICTURE FROM MODEL BELOW */}
               <img id="friendpic" src={user.profilePic} data-username={user.username} onClick={this.clickedUser}/>
-              <strong data-username={user.username} onClick={this.clickedUser}>{user.username}</strong>
-              <small data-username={user.username} onClick={this.clickedUser}>({user.name})</small>
+              
+              <div className="names">
+                <strong data-username={user.username} onClick={this.clickedUser}>{user.username}</strong>
+                <small data-username={user.username} onClick={this.clickedUser}>({user.name})</small>
+              </div>
+              
+              
+              
             </li>
             {x == "default" && button}
             {x == "friend" && button}
@@ -355,6 +350,9 @@ export default class AddFriend extends React.Component {
       });
     }
 
+    
+
+    // otherwise return the users
     return (
       <div className="body">
         <form
@@ -370,6 +368,7 @@ export default class AddFriend extends React.Component {
             viewBox="0 0 16 16"
             fill="currentColor"
             xmlns="http://www.w3.org/2000/svg"
+            id="magnifying-search-icon"
           >
             <path
               fill-rule="evenodd"
