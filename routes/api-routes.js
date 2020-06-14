@@ -540,9 +540,14 @@ router.post("/api/createUser", (req,res) => {
     username: username,
     password: password
   }, (err, doc) => {
-    if(err) return res.json(err)
-    else{
-      return res.json(doc)
+    if(err) {
+      if (err.name === "MongoError" || err.code === 11000) {
+        res.json({ err: "username already exists" });
+      } else {
+        return res.json(err)
+      }
+    } else {
+      res.redirect(307, "/api/login");
     }
   })
 })

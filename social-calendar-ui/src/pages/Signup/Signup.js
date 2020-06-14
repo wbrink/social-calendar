@@ -2,8 +2,9 @@ import React, {useState} from "react";
 import { Link, useHistory } from "react-router-dom";
 import ErrorHandler from "../../components/errorHandler/ErrorHandler.js"
 import "./Signup.css"
+import { PropTypes } from "mobx-react";
 
-const Signup = () => {
+const Signup = (props) => {
 
     const history = useHistory();
 
@@ -29,37 +30,48 @@ const Signup = () => {
 
       async function handleFormSubmit(event) {
         event.preventDefault();
-        if (formObject.username && formObject.password && formObject.confirmPassword) {
+        if (formObject.username && formObject.password && formObject.confirmPassword && formObject.name) {
           if(formObject.password !== formObject.confirmPassword){
             console.log("passwords do not match")
             seterrorHandle({message: "Passwords do not match"})
-          }else{
+          } else {
             let userCredentials = {username: formObject.username, password: formObject.password, name: formObject.name}
             console.log("Login credintials sent to back end: " + JSON.stringify(userCredentials))
             fetch("/api/createUser", {
-                method: 'POST', // *GET, POST, PUT, DELETE, etc.
-                headers: {
-                  'Content-Type': 'application/json'
-                  // 'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                redirect: 'follow', // manual, *follow, error
-                body: JSON.stringify(userCredentials) // body data type must match "Content-Type" header
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data)
-                })
-            };
+              method: 'POST', // *GET, POST, PUT, DELETE, etc.
+              headers: {
+                'Content-Type': 'application/json'
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+              },
+              redirect: 'follow', // manual, *follow, error
+              body: JSON.stringify(userCredentials) // body data type must match "Content-Type" header
+              })
+              .then(response => response.json())
+              .then(data => {
+                  if (data.hasOwnProperty("err")) {
+                    if (data.err == "username already exists") {
+                      // then the user wasn't created and username already exists
+                      seterrorHandle({message: "Username Already Exists"});
+                    }
+                  }
+                  // then successful signup and subsequent login: redirect to profile
+                  props.history.push("/profile");
+              })
+          };
+        } else if( formObject.username){
+          // if name wasn't entered
+          if (!formObject.name) {
+            seterrorHandle({message: "Please Enter Your Name"});
+            return;
           }
-          else if( formObject.username){
-            seterrorHandle({message: "Please enter a valid password"})
-            if(formObject.password){
-              seterrorHandle({message: "Please confirm password"})
-            }
+          seterrorHandle({message: "Please enter a valid password"})
+          if(formObject.password){
+            seterrorHandle({message: "Please confirm password"})
           }
-          else if(formObject.username && formObject.password){
-              seterrorHandle({message: "Passwords do not match"})
-          }
+        }
+        else if(formObject.username && formObject.password){
+          seterrorHandle({message: "Passwords do not match"})
+        } 
         //clear forms
 
     }
