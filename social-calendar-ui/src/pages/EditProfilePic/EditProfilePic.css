@@ -3,7 +3,7 @@
   background-color: white;
   border-color: white;
   border-radius: 4px;
-  margin-top: 100px;
+  margin-top: 60px;
   margin-left: 30px;
   margin-right: 30px;
 }
@@ -76,6 +76,7 @@ a:hover {
   border-color: white;
   border-radius: 2px;
   width: 100px;
+  transition: all 0.1s ease-in;
 }
 
 #profilepic:hover {
@@ -97,35 +98,66 @@ h4 {
   margin-top: 7px;
 }
 
-#CancelButton {
+.save-cancel-btn {
   padding-top: 4px !important;
   padding-bottom: 6px !important;
-  margin-top: 18px;
-  margin-bottom: 40px;
+  margin-top: 5px;
+  margin-bottom: 5px;
   border-style: solid;
   border-color: white;
   border-radius: 48px;
   letter-spacing: 2px;
   font-family: "Fredoka One", cursive;
   text-align: center;
-  color: white;
-  background-color: #8cadc9;
   font-size: 0.9em;
   transition: 0.2s all ease-in;
   cursor: pointer;
 }
 
-#CancelButton:hover {
+.save-cancel-btnRed {
+  background-color: #ff6a6a;
+  color: white;
+}
+
+.save-cancel-btnGrey {
+  background-color: #8cadc9;
+  color: white;
+}
+
+.save-cancel-btn:first-child {
+  margin-top: 25px;
+}
+
+.save-cancel-btnRed:hover {
+  color: white;
+  background-color: #fa3c3c;
+  /* border-color: #ff6a6a; */
+}
+
+.save-cancel-btnGrey:hover {
   color: white;
   background-color: #677886;
   /* border-color: #ff6a6a; */
 }
 
-.form-check-input {
-  /* margin-left: 120px;
-  margin-top: 45px; */
-}
-
 .selected {
   box-shadow: 0px 12px 22px 1px #333;
+}
+
+@media only screen and (max-width: 500px) {
+  #profilepic {
+    width: 70px !important;
+    height: 70px !important;
+  }
+}
+
+@media only screen and (max-width: 330px) {
+  #profilepic {
+    width: 50px !important;
+    height: 50px !important;
+  }
+
+  #EditContainer {
+    margin-top: 10px;
+  }
 }

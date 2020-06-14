@@ -74,8 +74,8 @@ const EditProfilePic = (props) => {
           </div>
 
           <div className="row justify-content-center">
-            <div className="col-9 text-center" id="SignupLink" onClick={handleSubmit}>Save</div>
-            <div className="col-9 text-center" id="CancelButton" onClick={goBack}>Cancel</div>
+            <div className="col-9 text-center save-cancel-btn save-cancel-btnRed"  onClick={handleSubmit}>Save</div>
+            <div className="col-9 text-center save-cancel-btn save-cancel-btnGrey" onClick={goBack}>Cancel</div>
           </div>
         </div>
       </div>
