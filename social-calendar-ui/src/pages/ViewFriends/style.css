@@ -30,7 +30,7 @@ p {
 
 #search-friend-list-form {
   padding: 5px 0px;
-  background-color: rgb(44, 44, 44);
+  background-color: #5DADE2;
   flex: 0 0 auto;
   height: auto;
   display: flex;
@@ -50,6 +50,19 @@ p {
   margin-right: 50px;
 }
 
+.btn-primary{
+  font-size: 1.2em;
+  border-color: #FB7D7D;
+  background-color: #FB7D7D !important;
+}
+
+.btn-primary:hover{
+  font-size: 1.3em;
+  border-color: #FB7D7D;
+  background-color: #FB7D7D !important;
+}
+
+
 #search-friend-list-form input:focus {
   box-shadow: 0 0 2pt 2pt rgb(69, 165, 255);
 }
@@ -64,7 +77,7 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(44, 44, 44);
+  background-color: #5DADE2;
   flex: 0 0 10vh;
 }
 

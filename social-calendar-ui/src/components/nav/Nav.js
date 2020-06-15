@@ -2,6 +2,7 @@ import React from "react"
 
 function Nav(){
 
+
     function logOut(){
         fetch('/api/logout')
           .then(response => response.json())
@@ -27,6 +28,23 @@ function Nav(){
           class="collapse navbar-collapse flex-grow-0 py-0"
           id="navbarSupportedContent"
         >
+          {/* <div className="row justify-content-center">
+            <div className="col-4">
+            <a class=" nav-item nav-link" href="/friends">
+                View Friends
+              </a>
+            </div>
+            <div className="col-4">
+              <a class="nav-item nav-link" href="/addfriend">
+                Add Friends
+              </a>
+            </div>
+            <div className="col-4">
+              <a href="/" class="nav-item nav-link" onClick={logOut}>
+                Logout
+              </a>
+            </div>
+          </div> */}
           <ul class="navbar-nav text-right">
             <li class="nav-item active">
               <a class="nav-link" href="/friends">
