@@ -56,7 +56,7 @@ const EditProfile = (props) => {
           <div className="row justify-content-center" id="rowcss">
               <div className="col-12">
                 <div className="row justify-content-center">
-                <img id="profilepic" src="https://via.placeholder.com/90" />
+                <img id="profilepic" className="ml-0" src={userState.profilePic} />
                 </div>
               </div>
               <br></br>

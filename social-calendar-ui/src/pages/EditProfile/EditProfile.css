@@ -4,7 +4,7 @@
   border-color: white;
   border-radius: 4px;
   margin-bottom: 32px !important;
-  margin-top: 100px !important;
+  margin-top: 50px !important;
   margin-left: 30px;
   margin-right: 30px;
 }
@@ -28,7 +28,7 @@ input {
   border-bottom-style: solid;
   border-bottom-width: 1px;
 }
-#changeProfilePhoto{
+#changeProfilePhoto {
   border-color: #ff6a6a !important;
   padding-left: 14px !important;
   padding-top: 4px !important;
@@ -36,9 +36,9 @@ input {
   padding-right: 14px !important;
   color: white !important;
   background-color: #ff6a6a !important;
-  font-size: .9em !important;
+  font-size: 0.9em !important;
 }
-#changeProfilePhoto:hover{
+#changeProfilePhoto:hover {
   color: #ff6a6a !important;
   background-color: white !important;
   border-color: white !important;
@@ -58,7 +58,8 @@ input {
   font-family: "Fredoka One", cursive;
 }
 
-#editProfileSaveBtn{
+#editProfileSaveBtn {
+  border-radius: 7px;
   padding-right: 22px !important;
   padding-left: 22px !important;
   padding-top: 4px !important;
@@ -69,7 +70,6 @@ input {
   font-family: "Fredoka One", cursive;
   background-color: #ff6a6a !important;
   color: white !important;
-
 }
 
 .buttons:hover {
@@ -108,7 +108,11 @@ a:hover {
   border-radius: 2px;
 }
 
-a #profilepic:hover{
+.ml-0 {
+  margin-left: 0px !important;
+}
+
+a #profilepic:hover {
   background-color: none !important;
 }
 h4 {
