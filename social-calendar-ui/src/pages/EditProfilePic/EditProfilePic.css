@@ -80,7 +80,7 @@ a:hover {
 }
 
 #profilepic:hover {
-  border: 4px ridge red;
+  border: 4px ridge #ff6a6a;
 }
 
 .clicked {

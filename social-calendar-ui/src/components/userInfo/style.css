@@ -107,8 +107,8 @@ img {
 }
 
 @media screen and (min-width: 1200px) {
-  .userInfoContainer {
-    padding-left: 100px !important;
+  .userInfoContainer{
+    padding-left: 40px !important;
   }
 }
 
