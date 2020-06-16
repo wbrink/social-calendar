@@ -3,10 +3,12 @@ import { Link, Redirect } from "react-router-dom";
 import "./Login.css"
 import UserContext from "../../UserContext";
 import { isLoggedInURL } from "../../utils/isLoggedIn";
+import ErrorHandler from "../../components/errorHandler/ErrorHandler.js"
 
 const Login = (props) => {
     
-    const {userState, setUserState} = useContext(UserContext)
+    const {userState, setUserState} = useContext(UserContext);
+    const [errorMessage, setErrorMessage] = useState("");
     
     const [formObject, setFormObject] = useState({
         username: "",
@@ -36,7 +38,7 @@ const Login = (props) => {
                     if (data.msg === "Invalid login") {
                       invalidLogin(data.msg)
                     } else {
-                        console.log(data)
+                        // console.log(data)
                         // user.logIn(data.username, data.name, data._id, data.friends, data.bio, data.location, data.events, data.createdAt, true);
                         setUserState({...userState, username: data.username, name: data.name, _id: data._id, friends: data.friends, bio: data.bio, location: data.location, events: data.events, createdAt: data.createdAt, profilePic: data.profilePic, loggedIn: true})
                         
@@ -46,7 +48,7 @@ const Login = (props) => {
         //clear forms
 
         function invalidLogin(err){
-          console.log(err)
+          setErrorMessage("Invalid Login");
         }
     }
 
@@ -76,6 +78,8 @@ const Login = (props) => {
                 <form className="col" action="">
                     <input className="col" placeholder="Type your Password" name="password" onChange={handleInputChange} type="password"/>
                 </form>
+
+                <ErrorHandler message = {errorMessage}/>
                 <div className="row justify-content-center" id="LoginButtonContainer">
                     <input className="col-9 buttons" type="submit" onClick={handleFormSubmit} value="Login"/>
                 </div>
