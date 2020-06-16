@@ -112,6 +112,11 @@ img {
   }
 }
 
+.userpic{
+  width: 132px !important;
+  height: 160px !important;
+}
+
 .userDesc {
   padding-bottom: 8px;
   padding-right: 0px !important;
@@ -127,10 +132,10 @@ img {
 }
 
 #userLocation {
-  margin-top: 32px !important;
   margin-left: 22px;
   font-size: 0.79em;
   color: black;
+  margin-top: 48px !important;
 }
 
 #userCreatedAt {
@@ -141,6 +146,7 @@ img {
   background-color: white !important;
   border-color: white !important;
 }
+
 
 #userFriends {
   border-color: #fb7d7d;

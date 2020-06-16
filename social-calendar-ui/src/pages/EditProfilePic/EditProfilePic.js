@@ -54,7 +54,7 @@ const EditProfilePic = (props) => {
   return (
     <div className="container">
       <div className="row justify-content-center">
-        <div className="col" id="EditContainer">
+        <div className="col box" id="EditContainer">
           <div className="col-fliud" id="EditHeader">
             Edit Profile Picture
           </div>
