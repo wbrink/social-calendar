@@ -80,10 +80,15 @@ export default function UserInfo(props) {
 
       <div class="row" id="rowcss1">
         <div class="col-6">
-          <a href="/friends" className="col-12" id="userFriends">
-            {" "}
-            Friends {user.friends.length}
-          </a>
+          {user._id === userState._id 
+            ? <a href="/friends" className="col-12" id="userFriends">
+                Friends {user.friends.length}
+              </a>
+            : <a className="col-12" id="userFriends2">
+                Friends {user.friends.length}
+              </a>
+          }
+          
         </div>
         <div className="col-6 col-md-4 col-lg-3">
           {user.friends.some(el => el._id === userState._id)

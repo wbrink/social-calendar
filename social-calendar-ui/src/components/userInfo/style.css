@@ -7,7 +7,7 @@
   background-color: white;
   margin: 0;
   padding-top: 18px;
-  border-top-color: #343a40!important;
+  border-top-color: #343a40 !important;
   border-top-width: 4px !important;
   border-top-left-radius: 4px !important;
   border-top-right-radius: 4px !important;
@@ -84,43 +84,41 @@ strong {
   width: 100%;
   display: block;
   padding: 2px;
-  background-color: #5DADE2;
-  border-color: #5DADE2;
+  background-color: #5dade2;
+  border-color: #5dade2;
   border-radius: 8px !important;
 }
 
-
-
-#subHeaderUsername{
+#subHeaderUsername {
   font-size: 1.65em;
   color: black;
   margin-left: 16px;
 }
 
-img{
+img {
   margin-top: 20px !important;
   width: 132px !important;
   height: 160px;
 }
 
-.userInfoContainer{
+.userInfoContainer {
   max-height: 212px;
   margin-top: 18px !important;
 }
 
 @media screen and (min-width: 1200px) {
-  .userInfoContainer{
+  .userInfoContainer {
     padding-left: 100px !important;
   }
 }
 
-.userDesc{
+.userDesc {
   padding-bottom: 8px;
   padding-right: 0px !important;
   margin-right: 14px;
   margin-top: 12px;
   margin-bottom: 12px;
-  font-size: .8em;
+  font-size: 0.8em;
   max-height: 86px;
   overflow-y: scroll;
   border-bottom-style: solid;
@@ -128,25 +126,25 @@ img{
   border-bottom-color: black;
 }
 
-#userLocation{
+#userLocation {
   margin-top: 32px !important;
   margin-left: 22px;
-  font-size: .79em;
+  font-size: 0.79em;
   color: black;
 }
 
-#userCreatedAt{
+#userCreatedAt {
   color: black;
 }
 
-#profilepicContainer:hover{
+#profilepicContainer:hover {
   background-color: white !important;
   border-color: white !important;
 }
 
-#userFriends{
-  border-color: #FB7D7D;
-  background-color: #FB7D7D;
+#userFriends {
+  border-color: #fb7d7d;
+  background-color: #fb7d7d;
   color: white;
   font-family: "Fredoka One", cursive;
   padding: 5px;
@@ -155,13 +153,24 @@ img{
   border-radius: 8px !important;
 }
 
-#userFriends:hover{
+#userFriends2 {
+  border-color: #fb7d7d;
+  background-color: #fb7d7d;
+  color: white;
+  font-family: "Fredoka One", cursive;
+  padding: 5px;
+  padding-left: 12px;
+  padding-right: 12px;
+  border-radius: 8px !important;
+}
+
+#userFriends:hover {
   background-color: #f75d5d !important;
   border-color: #f75d5d !important;
 }
 
-.edit-profile:hover{
-  background-color: #5DADE2 !important;
-  border-color: #5DADE2 !important;
-  opacity: .9 !important;
+.edit-profile:hover {
+  background-color: #5dade2 !important;
+  border-color: #5dade2 !important;
+  opacity: 0.9 !important;
 }

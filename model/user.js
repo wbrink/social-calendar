@@ -46,6 +46,7 @@ const UserSchema = new Schema(
       type: String,
       maxlength: 50,
       trim: true,
+      default: "/images/orangemonster.jpg"
     },
     events: [
       {
