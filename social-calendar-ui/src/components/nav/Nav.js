@@ -1,13 +1,16 @@
-import React from "react"
+import React, {useContext} from "react";
+import UserContext from "../../UserContext";
 
-function Nav(){
-
+function Nav(props){
+  const {userState, setUserState} = useContext(UserContext);
 
     function logOut(){
         fetch('/api/logout')
           .then(response => response.json())
           .then(data => {
+            setUserState({...userState, loggedIn: false});
             console.log(data)
+            props.history.push("/");
           });
     }
     return(
@@ -57,7 +60,17 @@ function Nav(){
               </a>
             </li>
             <li class="nav-item active">
-              <a href="/" class="nav-link" onClick={logOut}>
+              <a href="/friend-requests" class="nav-link">
+                Friend Requests
+              </a>
+            </li>
+            <li class="nav-item active">
+              <a href="/profile" class="nav-link">
+                Profile
+              </a>
+            </li>
+            <li class="nav-item active">
+              <a href="" class="nav-link" onClick={logOut}>
                 Logout
               </a>
             </li>
