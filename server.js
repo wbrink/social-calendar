@@ -33,7 +33,7 @@ app.use(session({
   resave: false,
   // unset: "destroy", // session will be deleted when the response ends
   secret: "secret", // not positive what this does
-  store: new MongoStore({mongooseConnection: mongoose_db, secret: "Secret"}), // enables transparent crypto in accordance with OWASP
+  store: new MongoStore({mongooseConnection: mongoose_db, secret: process.env.SESSION_SECRET}), // enables transparent crypto in accordance with OWASP
   cookie: {
     httpOnly: true,
     secure: false,
