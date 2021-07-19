@@ -1,5 +1,5 @@
 #calendar-blur {
-  background-image: url("/images/calendar_pic_smallScreens_blur.PNG");
+  background-image: url("../../images/calendar_pic_smallScreens_blur.PNG");
   height: 70vh;
   background-position: center;
   background-size: cover;
@@ -28,6 +28,6 @@
 
 @media screen and (min-width: 500px) {
   #calendar-blur {
-    background-image: url("/images/calendar_pic_bigScreens_blur.PNG");
+    background-image: url("../../images/calendar_pic_bigScreens_blur.PNG");
   }
 }
