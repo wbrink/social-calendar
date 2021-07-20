@@ -8,8 +8,8 @@
     "client": "cd social-calendar-ui && npm run start",
     "postinstall": "cd social-calendar-ui && npm install",
     "build": "cd social-calendar-ui && npm run build",
-    "heroku-postbuild": "npm run build"
-    
+    "heroku-postbuild": "npm run build",
+    "start": "node server.js"
 
   },
   "keywords": [],
