@@ -10,7 +10,6 @@
     "build": "cd social-calendar-ui && npm run build",
     "heroku-postbuild": "npm run build",
     "start": "node server.js"
-
   },
   "keywords": [],
   "author": "",
