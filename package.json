@@ -24,7 +24,7 @@
     "if-env": "^1.0.4",
     "mobx": "^5.15.4",
     "mobx-react": "^6.2.2",
-    "moment": "^2.26.0",
+    "moment": "^2.29.4",
     "mongoose": "^5.9.14",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
